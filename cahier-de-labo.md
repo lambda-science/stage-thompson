@@ -13,5 +13,5 @@
 
 Commande à retenir pour le blastp
 ```bash
-/biolo/blast/bin/blastp -db blast-gorilla -outfmt '6 sseqid sseq' -max_target_seqs 1 -query fakeseq.fasta | awk 'BEGIN{FS="\t"; OFS="\n"}{gsub(/-/, "", $2); print ">"$1,$2}'
+/biolo/blast/bin/blastp -db blast-gorilla -evalue 0.005 -outfmt '6 sseqid sseq' -max_target_seqs 1 -query fakeseq.fasta | awk 'BEGIN{FS="\t"; OFS="\n"}{gsub(/-/, "", $2); print ">"$1,$2}'
 ```
