@@ -15,3 +15,8 @@ Commande à retenir pour le blastp
 ```bash
 /biolo/blast/bin/blastp -db blast-gorilla -evalue 0.005 -outfmt '6 sseqid sseq' -max_target_seqs 1 -query fakeseq.fasta | awk 'BEGIN{FS="\t"; OFS="\n"}{gsub(/-/, "", $2); print ">"$1,$2}'
 ```
+
+* Projet: Récupérer BDD RefSeq. Faire des recherche gene name Humain - Primate OU/ET blast protéines humaine vers le best hit par primate.
+* Récupérer exon map (Combien d'exon dans la région mal prédiet ? Pic du nb d'exon dans une window de 10 AA?) + carte genomique (Y'a des N dans les région mal prédite ?)
+* A mettre à jour: récupérer blast-sw blast-trembl et re-faire les blastdbcmd pour récupérer les séquences à jour.
+* A mettre à jour: refaire les requête orthoinspector pour récupérer les VRAI ortholog (bugfix signalé entrain d'être corrigé)
