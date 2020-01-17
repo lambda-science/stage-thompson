@@ -10,3 +10,8 @@
 * Projet: Amélioration des séquences en utilisant une base de données locale de uniprot récente
 * Projet: Modifier la récupération des séquences en les récupérant grace à des blastP sur les protéomes des primates non-homme 
 * Projet: Améliorer / Nettoyer l'organisation des fichiers sur ena/ et local.
+
+Commande à retenir pour le blastp
+```bash
+/biolo/blast/bin/blastp -db blast-gorilla -outfmt '6 sseqid sseq' -max_target_seqs 1 -query fakeseq.fasta | awk 'BEGIN{FS="\t"; OFS="\n"}{gsub(/-/, "", $2); print ">"$1,$2}'
+```
