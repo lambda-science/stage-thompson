@@ -20,3 +20,10 @@ Commande à retenir pour le blastp
 * Récupérer exon map (Combien d'exon dans la région mal prédiet ? Pic du nb d'exon dans une window de 10 AA?) + carte genomique (Y'a des N dans les région mal prédite ?)
 * A mettre à jour: récupérer blast-sw blast-trembl et re-faire les blastdbcmd pour récupérer les séquences à jour.
 * A mettre à jour: refaire les requête orthoinspector pour récupérer les VRAI ortholog (bugfix signalé entrain d'être corrigé)
+
+### Semaine 2: 20.01.2020
+* Fait: installation des BDD RefSeq, Uniprot-SW, Uniprot-Trembl
+* Fait: query des indentifiants uniprot sur la dernière version
+* Fait: Nouveaux derniers alignements
+* Projet: conversion Uniprot AC -> RefSeq Protein (beaucoup de perte)
+* Projet: script conversion Uniprot AC -> Gene name -> RefSeq Protein (peu de perte mais très long et isoforme ?)
