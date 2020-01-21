@@ -27,3 +27,6 @@ Commande à retenir pour le blastp
 * Fait: Nouveaux derniers alignements
 * Projet: conversion Uniprot AC -> RefSeq Protein (beaucoup de perte)
 * Projet: script conversion Uniprot AC -> Gene name -> RefSeq Protein (peu de perte mais très long et isoforme ?)
+* Utilisation script julie compte d'erreur
+* Projet: Faire la distribution du nb d'erreur par sequence -> normale ?
+
