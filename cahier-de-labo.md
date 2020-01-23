@@ -33,3 +33,5 @@ Commande à retenir pour le blastp
 ```cat * | awk '/^>/ {printf("%s%s\t",(N>0?"\n":""),$0);N++;next;} {printf("%s",$0);} END {printf("\n");}' |grep "Macaca mu" -F -A 0 | tr "\t" "\n"```
 * Annulation de cross-ref / blast chez RefSeq
 * Simplement recherche des séquences présentant un mismatch chez Uniprot dans la base RefSeq avec 100% identité. Sur 30 000 seq avec mismatch uniprot, 5500 sont retrouvés avec 100% d'identité dans RefSeq. = Problême commun aux deux bases
+* Erreur 3 = pas forcément une erreure de prédiction, peut être isoforme différent ? A confirmer par autre indices (NNN, exon ...). Regarder nb de iso ou de seq ds ref vs uni (= comparer qui en predit cb en moyenne). Missmatch = ok chez prot membranaire normalement (identité = trop strict). 30 000 seq = cb de fichie d'alignement ???
+* 30 000 - 5500 de refgene = des isoformes unique à Uniprot
