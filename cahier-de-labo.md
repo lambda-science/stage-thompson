@@ -31,3 +31,5 @@ Commande à retenir pour le blastp
 * Projet: Faire la distribution du nb d'erreur par sequence -> normale ?
 * Linéarisation de fasta et recherche d'un orga 
 ```cat * | awk '/^>/ {printf("%s%s\t",(N>0?"\n":""),$0);N++;next;} {printf("%s",$0);} END {printf("\n");}' |grep "Macaca mu" -F -A 0 | tr "\t" "\n"```
+* Annulation de cross-ref / blast chez RefSeq
+* Simplement recherche des séquences présentant un mismatch chez Uniprot dans la base RefSeq avec 100% identité. Sur 30 000 seq avec mismatch uniprot, 5500 sont retrouvés avec 100% d'identité dans RefSeq. = Problême commun aux deux bases
