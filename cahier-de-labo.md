@@ -29,4 +29,5 @@ Commande à retenir pour le blastp
 * Projet: script conversion Uniprot AC -> Gene name -> RefSeq Protein (peu de perte mais très long et isoforme ?)
 * Utilisation script julie compte d'erreur
 * Projet: Faire la distribution du nb d'erreur par sequence -> normale ?
-
+* Linéarisation de fasta et recherche d'un orga 
+```cat * | awk '/^>/ {printf("%s%s\t",(N>0?"\n":""),$0);N++;next;} {printf("%s",$0);} END {printf("\n");}' |grep "Macaca mu" -F -A 0 | tr "\t" "\n"```
