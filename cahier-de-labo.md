@@ -38,3 +38,4 @@ Commande à retenir pour le blastp
 * Projet: récupérer les séquences de transcript (uniprot mapping) et récupérer donc les Exons. Pour les zones à erreur n°3 regarder combien d'exon son colocalisé (+2 ou 0 = erreur de prédiction) et regarder si présence de N dans seq génomique colocalisée avec erreur.
 * En cours: requête des séquences génomiques des protéines présentant une erreur de type 3 (30 000 séquences à récupérer, 600 POST de 50 seq avec 30 en une fois)
 * Si Error type 3: voir si on peut retrouver la séquence protéique humaine dans la zone génomique primate ça veut dire pb de prediction (Difficile si error 3 en N-ter mais faisable si entre deux exons)
+* Modif sensibilité mismatch taille mini 10 AA -> 11659 seq
