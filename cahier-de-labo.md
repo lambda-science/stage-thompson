@@ -36,3 +36,4 @@ Commande à retenir pour le blastp
 * Erreur 3 = pas forcément une erreure de prédiction, peut être isoforme différent ? A confirmer par autre indices (NNN, exon ...). Regarder nb de iso ou de seq ds ref vs uni (= comparer qui en predit cb en moyenne). Missmatch = ok chez prot membranaire normalement (identité = trop strict). 30 000 seq = cb de fichie d'alignement ???
 * 30 000 - 5500 de refgene = des isoformes unique à Uniprot
 * Projet: récupérer les séquences de transcript (uniprot mapping) et récupérer donc les Exons. Pour les zones à erreur n°3 regarder combien d'exon son colocalisé (+2 ou 0 = erreur de prédiction) et regarder si présence de N dans seq génomique colocalisée avec erreur.
+* En cours: requête des séquences génomiques des protéines présentant une erreur de type 3 (30 000 séquences à récupérer, 600 POST de 50 seq avec 30 en une fois)
