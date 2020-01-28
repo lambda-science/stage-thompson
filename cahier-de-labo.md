@@ -43,3 +43,7 @@ Commande à retenir pour le blastp
 * Done: compter les petits exon et les seq cDNA contenant des N
 * A faire: intron map, grep motif intron canonique cb ne le respecte pas ?
 * A faire: retrouver seq protéique humaine dans seq génomique ? -> Algorithmie pour lire mafft, fichier erreur ect...
+* Compter les séquences comportant de N 
+```
+cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
+```
