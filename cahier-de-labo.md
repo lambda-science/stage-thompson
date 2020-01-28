@@ -39,3 +39,7 @@ Commande à retenir pour le blastp
 * En cours: requête des séquences génomiques des protéines présentant une erreur de type 3 (30 000 séquences à récupérer, 600 POST de 50 seq avec 30 en une fois)
 * Si Error type 3: voir si on peut retrouver la séquence protéique humaine dans la zone génomique primate ça veut dire pb de prediction (Difficile si error 3 en N-ter mais faisable si entre deux exons)
 * Modif sensibilité mismatch taille mini 10 AA -> 11659 seq
+* Done: récupération exon map, seq genomique, cDNA. En cours: CDS
+* Done: compter les petits exon et les seq cDNA contenant des N
+* A faire: intron map, grep motif intron canonique cb ne le respecte pas ?
+* A faire: retrouver seq protéique humaine dans seq génomique ? -> Algorithmie pour lire mafft, fichier erreur ect...
