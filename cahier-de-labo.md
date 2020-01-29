@@ -47,3 +47,7 @@ Commande à retenir pour le blastp
 ```
 cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 ```
+**Discussion julie 29/01: **
+* TODO: colocaliser les petits exons avec l'erreur
+* TODO: compter les séquences ayant des XXXXX au mismatch
+* TODO: traduction de zone prot humaine -> génomique
