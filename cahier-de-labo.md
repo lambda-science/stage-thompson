@@ -52,3 +52,4 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * TODO: compter les séquences ayant des XXXXX au mismatch
 * TODO: traduction de zone prot humaine -> génomique
 * J'ai vu des plusieurs petits exon séparés par 1 ou 2 bp introns -> intéressant détections d'introns sous la taille connue ?
+* Arabidopsis taliana: introns 59 bp min, exon 1 bp min
