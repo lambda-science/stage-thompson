@@ -54,3 +54,7 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * TODO: Comparaison  stat exon/N avec gènes sans erreur/sans mismatch / randomly sampled
 * J'ai vu des plusieurs petits exon séparés par 1 ou 2 bp introns -> intéressant détections d'introns sous la taille connue ?
 * Arabidopsis taliana: introns 59 bp min, exon 1 bp min
+* Humain mini 39 bp introns ? 
+* Big TODO: refactorer et commenter le code pour le ré-utiliser
+* Refaire la pipeline en filtrant les données pour les seq humaine n'existant pas ?
+* Prototype de traduction: faire alignement MAAFT + score ?
