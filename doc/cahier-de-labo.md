@@ -36,6 +36,8 @@ Commande à retenir pour le blastp
 * Erreur 3 = pas forcément une erreure de prédiction, peut être isoforme différent ? A confirmer par autre indices (NNN, exon ...). Regarder nb de iso ou de seq ds ref vs uni (= comparer qui en predit cb en moyenne). Missmatch = ok chez prot membranaire normalement (identité = trop strict). 30 000 seq = cb de fichie d'alignement ???
 * 30 000 - 5500 de refgene = des isoformes unique à Uniprot
 * Projet: récupérer les séquences de transcript (uniprot mapping) et récupérer donc les Exons. Pour les zones à erreur n°3 regarder combien d'exon son colocalisé (+2 ou 0 = erreur de prédiction) et regarder si présence de N dans seq génomique colocalisée avec erreur.
+
+### Semaine 3: 27.01.2020
 * En cours: requête des séquences génomiques des protéines présentant une erreur de type 3 (30 000 séquences à récupérer, 600 POST de 50 seq avec 30 en une fois)
 * Si Error type 3: voir si on peut retrouver la séquence protéique humaine dans la zone génomique primate ça veut dire pb de prediction (Difficile si error 3 en N-ter mais faisable si entre deux exons)
 * Modif sensibilité mismatch taille mini 10 AA -> 11659 seq
@@ -47,7 +49,9 @@ Commande à retenir pour le blastp
 ```
 cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 ```
+
 **Discussion julie 29/01:**
+
 * TODO: colocaliser les petits exons avec l'erreur
 * TODO: compter les séquences ayant des XXXXX au mismatch
 * TODO: traduction de zone prot humaine -> génomique
@@ -58,3 +62,4 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * Big TODO: refactorer et commenter le code pour le ré-utiliser
 * Refaire la pipeline en filtrant les données pour les seq humaine n'existant pas ?
 * Prototype de traduction: faire alignement MAAFT + score ?
+* Journée du 30/01: grand netoyage du dossier local et SSH: fusion des deux et unificiation, supression des dossier et fichier inutile (création d'un back-up avant). Push et création d'un dépot git avec les sources. Organisation des scripts python, ajout de quelques commentaire et du détail du workflow necessaire pour re-creer les données. Ajout de doc sur la structure du dossier-projet.
