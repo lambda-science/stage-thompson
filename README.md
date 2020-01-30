@@ -10,7 +10,7 @@
 │   ├── uniprot-sequence ----------------# ID, Séquence, Alignement des protéines orthologue Uniprot
 │   ├── uniprot-exon-map ----------------# Exon-map et autre séquence genomique, CDS, cDNA
 │   ├── uniprot-error-mismatch ----------# Fichiers relatifs aux détection d'erreur d'alignement et mismatch
-│   ├── uniprot-translation-correction --# Fichiers relatifs à la correction des erreurs de mismatch par traduction
+│   └── uniprot-translation-correction --# Fichiers relatifs à la correction des erreurs de mismatch par traduction
 ├── results  ----------------------------# Dossier contenant certains résultats finaux
 ├── temp  -------------------------------# Dossier pour tout fichier temporaire (screenshot, sequence test)
 └── src  --------------------------------# Code source non-bash (python, jupyter notebook)
