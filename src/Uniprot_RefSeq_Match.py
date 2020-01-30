@@ -1,3 +1,4 @@
+# Script et fonction permettant de chercher la présence de séquence eronnée de Uniprot dans la base RefSeq
 def fasta2List(pathFasta):
     f = open(pathFasta, "r")
     title = []
@@ -32,13 +33,14 @@ def importQuery(pathFasta):
     dictionary = dict(zip(title, seq))
     return dictionary
 
-my_DB = fasta2List("/commun/bics/DB-Corentin/refseq-perfect/all.fasta")
-my_Query = importQuery("/home/meyer/refseq-perfect-match/ID_error3_filt.fasta")
-f = open("results.out","w")
-for i, j in my_Query.items():
-    try: 
-        match = my_DB[j]
-        f.write("Match found: "+i+" "+my_DB[j]+"\n")
-    except:
-        pass
-f.close()
+if __name__ == "__main__":
+    my_DB = fasta2List("/commun/bics/DB-Corentin/refseq-perfect/all.fasta")
+    my_Query = importQuery("../raw/uniprot-error-mismatch/ID_error3_filt.fasta")
+    f = open("../raw/uniprot-error-mismatch/results.out","w")
+    for i, j in my_Query.items():
+        try: 
+            match = my_DB[j]
+            f.write("Match found: "+i+" "+my_DB[j]+"\n")
+        except:
+            pass
+    f.close()

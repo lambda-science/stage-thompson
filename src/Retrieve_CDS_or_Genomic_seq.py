@@ -1,9 +1,10 @@
+# Script créer pour récupérer de façon parallèle les ficier des CDS des identifiants uniprot à mismatch.
+# (sous-produit 3-Retrieve_Genomic....)
 import pandas as pd
-
-ID_file = pd.read_csv("transcript_ensembl.tab", sep = "\t")
-
 import grequests
 import json
+
+ID_file = pd.read_csv("transcript_ensembl.tab", sep = "\t")
 
 url = "https://rest.ensembl.org/sequence/id"
 headers={ "Content-Type" : "application/json", "Accept" : "application/json"}

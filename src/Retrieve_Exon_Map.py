@@ -1,3 +1,5 @@
+# Script créer pour récupérer de façon parallèle les fichier JSON contenant l'information d'exon-map 
+# (sous-produit 3-Retrieve_Genomic....)
 import grequests
 import requests, sys
 import pandas as pd
@@ -16,7 +18,7 @@ rs = [grequests.post(url, headers=headers, data=json.dumps(i)) for i in params]
 all_response = grequests.map(rs)
 
 print(all_response)
-f = open("lookup.json", "a")
+f = open("../raw/uniprot-exon-map/lookup_newline.json", "a")
 for response in all_response:
     try:
         f.write(json.dumps(response.json())+"\n")
