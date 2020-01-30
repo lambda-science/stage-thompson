@@ -11,7 +11,8 @@
 7. Récupérer les séquences des ID à mismatch
 ```/biolo/blast/bin/blastdbcmd -entry_batch mismatch.id -db /commun/bics/DB-Corentin/uniprot >> mismatch.id.fasta```
 7. Optionnel: Executer src/2-Uniprot_RefSeq_Match.ipynb
-8. Executer src/3-Retrieve_Genomic_CDS_and_Exon.ipynb
-9. Executer src/4-Generate_Exon_Map.ipynb  
-10. Executer src/5-ExonMap_to_cDNA.ipynb
-11. Executer src/6-Mismatch_correction_translation.ipynb
+8. Faire la correspondance UniprotID -> Ensembl Transcript avec https://www.uniprot.org/uploadlists/ (télécharger le fichier .tab)
+9. Executer src/3-Retrieve_Genomic_CDS_and_Exon.ipynb
+10. Executer src/4-Generate_Exon_Map.ipynb  
+11. Executer src/5-ExonMap_to_cDNA.ipynb
+12. Executer src/6-Mismatch_correction_translation.ipynb
