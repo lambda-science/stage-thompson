@@ -1,5 +1,20 @@
 # Code source pour mon stage de fin d'étude M2 Biotech HT Analyse @ ESBS Strasbourg - dans avec Julie D. Thompson dans l'équipe CSTB - iCube
 
+### Structure des données (dossier local et sur serveur ssh.lbgi.fr)
+```
+├── bin  --------------------------------# Ensemble de script bash
+├── doc  --------------------------------# Tout documents en rapport avec le projet (article, cahier de labo, notes)
+├── raw  --------------------------------# Donnée brute ou en partie traitée
+│   ├── orthoinspector-json -------------# Fichier raw JSON Orthoinspector
+│   ├── orthoinspector-json-processed ---# Fichier issue du traitement des JSON
+│   ├── uniprot-sequence ----------------# ID, Séquence, Alignement des protéines orthologue Uniprot
+│   ├── uniprot-exon-map ----------------# Exon-map et autre séquence genomique, CDS, cDNA
+│   ├── uniprot-error-mismatch ----------# Fichiers relatifs aux détection d'erreur d'alignement et mismatch
+│   ├── uniprot-translation-correction --# Fichiers relatifs à la correction des erreurs de mismatch par traduction
+├── results  ----------------------------# Dossier contenant certains résultats finaux
+├── temp  -------------------------------# Dossier pour tout fichier temporaire (screenshot, sequence test)
+└── src  --------------------------------# Code source non-bash (python, jupyter notebook)
+```
 ### Workflow pour re-générer les données
 1. Executer src/1-Orthoinspector_to_ID_file.ipynb  
 2. Executer bin/retrieve_seq_from_uniprot.sh  
