@@ -5,6 +5,7 @@
 ├── bin  --------------------------------# Ensemble de script bash
 ├── doc  --------------------------------# Tout documents en rapport avec le projet (article, cahier de labo, notes)
 ├── raw  --------------------------------# Donnée brute ou en partie traitée
+│   ├── correction-pairwise -------------# Fasta et MAFFT des alignement fragment humain - seq génomique pour correction
 │   ├── orthoinspector-json -------------# Fichier raw JSON Orthoinspector
 │   ├── orthoinspector-json-processed ---# Fichier issue du traitement des JSON
 │   ├── uniprot-sequence ----------------# ID, Séquence, Alignement des protéines orthologue Uniprot
