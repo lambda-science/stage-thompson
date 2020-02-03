@@ -54,8 +54,10 @@ for index, row in Error_file.iloc[:,:].iterrows():
     Prot_list = fasta2List("../raw/uniprot-sequence/"+fasta_name)
     prot_HumanRef = [val for key, val in Prot_list.items() if row[0][20:-15] in key]
     genomic_Seq = [val for key, val in my_Genomic.items() if prot_name in key]
-    
-    if prot_HumanRef == []:
+    if genomic_Seq == []:
+        pass
+
+    elif prot_HumanRef == []:
         pass
     else:
         peptide_Ref = (row[0][20:-15], prot_HumanRef[0][human_start:human_stop])
