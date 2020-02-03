@@ -63,3 +63,6 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * Refaire la pipeline en filtrant les données pour les seq humaine n'existant pas ?
 * Prototype de traduction: faire alignement MAAFT + score ?
 * Journée du 30/01: grand netoyage du dossier local et SSH: fusion des deux et unificiation, supression des dossier et fichier inutile (création d'un back-up avant). Push et création d'un dépot git avec les sources. Organisation des scripts python, ajout de quelques commentaire et du détail du workflow necessaire pour re-creer les données. Ajout de doc sur la structure du dossier-projet.
+
+### Semaine 4: 03/02/2020
+* Update git pour utiliser des EOL LF seulement et ne plus commit les file permissions THANKS GOD
