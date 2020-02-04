@@ -32,4 +32,18 @@
 9. Executer src/3-Retrieve_Genomic_CDS_and_Exon.ipynb
 10. Executer src/4-Generate_Exon_Map.ipynb  
 11. Executer src/5-ExonMap_to_cDNA.ipynb
-12. Executer src/6-Mismatch_correction_translation.ipynb
+12. Executer src/6-Mismatch_correction_translation.ipynb  
+13. Executer src/7-Colocalize_exon_intron_mismatch.ipynb
+14. Executer src/8-Mismatch_correction_similarity.ipynb
+
+### Environnement virtuel
+Le fichier environment.yml contient les informations de version et de packages utilisés pour ce projet.  
+Il s'installe en utilisant la distribution Anaconda3 ou Miniconda3.  
+Installer l'environnement:  
+```conda env create -f environment.yml```  
+Activer l'environnement:  
+```conda activate stage-env```  
+Désactiver l'environnement:  
+```conda deactivate```  
+Mettre à jour l'information d'environnement pour les derniers packages utilisés:  
+```conda env export > environment.yml```
