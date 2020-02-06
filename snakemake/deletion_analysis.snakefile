@@ -32,7 +32,7 @@
 #############################################################################################
 
 # 7/ Correction de l'erreur par traduction et recherche de 100% d'identité
-rule error_correction_identity_translation():
+rule error_correction_identity_translation:
     input:
         "../data/deletion-analysis/deletion.id", "../data/deletion-analysis/genomic_all.fasta"
     output:
