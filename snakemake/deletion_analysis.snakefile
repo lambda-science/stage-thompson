@@ -32,22 +32,22 @@
 #############################################################################################
 
 # 2.1/ Récupérer les séquences des ID à erreur
-# rule get_SEQ_errors:
-#    input:
-#        "../data/deletion-analysis/mismatch.id"
-#    output:
-#        "../data/deletion-analysis/test_mkdir/mismatch.id.fasta"
-#    message:
-#        "Récupération des ID des erreurs"
-#    shell:
-#        "/biolo/blast/bin/blastdbcmd - entry_batch {{input}} -db / commun/bics/DB-Corentin/uniprot >> {{output}}"
+rule get_SEQ_errors:
+    input:
+        "../data/deletion-analysis/deletion.id"
+    output:
+        "../data/deletion-analysis/deletion.id.fasta"
+    message:
+        "Récupération des séquences correspondants aux ID à erreurs"
+    shell:
+        "/biolo/blast/bin/blastdbcmd - entry_batch {{input}} -db / commun/bics/DB-Corentin/uniprot >> {{output}}"
 
 # 2/ Récupération des ID des erreurs
 rule get_ID_errors:
     input:
         "../data/deletion-analysis/uniprot_errors_type2.txt"
     output:
-        "../data/deletion-analysis/mismatch.id"
+        "../data/deletion-analysis/deletion.id"
     message:
         "Récupération des ID des erreurs"
     shell:
