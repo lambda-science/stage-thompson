@@ -41,7 +41,7 @@ rule get_SEQ_and_ID_errors:
     message:
         "Récupération des séquences correspondantes aux ID à erreurs\nRécupération identifiant Trasncript Ensembl pour chaque ID uniprot"
     shell:
-        "python 1.1-Uniprot-To-Ensembl.py {{input}} > {{output[1]}} & "
+        "python ../src/1.1-Uniprot-To-Ensembl.py {{input}} > {{output[1]}} & "
         "/biolo/blast/bin/blastdbcmd -entry_batch {{input}} -db /commun/bics/DB-Corentin/uniprot >> {{output[0]}} &"
 
 # 2/ Récupération des ID des erreurs
