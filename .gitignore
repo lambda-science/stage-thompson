@@ -137,3 +137,4 @@ doc/articles-files/
 */nohup.out
 nohup.out
 data/
+snakemake/.snakemake
