@@ -136,3 +136,4 @@ doc/articles-files/
 .vscode/
 */nohup.out
 nohup.out
+data/
