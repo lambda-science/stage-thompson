@@ -30,7 +30,11 @@
 #        "../data/deletion-analysis/uniprot-translation-correction/translation_match.tab",
 
 #############################################################################################
-
+rule target:
+    input:
+        "../data/deletion-analysis/deletion.id"
+        "../data/deletion-analysis/uniprot_errors_type2.txt"
+        "../data/raw/uniprot_new_errors.txt"
 # 3/ Correspondance Uniprot ID -> Ensembl Transcript
 rule uniprot_to_transcriptID:
     input:
