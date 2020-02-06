@@ -29,7 +29,7 @@ def makeAsyncEnsemblSeqRequest(ID_file, type_request):
                "Accept": "application/json"}
 
     params = []
-    for i in range(0, 9960, 50):
+    for i in range(0, len(ID_file.index), 50):
         try:
             params.append(
                 {"ids": ID_file.iloc[i:i+50, 1].tolist(), "type": type_request})
@@ -39,7 +39,7 @@ def makeAsyncEnsemblSeqRequest(ID_file, type_request):
 
     rs = [grequests.post(url, headers=headers, data=json.dumps(i))
           for i in params]
-    all_response = grequests.map(rs, size=50)
+    all_response = grequests.map(rs)
     return all_response
 
 
@@ -70,7 +70,7 @@ def makeAsyncEnsemblExonmapRequest(ID_file):
                "Accept": "application/json"}
 
     params = []
-    for i in range(0, 9960, 1000):
+    for i in range(0, len(ID_file.index), 1000):
         try:
             params.append(
                 {"ids": ID_file.iloc[i:i+1000, 1].tolist(), "expand": "1"})
@@ -99,10 +99,13 @@ if __name__ == "__main__":
     ID_file = pd.read_csv(sys.argv[1], sep="\t")
 
     my_response = makeAsyncEnsemblSeqRequest(ID_file, "cds")
+    print(my_response)
     writeAsyncEnsemblResponse(my_response, ID_file, sys.argv[2], "CDS")
 
     my_response2 = makeAsyncEnsemblSeqRequest(ID_file, "genomic")
+    print(my_response2)
     writeAsyncEnsemblResponse(my_response2, ID_file, sys.argv[3], "GENOMIC")
 
     my_response3 = makeAsyncEnsemblExonmapRequest(ID_file)
+    print(my_response3)
     writeAsyncEnsemblExonMapResposne(my_response3, sys.argv[4])

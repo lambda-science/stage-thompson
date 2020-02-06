@@ -15,7 +15,7 @@
 #     3/ Correspondance Uniprot ID -> Ensembl Transcript
 #     4/ Récupération séquences génomique, CDS, info exon
 #     5/ Création de l'exon_map
-#     6/ Création cDNA
+#     ((6/ Création cDNA))
 #     7/ Correction mismatch 100% identitié
 #     8/ Colocalization mismatch exon/intron
 #     9/ Correction mismatch par similarité
@@ -30,6 +30,39 @@
 #        "../data/deletion-analysis/uniprot-translation-correction/translation_match.tab",
 
 #############################################################################################
+
+# 7/ Correction de l'erreur par traduction et recherche de 100% d'identité
+rule error_correction_identity_translation():
+    input:
+        "../data/deletion-analysis/deletion.id", "../data/deletion-analysis/genomic_all.fasta"
+    output:
+        "../data/deletion-analysis/translation_match_100percent.tab"
+    message:
+        "Traduction des séquences génomique et recherche du peptide humain pour correction"
+    shell:
+        "python ../src/6-Mismatch_correction_translation.py {input[0]} {input[1]} {output}"
+
+#  5/ Création de l'exon_map
+rule create_exon_map:
+    input:
+        "../data/deletion-analysis/deletion.id", "../data/deletion-analysis/exon_json_dump.json", "../data/deletion-analysis/genomic_all.fasta"
+    output:
+        "../data/deletion-analysis/Exon_map.tab", "../data/deletion-analysis/Intron_map.tab"
+    message:
+        "Generation de l'exon et de l'intron map"
+    shell:
+        "python ../src/4-Generate_Exon_Map.py {input[0]} {input[1]} {input[2]} {ouput[0]} {output[1]}"
+
+#  4/ Récupération séquences génomique, CDS, info exon
+rule get_genomic_CDS_exon_info:
+    input:
+        "../data/deletion-analysis/transcript_ensembl.tab"
+    output:
+        "../data/deletion-analysis/CDS_all.fasta", "../data/deletion-analysis/genomic_all.fasta", "../data/deletion-analysis/exon_json_dump.json"
+    message:
+        "Récupération seq génomique, seq CDS et json dump des exons"
+    shell:
+        "python ../src/3-Retrieve_genomic_CDS_and_Exon.pyled-1.py {input[0]} {output[0]} {output[1]} {output[2]}"
 
 # 2.1/ Récupérer les séquences des ID à erreur
 # 3/ Correspondance Uniprot ID -> Ensembl Transcript
