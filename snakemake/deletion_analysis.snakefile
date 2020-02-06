@@ -37,14 +37,12 @@ rule get_SEQ_and_ID_errors:
     input:
         "../data/deletion-analysis/deletion.id"
     output:
-        "../data/deletion-analysis/deletion.id.fasta"
-    output2:
-        "../data/deletion-analysis/transcript_ensembl.tab"
+        "../data/deletion-analysis/deletion.id.fasta", "../data/deletion-analysis/transcript_ensembl.tab"
     message:
         "Récupération des séquences correspondantes aux ID à erreurs\nRécupération identifiant Trasncript Ensembl pour chaque ID uniprot"
     shell:
-        "python 1.1-Uniprot-To-Ensembl.py {{input}} > {{output2}} & "
-        "/biolo/blast/bin/blastdbcmd - entry_batch {{input}} - db / commun/bics/DB-Corentin/uniprot >> {{output}} &"
+        "python 1.1-Uniprot-To-Ensembl.py {{input}} > {{output[1]}} & "
+        "/biolo/blast/bin/blastdbcmd - entry_batch {{input}} - db / commun/bics/DB-Corentin/uniprot >> {{output[0]}} &"
 
 # 2/ Récupération des ID des erreurs
 rule get_ID_errors:
