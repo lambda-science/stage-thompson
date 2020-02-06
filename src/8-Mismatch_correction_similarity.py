@@ -1,11 +1,7 @@
 # Script permettant de tenter de corriger un mismatch en alignant le peptide human a la seq génomic et en cherchant le meilleur match
 # Input:
-#     ID_file fichier de correspondance UniprotID - Ensembl Trasncript ID
 #     Error_file fichier contenant toute les erreurs de type mismatch (script julie)
-#     Exon_file fichier contenant les informations sur les positions des exons des transcripts
 #     my_Genomic fichier fasta contenant les séquences génomiques des transcripts
-#     my_cDNA fichier fasta contenant les séquences cDNA des transcripts
-#     my_CDS fichier fasta contenant les séquences CDS des transcripts
 
 # Importer les lib et fonction
 import json
@@ -35,23 +31,12 @@ def fasta2List(pathFasta):
     return dictionary
 
 
-# Importation de toutes les données utilisées
-ID_file = pd.read_csv(
-    "../raw/uniprot-exon-map/transcript_ensembl.tab", sep="\t")
-Error_file = pd.read_csv(
-    "../raw/uniprot-exon-map/uniprot_new_errors_filt.txt", sep=" ", header=None)
-Exon_file = pd.read_csv(
-    "../raw/uniprot-exon-map/Exon_map.tab", sep="\t", header=None)
-my_Genomic = fasta2List("../raw/uniprot-exon-map/genomics_new.fa")
-my_cDNA = fasta2List("../raw/uniprot-exon-map/cdna_seq.fa")
-my_CDS = fasta2List("../raw/uniprot-exon-map/cds_new.fa")
+def translateAndAlign(Error_file, out_folder, mafft_path):
 
-
-def translateAndAlign():
     # Pour chaque mismatch du fichier d'erreur: on cherche la séquence humaine en face du mismatch. On prend le séquence génomique de la protéine du primate
     # concerné et on la traduit dans les trois cadre de lecture. On cherche si la séquence humaine peut être trouvée dans une des séquence génomique traduite
     # Si oui on écrit dans un fichier  les informations du mismatch et la position génomique permetttant de le régler.
-    for index, row in Error_file.iloc[:1, :].iterrows():
+    for index, row in Error_file.iloc[:, :].iterrows():
         fasta_name = row[0][20:-6]
         prot_name = row[2]
         human_start = row[5]
@@ -62,8 +47,10 @@ def translateAndAlign():
                          if row[0][20:-15] in key]
         genomic_Seq = [val for key, val in my_Genomic.items()
                        if prot_name in key]
+        if genomic_Seq == []:
+            pass
 
-        if prot_HumanRef == []:
+        elif prot_HumanRef == []:
             pass
         else:
             peptide_Ref = (row[0][20:-15], prot_HumanRef[0]
@@ -71,8 +58,8 @@ def translateAndAlign():
 
             # Translation & alignement part
             for i in range(3):
-                f = open("../temp/"+str(index)+"_" +
-                         peptide_Ref[0]+"_"+str(i)+".fasta", "w")
+                f = open("../raw/correction-pairwise/fasta/"+str(index) +
+                         "_"+peptide_Ref[0]+"_"+str(i)+".fasta", "w")
                 genomic_prot = Seq(genomic_Seq[0][i:], generic_dna)
                 f.write(">"+prot_name+" genomic frame "+str(i) +
                         "\n"+str(genomic_prot.translate())+"\n")
@@ -81,22 +68,25 @@ def translateAndAlign():
                 f.close()
 
                 # Alignement MAFFT avec paramètre strictes sur l'ouverte et l'extension de gap
-                mafft_cline = MafftCommandline(
-                    input="../temp/"+str(index)+"_"+peptide_Ref[0]+"_"+str(i)+".fasta", op=5.0, ep=10.0)
+                mafft_cline = MafftCommandline("/biolo/mafft/inst/bin/mafft",
+                                               input="../raw/correction-pairwise/fasta/" +
+                                               str(index)+"_" +
+                                               peptide_Ref[0]+"_" +
+                                               str(i)+".fasta",
+                                               op=5.0, ep=10.0)
                 mafft_results = mafft_cline()
-                with open("../temp/"+str(index)+"_"+peptide_Ref[0]+"_"+str(i)+".fasta.mafft", "w") as handle:
+                with open("../raw/correction-pairwise/mafft/"+str(index)+"_"+peptide_Ref[0]+"_"+str(i)+".fasta.mafft", "w") as handle:
                     handle.write(mafft_results[0])
 
 
-def selectMatchInAlignement():
-    f = open("../raw/correction-pairwise/translation_match.tab", "w")
-    align_files = os.listdir("../raw/correction-pairwise/mafft/")
+def selectMatchInAlignement(mafft_folder, results_file):
+    f = open(results_file, "w")
+    align_files = os.listdir(mafft_folder)
     # Scan de la séquence aligné peptide humain pour trouver la position de début et de fin sur l'alignement
     f.write(
         "Match\tPrimate\tHuman\tStartPos\tStopPos\tSequence_Primate\tSequence_Humaine\n")
     for align_file in align_files:
-        align = AlignIO.read(
-            "../raw/correction-pairwise/mafft/"+align_file, "fasta")
+        align = AlignIO.read(mafft_folder+align_file, "fasta")
         start = 0
         found_Start = False
         for index, amino in enumerate(align[1, :].seq):
@@ -125,3 +115,10 @@ def selectMatchInAlignement():
         else:
             pass
     f.close()
+
+
+if __name__ == "__main__":
+    # Importation de toutes les données utilisées
+    Error_file = pd.read_csv(
+        "../raw/uniprot-exon-map/uniprot_new_errors_filt.txt", sep=" ", header=None)
+    my_Genomic = fasta2List("../raw/uniprot-exon-map/genomics_new.fa")
