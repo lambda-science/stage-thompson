@@ -30,32 +30,21 @@
 #        "../data/deletion-analysis/uniprot-translation-correction/translation_match.tab",
 
 #############################################################################################
-rule target:
-    input:
-        "../data/deletion-analysis/deletion.id"
-        "../data/deletion-analysis/uniprot_errors_type2.txt"
-        "../data/raw/uniprot_new_errors.txt"
-# 3/ Correspondance Uniprot ID -> Ensembl Transcript
-rule uniprot_to_transcriptID:
-    input:
-        "../data/deletion-analysis/deletion.id"
-    output:
-        "../data/deletion-analysis/transcript_ensembl.tab"
-    message:
-        "Récupération identifiant Trasncript Ensembl pour chaque ID uniprot"
-    shell:
-        "python 1.1-Uniprot-To-Ensembl.py {{input}} > {{output}}"
 
 # 2.1/ Récupérer les séquences des ID à erreur
-rule get_SEQ_errors:
+# 3/ Correspondance Uniprot ID -> Ensembl Transcript
+rule get_SEQ_and_ID_errors:
     input:
         "../data/deletion-analysis/deletion.id"
     output:
         "../data/deletion-analysis/deletion.id.fasta"
+    output2:
+        "../data/deletion-analysis/transcript_ensembl.tab"
     message:
-        "Récupération des séquences correspondantes aux ID à erreurs"
+        "Récupération des séquences correspondantes aux ID à erreurs\nRécupération identifiant Trasncript Ensembl pour chaque ID uniprot"
     shell:
-        "/biolo/blast/bin/blastdbcmd - entry_batch {{input}} -db / commun/bics/DB-Corentin/uniprot >> {{output}}"
+        "python 1.1-Uniprot-To-Ensembl.py {{input}} > {{output2}} & "
+        "/biolo/blast/bin/blastdbcmd - entry_batch {{input}} - db / commun/bics/DB-Corentin/uniprot >> {{output}} &"
 
 # 2/ Récupération des ID des erreurs
 rule get_ID_errors:
