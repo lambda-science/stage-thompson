@@ -32,7 +32,7 @@
 #############################################################################################
 
 # 3/ Correspondance Uniprot ID -> Ensembl Transcript
-rule uniprot-to-transcriptID:
+rule uniprot_to_transcriptID:
     input:
         "../data/deletion-analysis/deletion.id"
     output:
