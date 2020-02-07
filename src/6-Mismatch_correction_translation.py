@@ -80,7 +80,6 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
                     stop = start+len(querySeq)*3
                     ff.write("Match\t"+prot_name+"\t"+row[0][20:-15]+"\t"+str(
                         start)+"\t"+str(stop)+"\t"+str(querySeq)+"\n")
-                    match_counter += 1
 
     ff.close()
 
