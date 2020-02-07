@@ -52,7 +52,7 @@ def writeAsyncEnsemblResponse(all_response, ID_file, file_path, type_request):
         try:
             for entry in response.json():
                 f.write(
-                    ">"+entry['query']+" "+str(ID_file.iloc[indice*50+j, 0]) + type_request + "\n")
+                    ">"+entry['query']+" "+str(ID_file.iloc[indice*50+j, 0]) + " " + type_request + "\n")
                 f.write(entry['seq']+"\n")
                 j = j+1
         except:
