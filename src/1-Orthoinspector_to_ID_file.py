@@ -6,7 +6,6 @@
 #     Stockage d'un unique tableau contenant en colonne chaque espèce et en ligne chaque protéine ID
 #     Stockage d'un fichier par ligne contenant l'ID humain et les ID de chaque primate
 
-# Traiter les fichiers json pour avoir un colonne prot humaine et une colonne orthologue chez espèce d'intérêt
 import pandas as pd
 from os import listdir
 from os.path import isfile, join
@@ -14,7 +13,11 @@ import json
 
 
 def process_Json_orthoinspector():
-    # Traiter les réponses json orthoinspector pour en faire des fichier tabulés simple
+    # Function: Process orthoinspector json response to make simple .tab files
+    # Parameters: None
+    # Return: None. Write files in raw/orthoinspector-json/
+    # Description: Process orthoinspector json response to make simple .tab files with one file per primate vs human with a column
+    # for human uniprot ID and one column for primate uniprot ID
     taxonID = [60711, 9541, 9544, 9555, 9595, 9598, 9601, 61853, 9483, 30611]
     for i in range(10):
         f = open("../raw/orthoinspector-json-processed/" +
@@ -32,7 +35,10 @@ def process_Json_orthoinspector():
 
 
 def merge_tab_files():
-    # Fusion des fichier traiter précédent pour passer d'un fichier par comparaison à un fichier pour toute les comparaison
+    # Function: Merge processed .tab files from orthoinspector to form one single big table with all primates
+    # Parameters: None
+    # Return: main_df (dataframe): the pandas dataframe containing the table with all primates ID. Also write it to a file.
+    # Description: Merged final final contains one column for each primate with each uniprot ID. Column 0 is always human.
     myfiles2 = listdir("../raw/orthoinspector-json-processed/")
     main_df = pd.read_csv(
         '../raw/orthoinspector-json-processed/'+myfiles2[0], sep='\t', header=0)
@@ -47,8 +53,11 @@ def merge_tab_files():
 
 
 def write_orthologue_ID(gene_names):
-    # Préparation des identifiants pour query de séquence par fichier. Un fichier par comparaison (20 000 au total) à récupérer
-    # Une séquence par ligne
+    # Function: Separate row of orthologous uniprot ID of all primate table to one row per file containing each ID.
+    # Parameters:
+    # 		gene_names: (dataframe) dataframe containing uniprotID for each human prot per row and each primates by columns
+    # Return: None. Write a file for each row in /raw/uniprot-sequence/
+    # Description:
     for i in range(20265):
         f = open("../raw/uniprot-sequence/" +
                  str(gene_names.iloc[i, 0])+".id", "w", newline='\n')

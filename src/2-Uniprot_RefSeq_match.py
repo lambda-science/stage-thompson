@@ -8,7 +8,11 @@ import sys
 
 
 def fasta2List(pathFasta):
-    # Lis un fasta et retourne un dictionnaire de type: sequence:titre
+    # Function: Convert fastafile to dictionnary with seq:title structure
+    # Parameters:
+    # 		pathFasta: (str) path to the fasta file
+    # Return:
+    # 		dictionary: (dict) dictionnary seq:title structure
     f = open(pathFasta, "r")
     title = []
     seq = []
@@ -27,7 +31,11 @@ def fasta2List(pathFasta):
 
 
 def importQuery(pathFasta):
-    # Lis un fasta et retourne un dictionnaire de type: titre:sequence
+    # Function: Convert fastafile to dictionnary with title:seq structure
+    # Parameters:
+    # 		pathFasta: (str) path to the fasta file
+    # Return:
+    # 		dictionary: (dict) dictionnary title:seq structure
     f = open(pathFasta, "r")
     title = []
     seq = []

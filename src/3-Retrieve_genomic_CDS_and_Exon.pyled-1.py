@@ -20,10 +20,14 @@ import json
 
 
 def makeAsyncEnsemblSeqRequest(ID_file, type_request):
-    # Création des requêtes parallèles sur les serveur de ensembl pour récupérer les séquences génomique ou CDS
-    # Penser à indiquer le bon type: genomic ou cds
-    # Peut etre assez long (1h - 1H30), changer le paramètre size pour faire plus de requête simultanée
-    # Check en printant all_response si toute les réponses sont 200, dans le cas contraire certaines données sont perdues / sont à refaire
+    # Function: Create async request on Ensembl API to get genomic or CDS sequences of a list of ID
+    # Parameters:
+    # 		ID_file: (dataframe) uniprot-ensemble_transcript.tab conversion file. Column 2 correspond to ensembl ID
+    #       type_request: (str) "genomic" or "cds" retrieve CDS or genomic sequence
+    # Return:
+    # 		all_response: (list) list of response to ensemble API request (json format)
+    # Description: This function can have a long running time (multiple hours) you can change the size=10 parameters to increase
+    # the number of simultaneous request. You can print all_reposne to check if all response are 200 meaning they all worked.
     url = "https://rest.ensembl.org/sequence/id"
     headers = {"Content-Type": "application/json",
                "Accept": "application/json"}
@@ -44,7 +48,13 @@ def makeAsyncEnsemblSeqRequest(ID_file, type_request):
 
 
 def writeAsyncEnsemblResponse(all_response, ID_file, file_path, type_request):
-    # Ecriture des résultats des réponses dans un fichier fasta. Penser à indiquer le bon type CDS ou GENOMIC
+    # Function: Write response json results to a fasta file. Please indicate if it's CDS or genomic sequence
+    # Parameters:
+    # 		all_response: (list) list of response to ensemble API request (json format)
+    #       ID_file: (dataframe) uniprot-ensemble_transcript.tab conversion file. Column 2 correspond to ensembl ID
+    #       file_path: (str) path to the fasta file to write
+    #       type_request: (str) "genomic" or "cds" type of sequence to write
+    # Return: None - Write a file at file_path
     f = open(file_path, "w")
     indice = 0
     for response in all_response:
@@ -62,9 +72,13 @@ def writeAsyncEnsemblResponse(all_response, ID_file, file_path, type_request):
 
 
 def makeAsyncEnsemblExonmapRequest(ID_file):
-    # Création des requêtes parallèles sur les serveur de ensembl pour récupérer les séquences informations de localisation des exons
-    # Peut etre assez long (1h)
-    # Check en printant all_response si toute les réponses sont 200, dans le cas contraire certaines données sont perdues / sont à refaire
+    # Function: Create async request on Ensembl API to get exon informations about a list of transcripts.
+    # Parameters:
+    # 		ID_file: (dataframe) uniprot-ensemble_transcript.tab conversion file. Column 2 correspond to ensembl ID
+    # Return:
+    # 		all_response: (list) list of response to ensemble API request (json format)
+    # Description: This function can have a long running time (multiple hours) you can change the size=10 parameters to increase
+    # the number of simultaneous request. You can print all_reposne to check if all response are 200 meaning they all worked.
     url = "https://rest.ensembl.org/lookup/id/"
     headers = {"Content-Type": "application/json",
                "Accept": "application/json"}
@@ -84,7 +98,11 @@ def makeAsyncEnsemblExonmapRequest(ID_file):
 
 
 def writeAsyncEnsemblExonMapResposne(all_response, file_write):
-    # Ecriture des résultats des réponses dans un fichier json.
+    # Function: Write list of response json results to a single json file.
+    # Parameters:
+    # 		all_response: (list) list of response to ensemble API request (json format)
+    #       file_write: (str) path to the json file to write
+    # Return: None - Write a file at file_write
     f = open(file_write, "a")
     for response in all_response:
         try:
@@ -95,7 +113,6 @@ def writeAsyncEnsemblExonMapResposne(all_response, file_write):
 
 
 if __name__ == "__main__":
-    #ID_file = pd.read_csv("../raw/uniprot-exon-map/transcript_ensembl.tab", sep = "\t")
     ID_file = pd.read_csv(sys.argv[1], sep="\t")
 
     my_response = makeAsyncEnsemblSeqRequest(ID_file, "cds")
