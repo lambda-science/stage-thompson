@@ -67,6 +67,8 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
 
         if prot_HumanRef == []:
             pass
+        elif genomic_Seq == []:
+            pass
         else:
             peptide_Ref = (row[0][20:-15], prot_HumanRef[0]
                            [human_start:human_stop])
