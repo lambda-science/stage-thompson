@@ -39,7 +39,7 @@ rule target:
 # 7/ Correction de l'erreur par traduction et recherche de 100% d'identité
 rule error_correction_identity_translation:
     input:
-        "../data/deletion-analysis/deletion.id", "../data/deletion-analysis/genomic_all.fasta"
+        "../data/deletion-analysis/transcript_ensembl.tab", "../data/deletion-analysis/genomic_all.fasta"
     output:
         "../data/deletion-analysis/translation_match_100percent.tab"
     message:
@@ -50,7 +50,7 @@ rule error_correction_identity_translation:
 #  5/ Création de l'exon_map
 rule create_exon_map:
     input:
-        "../data/deletion-analysis/deletion.id", "../data/deletion-analysis/exon_json_dump.json", "../data/deletion-analysis/genomic_all.fasta"
+        "../data/deletion-analysis/transcript_ensembl.tab", "../data/deletion-analysis/exon_json_dump.json", "../data/deletion-analysis/genomic_all.fasta"
     output:
         "../data/deletion-analysis/Exon_map.tab", "../data/deletion-analysis/Intron_map.tab"
     message:
