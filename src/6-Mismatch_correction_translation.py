@@ -46,6 +46,7 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
     # For each mismatch of the error file we look for the human peptide creating the mismatch with the primate. We take the genomique sequence
     # of the mismatching primate protein and translate it in the three frames. We then search if the human sequence can be found in the primate
     # translated genomic one. If there is a match we write the informations in the results folder with the genomic position involved.
+    Error_File = pd.read_csv(Error_File, sep=" ", header=None)
     ff = open(results_file, "w")
     ff.write("Match\tPrimate\tHuman\tStartPos\tStopPos\tSequence\n")
     for index, row in Error_file.iloc[:, :].iterrows():

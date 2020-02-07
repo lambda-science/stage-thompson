@@ -71,3 +71,7 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * TO-DO: Regarder quel primate présente le plus d'erreur  
 * Refaire l'analyse pour les erreurs de type 2 (deletion en milieu de séquence = exon loupé ?) -> traduction et localisation exon manquant  
 * Regarder +/- 2 nt autour des exons prédit de correction pour voir si présence d'introns non-canonique.
+* Done: error par primate
+* En cours: projet snakemake 
+* En cours: documentation du code  
+* En cours: analyse erreur type 2
