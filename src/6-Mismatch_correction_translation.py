@@ -13,6 +13,11 @@ from Bio.Alphabet import generic_dna
 
 
 def fasta2List(pathFasta):
+    # Function: Convert fastafile to dictionnary with title:seq structure
+    # Parameters:
+    # 		pathFasta: (str) path to the fasta file
+    # Return:
+    # 		dictionary: (dict) dictionnary title:seq structure
     f = open(pathFasta, "r")
     title = []
     seq = []
@@ -31,9 +36,16 @@ def fasta2List(pathFasta):
 
 
 def translationCorrectMismtach(results_file, Error_File, my_Genomic):
-    # Pour chaque mismatch du fichier d'erreur: on cherche la séquence humaine en face du mismatch. On prend le séquence génomique de la protéine du primate
-    # concerné et on la traduit dans les trois cadre de lecture. On cherche si la séquence humaine peut être trouvée dans une des séquence génomique traduite
-    # Si oui on écrit dans un fichier  les informations du mismatch et la position génomique permetttant de le régler.
+    # Function: Try to correct a mismatch or deletion by translating the genomic sequence of the transcript and looking for the human peptid.
+    # Parameters:
+    # 		results_file: (str) path to the results file to write
+    #       Error_file: (str) path to the error file to read
+    #       my_Genomic: (dict) dictionnary containing genomique sequence of transcript of interest
+    # Return: None. Write a file at results_file path.
+    # Description:
+    # For each mismatch of the error file we look for the human peptide creating the mismatch with the primate. We take the genomique sequence
+    # of the mismatching primate protein and translate it in the three frames. We then search if the human sequence can be found in the primate
+    # translated genomic one. If there is a match we write the informations in the results folder with the genomic position involved.
     ff = open(results_file, "w")
     ff.write("Match\tPrimate\tHuman\tStartPos\tStopPos\tSequence\n")
     for index, row in Error_file.iloc[:, :].iterrows():

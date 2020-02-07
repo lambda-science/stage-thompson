@@ -14,14 +14,23 @@ import sys
 
 
 def merge_two_dicts(x, y):
-    # Pour merger les json entre eux
+    # Function: Merge two dictionarry together. Used to merge json response after being converted to dict.
+    # Parameters:
+    # 		x: (dict) first dict
+    #       y: (dict) second dict
+    # Return:
+    # 		z: (dict) merged dict
     z = x.copy()
     z.update(y)
     return z
 
 
 def importJson(filePath):
-    # Pour importer les json
+    # Function: Import json file. Json file can contains multiple json reponse with one json response to each line.
+    # Parameters:
+    # 		filePath: (str) path to the json file to import
+    # Return:
+    # 		MyJsonFull: (dict) json file merged and converted to a dictionnary
     data_dict = []
     with open(filePath) as json_data:
         for i in json_data:
@@ -33,7 +42,15 @@ def importJson(filePath):
 
 
 def catExonPos(MyJsonFull, seqID, dict_Genomic):
-    # Renvoie une string contenant la ligne à écrire dans le fichier (position exon, séquence...)
+    # Function: Extract exon position and sequence from exon informations and genomique sequence
+    # Parameters:
+    # 		MyJsonFull: (dict) json file merged and converted to a dictionnary with exon informations (transcript information)
+    #       seqID: (str) transcript ID of the transcript of interest
+    #       dict_Genomic: fasta genomic sequence converted to a dictionnary
+    # Return:
+    # 		exonString: (str) string with tabulated separated fields to write to a file.
+    # Description: This function normalize the absolute genome position to the relative position of the genomic transcript sequence
+    # depending on the strand. It also get the sequence of each exon.
     exonString = []
     if MyJsonFull[seqID]["strand"] == -1:
         ABSOLUTE_POST = MyJsonFull[seqID]["end"]
@@ -62,7 +79,11 @@ def catExonPos(MyJsonFull, seqID, dict_Genomic):
 
 
 def fasta2List(pathFasta):
-    # Importe un fichier fasta en dictionnaire titre:séquence
+    # Function: Convert fastafile to dictionnary with title:seq structure
+    # Parameters:
+    # 		pathFasta: (str) path to the fasta file
+    # Return:
+    # 		dictionary: (dict) dictionnary title:seq structure
     f = open(pathFasta, "r")
     title = []
     seq = []
@@ -81,6 +102,13 @@ def fasta2List(pathFasta):
 
 
 def writeExonmap(exon_map_File, ID_file, jsonFile, genomicFile):
+    # Function: Create an exon_map file containing exon informations and sequence for each transcript of interest by calling catExonPos function.
+    # Parameters:
+    # 		exon_map_File: (str) path to the exon_map.tab file to write as output
+    #       ID_file: (dataframe) uniprot-ensemble_transcript.tab conversion file. Column 2 correspond to ensembl ID
+    #       jsonFile: (dict) json file merged and converted to a dictionnary with exon informations (transcript information)
+    #       genomicFile: (dict) fasta genomic sequence converted to a dictionnary
+    # Return: None. Write a tabulated exon_map file to exon_map_File path.
     with open(exon_map_File, "w") as exon_file:
         for i in ID_file.iloc[:, 1]:
             uniprot_name = ID_file.loc[ID_file["To"] == i].iloc[0, 0]
@@ -89,7 +117,11 @@ def writeExonmap(exon_map_File, ID_file, jsonFile, genomicFile):
 
 
 def writeIntronMap(intron_map_file, exon_map_File):
-    # On fait maintenant l'intron map pour trouver les petits introns
+    # Function: Create an intron_map file containing introns informations and sequence for each transcript of interest by contrast with exon map file.
+    # Parameters:
+    # 		intron_map_file: (str) path & name to the intro_map file to write.
+    #       exon_map_file: (str) path to the exon_map file to read to create the intron map
+    # Return: None. Write a tabulated intron_map file to intron_map_file path.
     Exon_Map = pd.read_csv(exon_map_File, sep="\t", header=None)
     protein_list = list(set(Exon_Map.iloc[:, 0].to_list()))
 

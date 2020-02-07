@@ -7,7 +7,11 @@ import sys
 
 
 def writecDNASeq(myExonicMap, cDNAFile):
-    # Ecrit la liste des cDNA à partir de la carte exonique
+    # Function: write a fasta file containing cDNA sequence for each transcript of interest.
+    # Parameters:
+    # 		myExonicMap: (str) path to the exonic map file to read
+    #       cDNAFile: (str) path to the cDNA fasta file to write
+    # Return: None. Write a file at cDNAFile path.
     UniprotID = set(myExonicMap.iloc[:, 0].to_list())
     UniprotID = list(UniprotID)
     with open(mycDNAFile, "w") as cdna_file:
