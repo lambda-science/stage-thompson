@@ -52,8 +52,12 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
     for index, row in Error_File.iloc[:, :].iterrows():
         fasta_name = row[0][20:-6]
         prot_name = row[2]
-        human_start = row[5]
-        human_stop = row[6]
+        try:
+            human_start = row[5]
+            human_stop = row[6]
+        except:
+            human_start = row[3]
+            human_stop = row[4]
 
         Prot_list = fasta2List("uniprot/"+fasta_name)
         prot_HumanRef = [val for key, val in Prot_list.items()
