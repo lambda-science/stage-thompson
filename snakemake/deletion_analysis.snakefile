@@ -29,6 +29,11 @@
 #        "../data/deletion-analysis/correction-pairwise/translation_match.tab",
 #        "../data/deletion-analysis/uniprot-translation-correction/translation_match.tab",
 
+rule target:
+    input:
+        "../data/deletion-analysis/translation_match_100percent.tab",
+        "../data/deletion-analysis/Exon_map.tab",
+        "../data/deletion-analysis/Intron_map.tab"
 #############################################################################################
 
 # 7/ Correction de l'erreur par traduction et recherche de 100% d'identité
@@ -51,7 +56,7 @@ rule create_exon_map:
     message:
         "Generation de l'exon et de l'intron map"
     shell:
-        "python ../src/4-Generate_Exon_Map.py {input[0]} {input[1]} {input[2]} {ouput[0]} {output[1]}"
+        "python ../src/4-Generate_Exon_Map.py {input[0]} {input[1]} {input[2]} {output[0]} {output[1]}"
 
 #  4/ Récupération séquences génomique, CDS, info exon
 rule get_genomic_CDS_exon_info:
