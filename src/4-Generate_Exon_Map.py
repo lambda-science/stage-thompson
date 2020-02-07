@@ -81,7 +81,7 @@ def fasta2List(pathFasta):
 
 
 def writeExonmap(exon_map_File, ID_file, jsonFile, genomicFile):
-    with open("../raw/uniprot-exon-map/Exon_map.tab", "w") as exon_file:
+    with open(exon_map_File, "w") as exon_file:
         for i in ID_file.iloc[:, 1]:
             uniprot_name = ID_file.loc[ID_file["To"] == i].iloc[0, 0]
             for exon in catExonPos(jsonFile, i, genomicFile):
