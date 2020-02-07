@@ -39,7 +39,7 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
     # Function: Try to correct a mismatch or deletion by translating the genomic sequence of the transcript and looking for the human peptid.
     # Parameters:
     # 		results_file: (str) path to the results file to write
-    #       Error_file: (str) path to the error file to read
+    #       Error_File: (str) path to the error file to read
     #       my_Genomic: (dict) dictionnary containing genomique sequence of transcript of interest
     # Return: None. Write a file at results_file path.
     # Description:
@@ -49,7 +49,7 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
     Error_File = pd.read_csv(Error_File, sep=" ", header=None)
     ff = open(results_file, "w")
     ff.write("Match\tPrimate\tHuman\tStartPos\tStopPos\tSequence\n")
-    for index, row in Error_file.iloc[:, :].iterrows():
+    for index, row in Error_File.iloc[:, :].iterrows():
         fasta_name = row[0][20:-6]
         prot_name = row[2]
         human_start = row[5]
@@ -82,6 +82,6 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
 
 
 if __name__ == '__main__':
-    Error_file = sys.argv[1]
+    Error_File = sys.argv[1]
     my_Genomic = fasta2List(sys.argv[2])
-    translationCorrectMismtach(sys.argv[3], Error_file, my_Genomic)
+    translationCorrectMismtach(sys.argv[3], Error_File, my_Genomic)
