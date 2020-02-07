@@ -39,7 +39,7 @@ rule target:
 # 7/ Correction de l'erreur par traduction et recherche de 100% d'identité
 rule error_correction_identity_translation:
     input:
-        "../data/deletion-analysis/transcript_ensembl.tab", "../data/deletion-analysis/genomic_all.fasta"
+        "../data/deletion-analysis/uniprot_errors_type2.txt", "../data/deletion-analysis/genomic_all.fasta"
     output:
         "../data/deletion-analysis/translation_match_100percent.tab"
     message:
