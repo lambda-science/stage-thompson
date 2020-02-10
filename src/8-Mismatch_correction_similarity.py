@@ -49,8 +49,14 @@ def translateAndAlign(Error_file, out_folder, mafft_path):
     for index, row in Error_file.iloc[:, :].iterrows():
         fasta_name = row[0][20:-6]
         prot_name = row[2]
-        human_start = row[5]
-        human_stop = row[6]
+        try:
+            # For mismatch: col 5 and 6 are human peptide, 3 and 4 are primate
+            human_start = row[5]
+            human_stop = row[6]
+        except:
+            # For Type 2 error col 3 and 4 are human peptide, primate are absent
+            human_start = row[3]
+            human_stop = row[4]
 
         Prot_list = fasta2List("../raw/uniprot-sequence/"+fasta_name)
         prot_HumanRef = [val for key, val in Prot_list.items()
