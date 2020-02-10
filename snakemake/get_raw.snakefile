@@ -1,25 +1,23 @@
-#################################################
-####### Analyse des alignement à deletion #######
-#################################################
-# input:
-#      dossier raw/
+########################################################
+####### Récupération des données brute l'analyse #######
+########################################################
+# input: None.
 #
 # output:
-#       ../data/deletion-analysis/correction-pairwise/translation_match.tab
-#       ../data/deletion-analysis/uniprot-translation-correction/translation_match.tab
+#        "../data/raw/orthoinspector-json/*.json",
+#        "../data/raw/orthoinspector-json-processed/*.txt",
+#        "../data/raw/uniprot-sequence/*.id",
+#        "../data/raw/uniprot-sequence/*.id.fasta",
+#        "../data/raw/uniprot-sequence/*.id.fasta.mafft",
+#        "../data/raw/uniprot-sequence/uniprot_new_errors.txt"
 #
 # processus :
-#     1/ Récupération des erreurs
-#     2/ Récupération des ID des erreurs
-#     2.1 / Récupérer les séquences des ID à mismatch
-#     3/ Correspondance Uniprot ID -> Ensembl Transcript
-#     4/ Récupération séquences génomique, CDS, info exon
-#     5/ Création de l'exon_map
-#     ((6/ Création cDNA))
-#     7/ Correction mismatch 100% identitié
-#     8/ Colocalization mismatch exon/intron
-#     9/ Correction mismatch par similarité
-#
+#       1/ Récupération données orthoinspectors
+#       2/ Processing données orthoinspectors
+#       3/ Récupération des séquences.
+#       4/ Alignement des séquences.
+#       5/ Error-calling sur les alignements.
+
 #################################################
 #################################################
 
