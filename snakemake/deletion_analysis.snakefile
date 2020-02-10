@@ -50,11 +50,6 @@ rule error_correction_similarity_translation:
     shell:
         "python ../src/8-Mismatch_correction_similariy.py {input[0]} {input[1]} {params.out_folder} {params.mafft_path} {output}
 
-#     arg1 Error_file fichier contenant toute les erreurs de type mismatch (script julie)
-#     arg2 my_Genomic fichier fasta contenant les séquences génomiques des transcripts
-#     arg3 out_folder: dossier de sortie qui va contenir les fichier fasta et mafft d'ailgnement
-#     arg4 mafft_path: chemin vers le programme mafft
-#     arg5 results_file: chemin vers le fichier final contenant les matchs
 # 7/ Correction de l'erreur type2 par traduction et recherche de 100% d'identité
 rule error_correction_identity_translation:
     input:
