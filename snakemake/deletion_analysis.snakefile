@@ -46,7 +46,7 @@ rule error_correction_similarity_translation:
     output:
         "../data/deletion-analysis/translation_match_similarity.tab"
     message:
-        "Traduction des séquences et recherche du peptide human avec 80% similarité et <10 gap
+        "Traduction des séquences et recherche du peptide human avec 80% similarité et <10 gap"
     shell:
         "python ../src/8-Mismatch_correction_similariy.py {input[0]} {input[1]} {params.out_folder} {params.mafft_path} {output}
 
