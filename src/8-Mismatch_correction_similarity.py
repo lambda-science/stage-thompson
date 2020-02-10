@@ -58,7 +58,7 @@ def translateAndAlign(Error_file, out_folder, mafft_path):
             human_start = row[3]
             human_stop = row[4]
 
-        Prot_list = fasta2List("../raw/uniprot-sequence/"+fasta_name)
+        Prot_list = fasta2List("../data/raw/uniprot-sequence/"+fasta_name)
         prot_HumanRef = [val for key, val in Prot_list.items()
                          if row[0][20:-15] in key]
         genomic_Seq = [val for key, val in my_Genomic.items()
