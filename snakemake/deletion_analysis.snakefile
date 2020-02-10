@@ -35,8 +35,26 @@ rule target:
         "../data/deletion-analysis/Exon_map.tab",
         "../data/deletion-analysis/Intron_map.tab"
 #############################################################################################
+# 9/ Correction erreur type2 par traduction et 80% similarité
+rule error_correction_similarity_translation:
+    input:
+        "../data/deletion-analysis/uniprot_errors_type2_size.txt", "../data/deletion-analysis/genomic_all.fasta"
+    params:
+        out_folder="../data/deletion-analysis/similarity_correction/",
+        mafft_path="/biolo/mafft/inst/bin/mafft"
+    output:
+        "../data/deletion-analysis/translation_match_similarity.tab"
+    message:
+        "Traduction des séquences et recherche du peptide human avec 80% similarité et <10 gap
+    shell:
+        "python ../src/8-Mismatch_correction_similariy.py {input[0]} {input[1]} {params.out_folder} {params.mafft_path} {output}
 
-# 7/ Correction de l'erreur par traduction et recherche de 100% d'identité
+#     arg1 Error_file fichier contenant toute les erreurs de type mismatch (script julie)
+#     arg2 my_Genomic fichier fasta contenant les séquences génomiques des transcripts
+#     arg3 out_folder: dossier de sortie qui va contenir les fichier fasta et mafft d'ailgnement
+#     arg4 mafft_path: chemin vers le programme mafft
+#     arg5 results_file: chemin vers le fichier final contenant les matchs
+# 7/ Correction de l'erreur type2 par traduction et recherche de 100% d'identité
 rule error_correction_identity_translation:
     input:
         "../data/deletion-analysis/uniprot_errors_type2.txt", "../data/deletion-analysis/genomic_all.fasta"

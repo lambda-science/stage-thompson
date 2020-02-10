@@ -41,6 +41,11 @@ def translateAndAlign(Error_file, out_folder, mafft_path):
     # Pour chaque mismatch du fichier d'erreur: on cherche la séquence humaine en face du mismatch. On prend le séquence génomique de la protéine du primate
     # concerné et on la traduit dans les trois cadre de lecture. On cherche si la séquence humaine peut être trouvée dans une des séquence génomique traduite
     # Si oui on écrit dans un fichier  les informations du mismatch et la position génomique permetttant de le régler.
+    if not os.path.exists(out_folder):
+        os.mkdir(out_folder)
+        os.mkdir(out_folder+"/fasta/")
+        os.mkdir(out_folder+"/mafft/")
+
     for index, row in Error_file.iloc[:, :].iterrows():
         fasta_name = row[0][20:-6]
         prot_name = row[2]
