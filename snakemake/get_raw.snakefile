@@ -37,14 +37,20 @@ rule target:
         "../data/raw/uniprot-sequence/*.id.fasta",
         "../data/raw/uniprot-sequence/*.id.fasta.mafft",
 #############################################################################################
-
-# 1/ Récupération des erreurs TYPE 2
-rule get_errors:
-    input:
+rule orthoinspector_requests:        
+    output: "../data/raw/orthoinspector-json/*.json"   
+    message: "Récupération des données Orthoinspector"
+    shell: "python ../src/1-Orthoinspector_to_ID_file.py"
         
-    output:
+# 1/ Récupération données orthoinspectors
+rule orthoinspector_requests:        
+    output: "../data/raw/orthoinspector-json/*.json"   
+    message: "Récupération des données Orthoinspector"
+    shell: "python ../src/1-Orthoinspector_to_ID_file.py"
         
-    message:
-        
-    shell:
+# 1/ Récupération données orthoinspectors
+rule orthoinspector_requests:        
+    output: "../data/raw/orthoinspector-json/*.json"   
+    message: "Récupération des données Orthoinspector"
+    shell: "python ../src/1-Orthoinspector_to_ID_file.py"
         

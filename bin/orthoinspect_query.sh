@@ -3,5 +3,5 @@ name=(C.sabaeus M.fascicularis M.mulatta P.anubis G.gorilla H.sapiens P.troglody
 human=9606
 for i in ${taxonID[@]}
 do
-    curl -X GET "https://lbgi.fr/orthoinspectorv3/api/Eukaryota/species/$human/orthologs/$i" -H  "accept: application/json" > ../raw/orthoinspector-json/$i.json
+    curl -X GET "https://lbgi.fr/orthoinspectorv3/api/Eukaryota/species/$human/orthologs/$i" -H  "accept: application/json" > ../data/raw/orthoinspector-json/$i.json
 done
