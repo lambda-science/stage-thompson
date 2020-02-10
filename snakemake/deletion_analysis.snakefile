@@ -32,6 +32,7 @@
 rule target:
     input:
         "../data/deletion-analysis/translation_match_100percent.tab",
+        "../data/deletion-analysis/translation_match_similarity.tab",
         "../data/deletion-analysis/Exon_map.tab",
         "../data/deletion-analysis/Intron_map.tab"
 #############################################################################################
