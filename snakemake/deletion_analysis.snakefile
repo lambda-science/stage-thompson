@@ -48,7 +48,7 @@ rule error_correction_similarity_translation:
     message:
         "Traduction des séquences et recherche du peptide human avec 80% similarité et <10 gap"
     shell:
-        "python ../src/8-Mismatch_correction_similariy.py {input[0]} {input[1]} {params.out_folder} {params.mafft_path} {output}"
+        "python ../src/8-Mismatch_correction_similarity.py {input[0]} {input[1]} {params.out_folder} {params.mafft_path} {output}"
 
 # 7/ Correction de l'erreur type2 par traduction et recherche de 100% d'identité
 rule error_correction_identity_translation:
