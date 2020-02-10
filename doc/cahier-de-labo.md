@@ -82,4 +82,6 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * Done: Diapo présentation groupe A-M
 * En cours: snakemake qui tourne
 * En cours: préparation snakemake pour données raw
-* Olivier: regarder seq à erreur uniprot spécific ET ou l'on retrouve pas la bonne séquence (gap) -> est-ce que le NCBI prédit aussi des trucs bidons ?
+* Olivier: regarder seq à erreur uniprot spécific ET ou l'on retrouve pas la bonne séquence (gap) -> est-ce que le NCBI prédit aussi des trucs bidons ? -> DONE
+* Done: Biblio sur Genemark Hmm ES 3.0  
+* A faire: wildcare snakemake raw
