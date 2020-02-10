@@ -23,12 +23,6 @@
 #################################################
 #################################################
 
-# Fichiers en sortie du workflow
-# rule target:
-#    input:
-#        "../data/deletion-analysis/correction-pairwise/translation_match.tab",
-#        "../data/deletion-analysis/uniprot-translation-correction/translation_match.tab",
-
 rule target:
     input:
         "../data/raw/orthoinspector-json/*.json",
@@ -36,21 +30,36 @@ rule target:
         "../data/raw/uniprot-sequence/*.id",
         "../data/raw/uniprot-sequence/*.id.fasta",
         "../data/raw/uniprot-sequence/*.id.fasta.mafft",
+        "../data/raw/uniprot-sequence/uniprot_new_errors.txt"
+
 #############################################################################################
-rule orthoinspector_requests:        
-    output: "../data/raw/orthoinspector-json/*.json"   
-    message: "Récupération des données Orthoinspector"
+# 5/ Error-calling sur les alignements.
+rule error_calling_julies_script:        
+    output: "../data/raw/uniprot-sequence/uniprot_new_errors.txt"   
+    message: "Détermination des erreurs d'alignement"
+    shell: "./../bin/orthoinspect_query.sh"
+        
+# 4/ Alignement des séquences.
+rule mafft_align:        
+    output: "../data/raw/uniprot-sequence/*.id.fasta.mafft"   
+    message: "Alignement des séquences orthologues"
+    shell: "./../bin/mafft_all.sh"
+        
+# 3/ Récupération des séquences.
+rule DB_get_seq:        
+    output: "../data/raw/uniprot-sequence/*.id.fasta"   
+    message: "Récupération séquences protéïque dans la BDD Uniprot"
+    shell: "./../bin/retrieve_seq_from_uniprot.sh"
+        
+# 2/ Processing données orthoinspectors
+rule orthoinspector_process:        
+    output: "../data/raw/orthoinspector-json-processed/*.txt", "../data/raw/uniprot-sequence/*.id.fasta"   
+    message: "Processing des données Orthoinspector"
     shell: "python ../src/1-Orthoinspector_to_ID_file.py"
         
 # 1/ Récupération données orthoinspectors
 rule orthoinspector_requests:        
     output: "../data/raw/orthoinspector-json/*.json"   
     message: "Récupération des données Orthoinspector"
-    shell: "python ../src/1-Orthoinspector_to_ID_file.py"
-        
-# 1/ Récupération données orthoinspectors
-rule orthoinspector_requests:        
-    output: "../data/raw/orthoinspector-json/*.json"   
-    message: "Récupération des données Orthoinspector"
-    shell: "python ../src/1-Orthoinspector_to_ID_file.py"
+    shell: "./../bin/orthoinspect_query.sh"
         
