@@ -32,7 +32,9 @@ rule target:
 
 #############################################################################################
 # 5/ Error-calling sur les alignements.
-rule error_calling_julies_script:        
+rule error_calling_julies_script: 
+    input:
+        "../data/raw/uniprot-sequence/*.id.fasta.mafft"       
     output: 
         "../data/raw/uniprot-sequence/uniprot_new_errors.txt"   
     message: 
@@ -41,7 +43,9 @@ rule error_calling_julies_script:
         "./../bin/orthoinspect_query.sh"
         
 # 4/ Alignement des séquences.
-rule mafft_align:        
+rule mafft_align:
+    input:
+        "../data/raw/uniprot-sequence/*.id.fasta"        
     output: 
         "../data/raw/uniprot-sequence/*.id.fasta.mafft"
     message: 
@@ -50,7 +54,9 @@ rule mafft_align:
         "./../bin/mafft_all.sh"
         
 # 3/ Récupération des séquences.
-rule DB_get_seq:        
+rule DB_get_seq:
+    input: 
+        "../data/raw/uniprot-sequence/*.id"    
     output: 
         "../data/raw/uniprot-sequence/*.id.fasta"
     message: 
@@ -59,7 +65,9 @@ rule DB_get_seq:
         "./../bin/retrieve_seq_from_uniprot.sh"
         
 # 2/ Processing données orthoinspectors
-rule orthoinspector_process:        
+rule orthoinspector_process:
+    input:
+        "../data/raw/orthoinspector-json/"        
     output: 
         directory("../data/raw/orthoinspector-json-processed"),
         "../data/raw/uniprot-sequence/*.id"
