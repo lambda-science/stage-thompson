@@ -49,8 +49,8 @@ rule error_correction_similarity_translation:
 rule error_correction_identity_translation:
     input:
         "../data/deletion-analysis/uniprot_errors_type2.txt", "../data/deletion-analysis/genomic_all.fasta"
-	params:
-		relatif="alignement"
+    params:
+        relatif="alignement"
     output:
         "../data/deletion-analysis/translation_match_100percent.tab"
     message:
