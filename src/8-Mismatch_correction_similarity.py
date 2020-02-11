@@ -5,6 +5,8 @@
 #     arg3 out_folder: dossier de sortie qui va contenir les fichier fasta et mafft d'ailgnement
 #     arg4 mafft_path: chemin vers le programme mafft
 #     arg5 results_file: chemin vers le fichier final contenant les matchs
+#     arg6 relatif si les positions du fichier d'erreur sont relatif au fichier fasta ou d'alignement
+
 # Output
 # Dossier fasta/ mafft/ et fichier results_file
 
@@ -36,7 +38,7 @@ def fasta2List(pathFasta):
     return dictionary
 
 
-def translateAndAlign(Error_file, out_folder, mafft_path):
+def translateAndAlign(Error_file, out_folder, mafft_path, relatif):
 
     # Pour chaque mismatch du fichier d'erreur: on cherche la séquence humaine en face du mismatch. On prend le séquence génomique de la protéine du primate
     # concerné et on la traduit dans les trois cadre de lecture. On cherche si la séquence humaine peut être trouvée dans une des séquence génomique traduite
@@ -58,16 +60,21 @@ def translateAndAlign(Error_file, out_folder, mafft_path):
             human_start = row[3]
             human_stop = row[4]
 
-        Prot_list = fasta2List("../data/raw/uniprot-sequence/"+fasta_name)
+        if relatif == "fasta":
+            Prot_list = fasta2List("../data/raw/uniprot-sequence/"+fasta_name)
+        elif relatif == "alignement":
+            Prot_list = fasta2List(
+                "../data/raw/uniprot-sequence/"+fasta_name+".mafft")
+
         prot_HumanRef = [val for key, val in Prot_list.items()
                          if row[0][20:-15] in key]
         genomic_Seq = [val for key, val in my_Genomic.items()
                        if prot_name in key]
         if genomic_Seq == []:
             pass
-
         elif prot_HumanRef == []:
             pass
+
         else:
             peptide_Ref = (row[0][20:-15], prot_HumanRef[0]
                            [human_start:human_stop])
@@ -145,8 +152,7 @@ if __name__ == "__main__":
     mafft_align_folder = out_folder+"mafft/"
     mafft_path = sys.argv[4]
     results_file = sys.argv[5]
+    relatif = sys.argv[6]
 
-    if len(os.listdir(out_folder+"mafft")) < 60000:  # DEBUG
-        translateAndAlign(Error_file, out_folder, mafft_path)
-    else:
-        selectMatchInAlignement(mafft_align_folder, results_file)
+    translateAndAlign(Error_file, out_folder, mafft_path, relatif)
+    selectMatchInAlignement(mafft_align_folder, results_file)

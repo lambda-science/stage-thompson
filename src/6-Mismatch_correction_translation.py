@@ -3,6 +3,7 @@
 #     arg1 Error_file fichier contenant toute les erreurs de type mismatch (script julie)
 #     arg2 my_Genomic fichier fasta contenant les séquences génomiques des transcripts
 #     arg3 results_file fichier ou écrire l'output
+#     arg4 relatif si les positions du fichier d'erreur sont relatif au fichier fasta ou d'alignement
 
 # Importer les lib et fonction
 import json
@@ -35,7 +36,7 @@ def fasta2List(pathFasta):
     return dictionary
 
 
-def translationCorrectMismtach(results_file, Error_File, my_Genomic):
+def translationCorrectMismtach(results_file, Error_File, my_Genomic, relatif):
     # Function: Try to correct a mismatch or deletion by translating the genomic sequence of the transcript and looking for the human peptid.
     # Parameters:
     # 		results_file: (str) path to the results file to write
@@ -59,7 +60,12 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
             human_start = row[3]
             human_stop = row[4]
 
-        Prot_list = fasta2List("../data/raw/uniprot-sequence/"+fasta_name)
+        if relatif == "fasta":
+            Prot_list = fasta2List("../data/raw/uniprot-sequence/"+fasta_name)
+        elif relatif == "alignement":
+            Prot_list = fasta2List(
+                "../data/raw/uniprot-sequence/"+fasta_name+".mafft")
+
         prot_HumanRef = [val for key, val in Prot_list.items()
                          if row[0][20:-15] in key]
         genomic_Seq = [val for key, val in my_Genomic.items()
@@ -89,4 +95,5 @@ def translationCorrectMismtach(results_file, Error_File, my_Genomic):
 if __name__ == '__main__':
     Error_File = sys.argv[1]
     my_Genomic = fasta2List(sys.argv[2])
-    translationCorrectMismtach(sys.argv[3], Error_File, my_Genomic)
+    relatif = sys.argv[4]
+    translationCorrectMismtach(sys.argv[3], Error_File, my_Genomic, relatif)
