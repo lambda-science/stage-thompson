@@ -104,6 +104,7 @@ def selectMatchInAlignement(mafft_align_folder, results_file):
     for align_file in align_files:
         align = AlignIO.read(mafft_align_folder+align_file, "fasta")
         start = 0
+        last_amino_index = 0  # Debug ?
         found_Start = False
         for index, amino in enumerate(align[1, :].seq):
             if amino.isalpha() and found_Start == False:
@@ -141,6 +142,7 @@ if __name__ == "__main__":
     mafft_align_folder = out_folder+"mafft/"
     mafft_path = sys.argv[4]
     results_file = sys.argv[5]
-
-    translateAndAlign(Error_file, out_folder, mafft_path)
-    selectMatchInAlignement(mafft_align_folder, results_file)
+    if len(os.listdir(out_folder+"mafft")) < 60000:  # DEBUGGIN CONDITION
+        translateAndAlign(Error_file, out_folder, mafft_path)
+    else:
+        selectMatchInAlignement(mafft_align_folder, results_file)
