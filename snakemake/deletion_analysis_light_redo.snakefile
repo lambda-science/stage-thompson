@@ -27,7 +27,7 @@ rule error_correction_similarity_translation:
         "../data/deletion-analysis/uniprot_errors_type2.txt", "../data/deletion-analysis/genomic_all.fasta"
     params:
         out_folder="../data/deletion-analysis/similarity_correction/",
-        mafft_path="/biolo/mafft/inst/bin/mafft"
+        mafft_path="/biolo/mafft/inst/bin/mafft",
         relatif="alignement"
     output:
         "../data/deletion-analysis/translation_match_similarity.tab"
