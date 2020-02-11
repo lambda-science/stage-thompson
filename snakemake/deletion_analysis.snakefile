@@ -24,11 +24,6 @@
 #################################################
 
 # Fichiers en sortie du workflow
-# rule target:
-#    input:
-#        "../data/deletion-analysis/correction-pairwise/translation_match.tab",
-#        "../data/deletion-analysis/uniprot-translation-correction/translation_match.tab",
-
 rule target:
     input:
         "../data/deletion-analysis/translation_match_100percent.tab",
