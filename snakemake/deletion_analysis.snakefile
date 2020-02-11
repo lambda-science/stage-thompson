@@ -39,7 +39,7 @@ rule target:
 # 9/ Correction erreur type2 par traduction et 80% similarité
 rule error_correction_similarity_translation:
     input:
-        "../data/deletion-analysis/uniprot_errors_type2_size.txt", "../data/deletion-analysis/genomic_all.fasta"
+        "../data/deletion-analysis/uniprot_errors_type2.txt", "../data/deletion-analysis/genomic_all.fasta"
     params:
         out_folder="../data/deletion-analysis/similarity_correction/",
         mafft_path="/biolo/mafft/inst/bin/mafft"
