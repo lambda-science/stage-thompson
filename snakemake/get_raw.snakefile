@@ -30,7 +30,7 @@ rule target:
         "../data/raw/uniprot-sequence/*.id.fasta.mafft",
         "../data/raw/uniprot-sequence/uniprot_new_errors.txt"
 
-#############################################################################################
+##############################################################################
 # 5/ Error-calling sur les alignements.
 rule error_calling_julies_script: 
     input:
