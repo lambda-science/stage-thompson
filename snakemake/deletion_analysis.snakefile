@@ -107,13 +107,13 @@ rule get_ID_errors:
     shell:
         "cat {input} | cut -d ' ' -f3 | uniq > {output}"
 
-# 1/ Récupération des erreurs TYPE 2
+# 1/ Récupération des erreurs TYPE 2 et selection par taille (>=10)
 rule get_errors:
     input:
         "../data/raw/uniprot_new_errors.txt"
     output:
         "../data/deletion-analysis/uniprot_errors_type2.txt"
     message:
-        "Récupération des erreurs"
+        "Récupération des erreurs et selection par taille"
     shell:
-        "cat {input} | grep \"SEQ_ERROR2\" > {output}"
+        "cat {input} | grep \"SEQ_ERROR2\" | awk '$5-$4 >= 10 {print}' > {output}"

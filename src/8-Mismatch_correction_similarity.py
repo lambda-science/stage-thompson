@@ -113,24 +113,27 @@ def selectMatchInAlignement(mafft_align_folder, results_file):
             if found_Start and amino.isalpha():
                 last_amino_index = index+1
 
-        peptide_genomique = align[0, start:last_amino_index].seq
-        peptide_humain_query = align[1, start:last_amino_index].seq
-
-        # Boucle qui scan l'identité entre la paire de peptide
-        identity_count = 0
-        gap_count = 0
-        for i in range(len(peptide_humain_query)):
-            if peptide_genomique[i] == peptide_humain_query[i]:
-                identity_count += 1
-            if (peptide_genomique[i] == "-") or (peptide_humain_query[i] == "-"):
-                gap_count += 1
-        identity_percentage = identity_count/len(peptide_humain_query)
-
-        if gap_count < 10 and identity_percentage > 0.8:
-            f.write("Match\t"+align[0].id+"\t"+align[1].id+"\t"+str(start*3)+"\t"+str(last_amino_index*3)+"\t"
-                    + str(peptide_genomique)+"\t"+str(peptide_humain_query)+"\n")
-        else:
+        if last_amino_index == 0:  # DEBUG
             pass
+        else:
+            peptide_genomique = align[0, start:last_amino_index].seq
+            peptide_humain_query = align[1, start:last_amino_index].seq
+
+            # Boucle qui scan l'identité entre la paire de peptide
+            identity_count = 0
+            gap_count = 0
+            for i in range(len(peptide_humain_query)):
+                if peptide_genomique[i] == peptide_humain_query[i]:
+                    identity_count += 1
+                if (peptide_genomique[i] == "-") or (peptide_humain_query[i] == "-"):
+                    gap_count += 1
+            identity_percentage = identity_count/len(peptide_humain_query)
+
+            if gap_count < 10 and identity_percentage > 0.8:
+                f.write("Match\t"+align[0].id+"\t"+align[1].id+"\t"+str(start*3)+"\t"+str(last_amino_index*3)+"\t"
+                        + str(peptide_genomique)+"\t"+str(peptide_humain_query)+"\n")
+            else:
+                pass
     f.close()
 
 
