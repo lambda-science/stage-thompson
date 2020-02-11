@@ -23,11 +23,11 @@
 
 rule target:
     input:
-        "../data/raw/orthoinspector-json/*.json",
-        "../data/raw/orthoinspector-json-processed/*.txt",
-        "../data/raw/uniprot-sequence/*.id",
-        "../data/raw/uniprot-sequence/*.id.fasta",
-        "../data/raw/uniprot-sequence/*.id.fasta.mafft",
+        "../data/raw/orthoinspector-json/{ortho_json}.json",
+        "../data/raw/orthoinspector-json-processed/{ortho_json_proc}.txt",
+        "../data/raw/uniprot-sequence/{prot}.id",
+        "../data/raw/uniprot-sequence/{prot}.id.fasta",
+        "../data/raw/uniprot-sequence/{prot}.id.fasta.mafft",
         "../data/raw/uniprot-sequence/uniprot_new_errors.txt"
 
 #############################################################################################
@@ -39,25 +39,26 @@ rule error_calling_julies_script:
         
 # 4/ Alignement des séquences.
 rule mafft_align:        
-    output: "../data/raw/uniprot-sequence/*.id.fasta.mafft"   
+    output: "../data/raw/uniprot-sequence/{prot}.id.fasta.mafft"   
     message: "Alignement des séquences orthologues"
     shell: "./../bin/mafft_all.sh"
         
 # 3/ Récupération des séquences.
 rule DB_get_seq:        
-    output: "../data/raw/uniprot-sequence/*.id.fasta"   
+    output: "../data/raw/uniprot-sequence/{prot}.id.fasta"   
     message: "Récupération séquences protéïque dans la BDD Uniprot"
     shell: "./../bin/retrieve_seq_from_uniprot.sh"
         
 # 2/ Processing données orthoinspectors
 rule orthoinspector_process:        
-    output: "../data/raw/orthoinspector-json-processed/*.txt", "../data/raw/uniprot-sequence/*.id.fasta"   
+    output: "../data/raw/orthoinspector-json-processed/{ortho_json_proc}.txt",
+            "../data/raw/uniprot-sequence/{ortho_json_proc}.id.fasta"   
     message: "Processing des données Orthoinspector"
     shell: "python ../src/1-Orthoinspector_to_ID_file.py"
         
 # 1/ Récupération données orthoinspectors
 rule orthoinspector_requests:        
-    output: "../data/raw/orthoinspector-json/*.json"   
+    output: "../data/raw/orthoinspector-json/{ortho_json}.json"   
     message: "Récupération des données Orthoinspector"
     shell: "./../bin/orthoinspect_query.sh"
         
