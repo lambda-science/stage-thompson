@@ -1,4 +1,5 @@
-# Script: Retrieve CDS, Genomic and Exon map for HUMAN protein where this is a mismatch w/ primate
+# Script: Retrieve CDS, Genomic and Exon map for HUMAN protein where
+# this is a mismatch w/ primate
 # Input:
 # 		arg1: ID_File (str) path
 # Output:
@@ -6,7 +7,14 @@
 # Description:
 #
 # %%
-from src.Retrieve_genomic_CDS_and_Exon_3 import *
+import sys
+try:
+    sys.path.append('~/stage-thompson/src/')
+    from Retrieve_genomic_CDS_and_Exon_3 import *
+except:
+    print("Erreur d'import, le dossier est-il bien dans votre Home ? \
+         ~/stage-thompson/")
+import pandas as pd
 
 # %%
 if __name__ == "__main__":
@@ -18,7 +26,8 @@ if __name__ == "__main__":
 
     my_response2 = makeAsyncEnsemblSeqRequest(ID_file, "genomic")
     print(my_response2)
-    writeAsyncEnsemblResponse(my_response2, ID_file, sys.argv[3], "GENOMIC")
+    writeAsyncEnsemblResponse(my_response2, ID_file, sys.argv[3],
+                              "GENOMIC")
 
     my_response3 = makeAsyncEnsemblExonmapRequest(ID_file)
     print(my_response3)

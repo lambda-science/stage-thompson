@@ -46,6 +46,4 @@ Activer l'environnement:
 Désactiver l'environnement:  
 ```conda deactivate```  
 Mettre à jour l'information d'environnement pour les derniers packages utilisés:  
-```conda env export > environment.yml```  
-Une fois l'environnement activé, pensez à import le module SRC en mode develop avec:  
-```(stage-env) meyer@ena:~/stage-thompson$ conda develop src/```
+```conda env export > environment.yml```
