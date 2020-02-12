@@ -86,3 +86,5 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * Done: Biblio sur Genemark Hmm ES 3.0  
 * A faire: wildcare snakemake raw
 * BUG FIX: Erreur Type 2: les pos sont des positions sur l'alignement et non par sur la seq humaine
+* Réunion avec Julie parler du plan d'explications des mismatch. Info sur repeats, isoforme, seq avec N.  
+* A programmer: Flagging des mismatch, détection des 7 features différentes (liste carnet)  
