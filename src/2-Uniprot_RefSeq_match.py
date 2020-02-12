@@ -26,7 +26,7 @@ def fasta2List(pathFasta):
             seq_temp.append(line)
     seq.append(''.join(seq_temp).replace("\n", ""))
     seq.pop(0)
-    dictionary = dict(zip(seq, title))
+    dictionary = dict(zip(title, seq))
     return dictionary
 
 
@@ -49,13 +49,13 @@ def importQuery(pathFasta):
             seq_temp.append(line)
     seq.append(''.join(seq_temp).replace("\n", ""))
     seq.pop(0)
-    dictionary = dict(zip(title, seq))
+    dictionary = dict(zip(seq, title))
     return dictionary
 
 
 if __name__ == "__main__":
-    my_DB = fasta2List(sys.argv[1])
-    my_Query = importQuery(sys.argv[2])
+    my_DB = importQuery(sys.argv[1])
+    my_Query = fasta2List(sys.argv[2])
 
     f = open("raw/uniprot-error-mismatch/uniprot_refseq_match.out", "w")
     for i, j in my_Query:
