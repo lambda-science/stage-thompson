@@ -38,7 +38,7 @@ def fasta2List(pathFasta):
     return dictionary
 
 
-def translateAndAlign(Error_file, out_folder, mafft_path, relatif):
+def translateAndAlign(Error_file, out_folder, mafft_path, relatif, my_Genomic):
 
     # Pour chaque mismatch du fichier d'erreur: on cherche la séquence humaine en face du mismatch. On prend le séquence génomique de la protéine du primate
     # concerné et on la traduit dans les trois cadre de lecture. On cherche si la séquence humaine peut être trouvée dans une des séquence génomique traduite
@@ -154,5 +154,5 @@ if __name__ == "__main__":
     results_file = sys.argv[5]
     relatif = sys.argv[6]
 
-    translateAndAlign(Error_file, out_folder, mafft_path, relatif)
+    translateAndAlign(Error_file, out_folder, mafft_path, relatif, my_Genomic)
     selectMatchInAlignement(mafft_align_folder, results_file)
