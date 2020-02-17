@@ -52,29 +52,32 @@ def catExonPos(MyJsonFull, seqID, dict_Genomic):
     # Description: This function normalize the absolute genome position to the relative position of the genomic transcript sequence
     # depending on the strand. It also get the sequence of each exon.
     exonString = []
-    if MyJsonFull[seqID]["strand"] == -1:
-        ABSOLUTE_POST = MyJsonFull[seqID]["end"]
-        exon_list = MyJsonFull[seqID]["Exon"]
-        counter = 1
-        for i in exon_list:
-            stop = str(abs(i['end']-ABSOLUTE_POST))
-            start = str(abs(i['start']-ABSOLUTE_POST)+1)
-            res = [val for key, val in my_Genomic.items() if seqID in key]
-            exonString.append(seqID + "\tExon\t"+str(counter)+"\t" +
-                              stop+"\t"+start+"\t"+res[0][int(stop):int(start)])
-            counter += 1
+    try:
+        if MyJsonFull[seqID]["strand"] == -1:
+            ABSOLUTE_POST = MyJsonFull[seqID]["end"]
+            exon_list = MyJsonFull[seqID]["Exon"]
+            counter = 1
+            for i in exon_list:
+                stop = str(abs(i['end']-ABSOLUTE_POST))
+                start = str(abs(i['start']-ABSOLUTE_POST)+1)
+                res = [val for key, val in dict_Genomic.items() if seqID in key]
+                exonString.append(seqID + "\tExon\t"+str(counter)+"\t" +
+                                  stop+"\t"+start+"\t"+res[0][int(stop):int(start)])
+                counter += 1
 
-    if MyJsonFull[seqID]["strand"] == 1:
-        ABSOLUTE_POST = MyJsonFull[seqID]["start"]
-        exon_list = MyJsonFull[seqID]["Exon"]
-        counter = 1
-        for i in exon_list:
-            start = str(abs(i['start']-ABSOLUTE_POST))
-            stop = str(abs(i['end']-ABSOLUTE_POST)+1)
-            res = [val for key, val in dict_Genomic.items() if seqID in key]
-            exonString.append(seqID + "\tExon\t"+str(counter)+"\t" +
-                              start+"\t"+stop+"\t"+res[0][int(start):int(stop)])
-            counter += 1
+        if MyJsonFull[seqID]["strand"] == 1:
+            ABSOLUTE_POST = MyJsonFull[seqID]["start"]
+            exon_list = MyJsonFull[seqID]["Exon"]
+            counter = 1
+            for i in exon_list:
+                start = str(abs(i['start']-ABSOLUTE_POST))
+                stop = str(abs(i['end']-ABSOLUTE_POST)+1)
+                res = [val for key, val in dict_Genomic.items() if seqID in key]
+                exonString.append(seqID + "\tExon\t"+str(counter)+"\t" +
+                                  start+"\t"+stop+"\t"+res[0][int(start):int(stop)])
+                counter += 1
+    except Exception as exc:
+        print(exc)
     return exonString
 
 
@@ -143,6 +146,6 @@ def writeIntronMap(intron_map_file, exon_map_File):
 if __name__ == "__main__":
     ID_file = pd.read_csv(sys.argv[1], sep="\t")
     jsonFile = importJson(sys.argv[2])
-    my_Genomic = fasta2List(sys.argv[3])
-    writeExonmap(sys.argv[4], ID_file, jsonFile, my_Genomic)
+    genomicFile = fasta2List(sys.argv[3])
+    writeExonmap(sys.argv[4], ID_file, jsonFile, genomicFile)
     writeIntronMap(sys.argv[5], sys.argv[4])
