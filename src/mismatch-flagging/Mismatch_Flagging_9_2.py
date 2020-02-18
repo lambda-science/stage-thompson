@@ -4,6 +4,7 @@ try:
     sys.path.append('~/stage-thompson/src/')
     from Generate_Exon_Map_4 import *
 except:
+    print("Error import, is your stage-thompson located in home (~/) ?")
     pass
 
 Error_file = pd.read_csv(
