@@ -64,6 +64,8 @@ def localizeMismatchOnExonMap(mismatch_exon_pos_file, Error_file, my_CDS, exon_f
         # Si le mismatch ne se trouve plus dans la liste d'exon
         # Alors cela veut dire que l'exon supprimé contenait le mismatch
         fini = False
+        start_exon = "ERROR"
+        stop_exon = "ERROR"
         while fini != True:
             exon_tuple = [(exon_number_list[i], exon_seq_list[i])
                           for i in range(len(exon_number_list))]

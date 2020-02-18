@@ -5,21 +5,6 @@ import sys
 import os
 
 # %%
-
-
-def processtBlastn(Error_file, blast_folder):
-    for index, row in Error_file.iloc[:, :].iterrows():
-        fasta_name = row[0][20:-6]
-        prot_name = row[2]
-        human_start = row[5]
-        human_stop = row[6]
-
-        blast_file = blast_folder+"/" + \
-            str(index)+"_" + str(row[0][20:-15])+"_"+str(prot_name)+".blast"
-        df = pd.read_csv(blast_file, sep="\t", header=None)
-
-
-# %%
 if __name__ == "__main__":
     f = open("data/mismatch-analysis/tblastn/match.out", "w")
     f.write("Match\tPrimate\tHuman\tSeq Primate\tSeq Human\tStart Genome\t" +
