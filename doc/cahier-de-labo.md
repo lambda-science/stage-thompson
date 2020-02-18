@@ -94,3 +94,4 @@ cat cds_new.fa | grep -E "^[^>].*" | grep -E "N" | wc -l
 * In progress: selecting the correct ensembl transcript ID 
 * Journal club article
 * In progress: mismatch exon map for human  
+* Chemin fichier kirsley /gstock/user/kchennen/Pampas/data/1_interim/Homo_sapiens/primates/
