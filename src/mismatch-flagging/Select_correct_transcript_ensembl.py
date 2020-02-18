@@ -1,5 +1,6 @@
 import pandas as pd
 import sys
+import math
 try:
     sys.path.append('~/stage-thompson/src/')
     from Generate_Exon_Map_4 import *
@@ -21,7 +22,7 @@ for index, row in ID_file.iloc[:, :].iterrows():
 
     if CDS == [] or prot == []:
         continue
-    elif len(CDS[0])-3 == len(prot[0])*3:
+    elif (math.ceil((len(CDS[0])-3)/3) == len(prot[0])) or (math.floor((len(CDS[0])-3)/3) == len(prot[0])):
         f.write(row[0] + "\t" + row[1]+"\n")
 
 f.close()
