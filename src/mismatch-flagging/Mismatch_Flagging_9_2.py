@@ -9,7 +9,7 @@ except:
 Error_file = pd.read_csv(
     "../../data/mismatch-analysis/uniprot-error-mismatch/uniprot_new_errors_filt.txt", sep=" ", header=None)
 ID_file = pd.read_csv(
-    "../../data/mismatch-flagging/human_uniprot_ensembl_corrected.tab", sep="\t")
+    "../../data/mismatch-flagging/human_uniprot_ensembl_corrected2.tab", sep="\t")
 jsonFile = importJson("../../data/mismatch-flagging/human_exon_dump.json")
 genomicFile = fasta2List("../../data/mismatch-flagging/human_genomic.fasta")
 
@@ -36,6 +36,8 @@ for index, row in Error_file.iloc[:, :].iterrows():
 
     # Interaive pop of exon list : seq. Check CDS in exon joint: TRUE = pop if False = seq important
     fini = False
+    start_exon = "ERROR"
+    stop_exon = "ERROR"
     while fini != True:
         exon_tuple = [(exon_number_list[i], exon_seq_list[i])
                       for i in range(len(exon_number_list))]
