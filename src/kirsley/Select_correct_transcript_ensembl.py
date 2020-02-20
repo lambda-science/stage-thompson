@@ -40,7 +40,7 @@ dict = {"uniprot_ID": uniprot_ID, "uniprot_Seq": uniprot_Seq}
 df_prot = pd.DataFrame(dict)
 
 # On cherche les correspondance de taille
-f = open("../../data/mismatch-analysis2/transcript_ensembl_corrected.tab", "w")
+f = open("../../data/kirsley-analysis/transcript_ensembl_corrected.tab", "w")
 f.write("From\tTo\n")
 
 for index, row in ID_file.iloc[:, :].iterrows():

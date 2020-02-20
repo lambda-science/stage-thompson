@@ -1,9 +1,9 @@
 # Fichiers en sortie du workflow
 rule target:
     input:
-        "../data/mismatch-analysis3/Exon_map.tab",
-        "../data/mismatch-analysis3/Intron_map.tab",
-        "../data/mismatch-analysis3/CDS_all_filt.fasta",
+        "../data/mismatch-analysis2/Exon_map.tab",
+        "../data/mismatch-analysis2/Intron_map.tab",
+        "../data/mismatch-analysis2/CDS_all_filt.fasta",
 
 #############################################################################################
 # tBlastn process
@@ -15,9 +15,9 @@ rule target:
 #  6/ Création de l'exon_map
 rule create_exon_map:
     input:
-        "../data/mismatch-analysis3/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis3/exon_json_dump.json", "../data/mismatch-analysis3/genomic_all_filt.fasta"
+        "../data/mismatch-analysis2/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis2/exon_json_dump.json", "../data/mismatch-analysis2/genomic_all_filt.fasta"
     output:
-        "../data/mismatch-analysis3/Exon_map.tab", "../data/mismatch-analysis3/Intron_map.tab"
+        "../data/mismatch-analysis2/Exon_map.tab", "../data/mismatch-analysis2/Intron_map.tab"
     message:
         "Generation de l'exon et de l'intron map"
     shell:
@@ -26,9 +26,9 @@ rule create_exon_map:
 #  5.2/ Filtrer CDS et genomic
 rule filt_cds_genom:
     input:
-        "../data/mismatch-analysis3/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis3/CDS_all.fasta", "../data/mismatch-analysis3/genomic_all.fasta"
+        "../data/mismatch-analysis2/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis2/CDS_all.fasta", "../data/mismatch-analysis2/genomic_all.fasta"
     output:
-        "../data/mismatch-analysis3/CDS_all_filt.fasta", "../data/mismatch-analysis3/genomic_all_filt.fasta"
+        "../data/mismatch-analysis2/CDS_all_filt.fasta", "../data/mismatch-analysis2/genomic_all_filt.fasta"
     message:
         "Filtrer CDS et genomic pour n'avoir aucun dup par ID uniprot"
     shell:
@@ -38,9 +38,9 @@ rule filt_cds_genom:
 # 5.1/ Retirer les dup des ID ensembl
 rule filter_cds:
     input:
-        "../data/mismatch-analysis3/transcript_ensembl_corrected.tab"
+        "../data/mismatch-analysis2/transcript_ensembl_corrected.tab"
     output:
-        "../data/mismatch-analysis3/transcript_ensembl_corrected2.tab"
+        "../data/mismatch-analysis2/transcript_ensembl_corrected2.tab"
     message:
         "Retirer les ID ensembl dupliques"
     shell:
@@ -49,9 +49,9 @@ rule filter_cds:
 # 5/ Selection des bonnes CDS/Genomiques ID (long)
 rule select_correct_ensemblID:
     input:
-        "../data/mismatch-analysis3/transcript_ensembl.tab", "../data/mismatch-analysis3/CDS_all.fasta", "../data/raw/uniprot-sequence/all_sequence.fasta"
+        "../data/mismatch-analysis2/transcript_ensembl.tab", "../data/mismatch-analysis2/CDS_all.fasta", "../data/raw/uniprot-sequence/all_sequence.fasta"
     output:
-        "../data/mismatch-analysis3/transcript_ensembl_corrected.tab"
+        "../data/mismatch-analysis2/transcript_ensembl_corrected.tab"
     message:
         "Selection des ID ensembl correspondant aux protéines"
     shell:
@@ -60,9 +60,9 @@ rule select_correct_ensemblID:
 #  4/ Récupération séquences génomique, CDS, info exon
 rule get_genomic_CDS_exon_info:
     input:
-        "../data/mismatch-analysis3/transcript_ensembl.tab"
+        "../data/mismatch-analysis2/transcript_ensembl.tab"
     output:
-        "../data/mismatch-analysis3/CDS_all.fasta", "../data/mismatch-analysis3/genomic_all.fasta", "../data/mismatch-analysis3/exon_json_dump.json"
+        "../data/mismatch-analysis2/CDS_all.fasta", "../data/mismatch-analysis2/genomic_all.fasta", "../data/mismatch-analysis2/exon_json_dump.json"
     message:
         "Récupération seq génomique, seq CDS et json dump des exons"
     shell:
@@ -71,9 +71,9 @@ rule get_genomic_CDS_exon_info:
 # 3/ Uniprot -> Ensembl
 rule get_SEQ_and_ID_errors:
     input:
-        "../data/mismatch-analysis3/mismatch.id"
+        "../data/mismatch-analysis2/mismatch.id"
     output:
-        "../data/mismatch-analysis3/transcript_ensembl.tab"
+        "../data/mismatch-analysis2/transcript_ensembl.tab"
     message:
         "Récupération identifiant Trasncript Ensembl pour chaque ID uniprot"
     shell:
@@ -82,9 +82,9 @@ rule get_SEQ_and_ID_errors:
 # 2.1/ Extraction des ID
 rule get_ID_errors:
     input:
-        "../data/mismatch-analysis3/uniprot_errors_type3.txt"
+        "../data/mismatch-analysis2/uniprot_errors_type3.txt"
     output:
-        "../data/mismatch-analysis3/mismatch.id"
+        "../data/mismatch-analysis2/mismatch.id"
     message:
         "Récupération des ID des erreurs"
     shell:
@@ -95,7 +95,7 @@ rule get_errors:
     input:
         "../data/raw/uniprot_new_errors.txt"
     output:
-        "../data/mismatch-analysis3/uniprot_errors_type3.txt"
+        "../data/mismatch-analysis2/uniprot_errors_type3.txt"
     message:
         "Récupération des erreurs"
     shell:
