@@ -4,13 +4,80 @@ rule target:
         "../data/mismatch-analysis2/Exon_map.tab",
         "../data/mismatch-analysis2/Intron_map.tab",
         "../data/mismatch-analysis2/CDS_all_filt.fasta",
+        "../data/mismatch-analysis2/mismatch_exon_pos.tab",
+        "../data/mismatch-analysis2/mismatch_exon_seq.tab",
+        "../data/mismatch-analysis2/mismatch_intron_seq.tab",
+        "../data/mismatch-analysis2/mismatch_CDS_seq.tab",
+        "../data/mismatch-analysis2/mismatch_genomic_seq.tab",
+        "../data/mismatch-analysis2/tblastn/all_couple.txt",
+        "../data/mismatch-analysis2/tblastn/match.out"
 
 #############################################################################################
-# tBlastn process
-# tBlastn exec
-# tBlastn prep
-# Colocaliser 2
-# Colocaliser 1
+# 8.3/ Processing des résultats tBlastn
+rule process_tblastn:
+    input:
+        "../data/mismatch-analysis2/uniprot_errors_type3.txt",
+        "../data/mismatch-analysis2/tblastn/"
+    output:
+        "../data/mismatch-analysis2/tblastn/match.out"
+    message:
+        "Lecture et processing resultats tblastn"
+    shell:
+        "python ../src/tblastn_process_9_1.py {output[0]} {input[0]} {input[1]}"
+
+# 8.2/ Execution du tBlastn
+rule exec_tblastn:
+    input:
+        "../data/mismatch-analysis2/uniprot_errors_type3.txt",
+        "../data/mismatch-analysis2/genomic_all_filt.fasta"
+    output:
+        directory("../data/mismatch-analysis2/tblastn/"),
+        "../data/mismatch-analysis2/tblastn/all_couple.txt"
+    message:
+        "Execution des tblastn"
+    shell:
+        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} {output[0]}"
+
+# 8.1/ Préparation des fichier pour le tBlastn
+rule prep_tblastn:
+    input:
+        "../data/mismatch-analysis2/uniprot_errors_type3.txt",
+        "../data/mismatch-analysis2/genomic_all_filt.fasta"
+    output:
+        directory("../data/mismatch-analysis2/tblastn/")
+    message:
+        "Préparation des sequence pour le tblastn"
+    shell:
+        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} {output[0]}"
+
+# 7.1/ Colocaliser les mismatch sur la CDS - genomic seq
+rule colocalise_on_CDS_genomic:
+    input:
+        "../data/mismatch-analysis2/mismatch_exon_seq.tab",
+        "../data/mismatch-analysis2/mismatch_intron_seq.tab"
+    output:
+        "../data/mismatch-analysis2/mismatch_CDS_seq.tab",
+        "../data/mismatch-analysis2/mismatch_genomic_seq.tab"
+    message:
+        "Localisation des mismatch au niveau de la CDS et de la sequence genomique"
+    shell:
+        "python ../src/Colocalize_CDS_genomic_mismatch_7_1.py {input[0]} {input[1]} {output[0]} {output[1]}"
+
+# 7/ Colocaliser les mismatch sur les exons/introns
+rule colocalise_on_exon_introns:
+    input:
+        "../data/mismatch-analysis2/uniprot_errors_type3.txt", 
+        "../data/mismatch-analysis2/CDS_all_filt.fasta",
+        "../data/mismatch-analysis2/Exon_map.tab",
+        "../data/mismatch-analysis2/Intron_map.tab"
+    output:
+        "../data/mismatch-analysis2/mismatch_exon_pos.tab",
+        "../data/mismatch-analysis2/mismatch_exon_seq.tab",
+        "../data/mismatch-analysis2/mismatch_intron_seq.tab"
+    message:
+        "Localisation des mismatch au niveau des exons et introns"
+    shell:
+        "python ../src/Colocalize_exon_intron_mismatch_7.py {input[0]} {input[1]} {input[2]} {output[0]} {input[3]} {output[1]} {output[2]}"
 
 #  6/ Création de l'exon_map
 rule create_exon_map:

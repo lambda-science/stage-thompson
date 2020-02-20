@@ -1,4 +1,7 @@
 # %%
+# arg1: output file
+# arg2: error file
+# arg3: tblastn folder
 import json
 import pandas as pd
 import sys
@@ -6,19 +9,19 @@ import os
 
 # %%
 if __name__ == "__main__":
-    f = open("data/mismatch-analysis/tblastn/match.out", "w")
+    f = open(sys.argv[1], "w")
     f.write("Match\tPrimate\tHuman\tSeq Primate\tSeq Human\tStart Genome\t" +
             "Stop Genome\tE-value\tSimilarity\tLength\tFrame\n")
-    Error_file = pd.read_csv(
-        "data/mismatch-analysis/uniprot-error-mismatch/uniprot_new_errors_" +
-        "filt.txt", sep=" ", header=None)
+
+    Error_file = pd.read_csv(sys.argv[2], sep=" ", header=None)
+
     for index, row in Error_file.iloc[:, :].iterrows():
         fasta_name = row[0][20:-6]
         prot_name = row[2]
         human_start = row[5]
         human_stop = row[6]
 
-        blast_file = "data/mismatch-analysis/tblastn/blast_out/" + \
+        blast_file = sys.argv[3]+"blast_out/" + \
             str(index)+"_" + str(row[0][20:-15])+"_"+str(prot_name)+".blast"
         try:
             df = pd.read_csv(blast_file, sep="\t", header=None)
