@@ -17,7 +17,8 @@ rule target:
 rule process_tblastn:
     input:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
-        "../data/mismatch-analysis2/tblastn/all_couple.txt"
+        "../data/mismatch-analysis2/tblastn/all_couple.txt",
+        "../data/mismatch-analysis2/tblastn/blast_out/*"
     output:
         "../data/mismatch-analysis2/tblastn/match.out"
     message:
@@ -32,12 +33,12 @@ rule exec_tblastn:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
         "../data/mismatch-analysis2/genomic_all_filt.fasta"
     output:
-        "../data/mismatch-analysis2/tblastn/all_couple.txt"
+        "../data/mismatch-analysis2/tblastn/blast_out/*"
     message:
         "Execution des tblastn"
     shell:
     # PENSEZ A CHANGER LE CHEMIN OUTPUT
-        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/mismatch-analysis2/tblastn/"
+        "./../bin/tblastn.sh"
 
 # 8.1/ Préparation des fichier pour le tBlastn
 rule prep_tblastn:
@@ -45,7 +46,7 @@ rule prep_tblastn:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
         "../data/mismatch-analysis2/genomic_all_filt.fasta"
     output:
-        directory("../data/mismatch-analysis2/tblastn/")
+        "../data/mismatch-analysis2/tblastn/all_couple.txt"
     message:
         "Préparation des sequence pour le tblastn"
     shell:
