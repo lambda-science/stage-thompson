@@ -17,6 +17,7 @@ rule target:
 rule process_tblastn:
     input:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
+        "../data/mismatch-analysis2/tblastn/all_couple.txt"
     output:
         "../data/mismatch-analysis2/tblastn/match.out"
     message:
@@ -31,7 +32,6 @@ rule exec_tblastn:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
         "../data/mismatch-analysis2/genomic_all_filt.fasta"
     output:
-        directory("../data/mismatch-analysis2/tblastn/"),
         "../data/mismatch-analysis2/tblastn/all_couple.txt"
     message:
         "Execution des tblastn"
