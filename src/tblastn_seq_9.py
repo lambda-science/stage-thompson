@@ -25,10 +25,8 @@ def fasta2List(pathFasta):
 
 
 def writeQuerySubject(Error_file, out_folder, my_Genomic):
-    if not os.path.exists(str(out_folder)):
-        os.mkdir(out_folder)
-        os.mkdir(out_folder+"/query_subject")
-        os.mkdir(out_folder+"/blast_out")
+    os.mkdir(out_folder+"/query_subject")
+    os.mkdir(out_folder+"/blast_out")
 
     fff = open(out_folder+"/all_couple.txt", "w")
     for index, row in Error_file.iloc[:, :].iterrows():
@@ -37,7 +35,7 @@ def writeQuerySubject(Error_file, out_folder, my_Genomic):
 
         human_start = row[5]
         human_stop = row[6]
-        Prot_list = fasta2List("data/raw/uniprot-sequence/"+fasta_name)
+        Prot_list = fasta2List("../data/raw/uniprot-sequence/"+fasta_name)
 
         prot_HumanRef = [val for key, val in Prot_list.items()
                          if row[0][20:-15] in key]

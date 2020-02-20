@@ -84,16 +84,16 @@ def makeAsyncEnsemblExonmapRequest(ID_file):
                "Accept": "application/json"}
 
     params = []
-    for i in range(0, len(ID_file.index), 1000):
+    for i in range(0, len(ID_file.index), 300):
         try:
             params.append(
-                {"ids": ID_file.iloc[i:i+1000, 1].tolist(), "expand": "1"})
+                {"ids": ID_file.iloc[i:i+300, 1].tolist(), "expand": "1"})
         except:
             params.append({"ids": ID_file.iloc[i:, 1].tolist(), "expand": "1"})
 
     rs = [grequests.post(url, headers=headers, data=json.dumps(i))
           for i in params]
-    all_response = grequests.map(rs, size=1)
+    all_response = grequests.map(rs, size=3)
     return all_response
 
 

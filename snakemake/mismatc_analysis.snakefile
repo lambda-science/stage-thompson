@@ -18,7 +18,7 @@ rule process_tblastn:
     input:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
         "../data/mismatch-analysis2/tblastn/all_couple.txt",
-        "../data/mismatch-analysis2/tblastn/blast_out/*"
+        "../data/mismatch-analysis2/tblastn/tblastn.done"
     output:
         "../data/mismatch-analysis2/tblastn/match.out"
     message:
@@ -31,14 +31,15 @@ rule process_tblastn:
 rule exec_tblastn:
     input:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
-        "../data/mismatch-analysis2/genomic_all_filt.fasta"
+        "../data/mismatch-analysis2/genomic_all_filt.fasta",
+        "../data/mismatch-analysis2/tblastn/all_couple.txt"
     output:
-        "../data/mismatch-analysis2/tblastn/blast_out/*"
+        "../data/mismatch-analysis2/tblastn/tblastn.done"
     message:
         "Execution des tblastn"
     shell:
     # PENSEZ A CHANGER LE CHEMIN OUTPUT
-        "./../bin/tblastn.sh"
+        "./../bin/tblastn.sh ../data/mismatch-analysis2/"
 
 # 8.1/ Préparation des fichier pour le tBlastn
 rule prep_tblastn:
@@ -50,7 +51,7 @@ rule prep_tblastn:
     message:
         "Préparation des sequence pour le tblastn"
     shell:
-        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} {output[0]}"
+        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/mismatch-analysis2/tblastn/"
 
 # 7.1/ Colocaliser les mismatch sur la CDS - genomic seq
 rule colocalise_on_CDS_genomic:
