@@ -4,7 +4,7 @@
 
 rule target:
     input:
-        "../data/raw/kirsley/*.fasta.mafft",
+#        "../data/raw/kirsley/*.fasta.mafft",
         "../data/raw/kirsley_error.txt",
         "../data/kirsley-analysis/kirsley_error_type3.txt",
         "../data/kirsley-analysis/transcript_ensembl.tab"
@@ -127,14 +127,15 @@ rule error_calling_julies_script:
         "Détermination des erreurs d'alignement"
     shell: 
         "./../bin/error_count_kirsley.sh"
+
         
 # 0/ Alignement des séquences.
-rule mafft_align:
-    input:
-        "../data/raw/kirsley/"    
-    output: 
-        "../data/raw/kirsley/*.fasta.mafft"
-    message: 
-        "Alignement des séquences orthologues"
-    shell: 
-        "./../bin/mafft_kirsley.sh"
+# rule mafft_align:
+#    input:
+#        "../data/raw/kirsley/"    
+#    output: 
+#        "../data/raw/kirsley/*.fasta.mafft"
+#    message: 
+#        "Alignement des séquences orthologues"
+#    shell: 
+#        "./../bin/mafft_kirsley.sh"

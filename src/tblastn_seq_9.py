@@ -24,7 +24,7 @@ def fasta2List(pathFasta):
     return dictionary
 
 
-def writeQuerySubject(Error_file, out_folder, my_Genomic):
+def writeQuerySubject(Error_file, out_folder, my_Genomic, raw_folder):
     os.mkdir(out_folder+"/query_subject")
     os.mkdir(out_folder+"/blast_out")
 
@@ -35,7 +35,7 @@ def writeQuerySubject(Error_file, out_folder, my_Genomic):
 
         human_start = row[5]
         human_stop = row[6]
-        Prot_list = fasta2List("../data/raw/uniprot-sequence/"+fasta_name)
+        Prot_list = fasta2List(raw_folder+"/"+fasta_name)
 
         prot_HumanRef = [val for key, val in Prot_list.items()
                          if row[0][20:-15] in key]
@@ -67,5 +67,6 @@ def writeQuerySubject(Error_file, out_folder, my_Genomic):
 if __name__ == "__main__":
     Error_file = pd.read_csv(sys.argv[1], sep=" ", header=None)
     my_Genomic = fasta2List(sys.argv[2])
-    out_folder = sys.argv[3]
-    writeQuerySubject(Error_file, out_folder, my_Genomic)
+    raw_folder = sys.argv[3]
+    out_folder = sys.argv[4]
+    writeQuerySubject(Error_file, out_folder, my_Genomic, raw_folder)

@@ -51,7 +51,7 @@ rule prep_tblastn:
     message:
         "Préparation des sequence pour le tblastn"
     shell:
-        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/mismatch-analysis2/tblastn/"
+        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/raw/uniprot-sequence/ ../data/mismatch-analysis2/tblastn/"
 
 # 7.1/ Colocaliser les mismatch sur la CDS - genomic seq
 rule colocalise_on_CDS_genomic:
