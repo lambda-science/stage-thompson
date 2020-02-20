@@ -9,24 +9,45 @@ try:
 except:
     pass
 
-ID_file = pd.read_csv(
-    "../data/mismatch-analysis/uniprot-exon-map/transcript_ensembl.tab", sep="\t")
-my_CDS = fasta2List(
-    "../data/mismatch-analysis/uniprot-exon-map/cds_new.fa")
-Prot_list = fasta2List(
-    "../data/raw/uniprot-sequence/all_sequence.fasta")
+if __name__ == "__main__":
+    ID_file = pd.read_csv(sys.argv[1], sep="\t")
+    my_CDS = fasta2List(sys.argv[2])
+    Prot_list = fasta2List(sys.argv[3])
 
-f = open("../data/mismatch-analysis/uniprot-exon-map/transcript_ensembl_corrected.tab", "w")
-f.write("From\tTo\n")
+# Dataframe pour CDS
+    CDS_ensembl_key = []
+    CDS_uniprot_key = []
+    CDS_seq = []
+    for key, val in my_CDS.items():
+        myKey = key[1:].split(" ")
+        CDS_ensembl_key.append(myKey[0])
+        CDS_uniprot_key.append(myKey[1])
+        CDS_seq.append(val)
+    dict = {"CDS_ensembl_key": CDS_ensembl_key,
+            "CDS_uniprot_key": CDS_uniprot_key, "CDS_seq": CDS_seq}
+    df_CDS = pd.DataFrame(dict)
 
-for index, row in ID_file.iloc[:, :].iterrows():
+# Dataframe pour Protein
+    uniprot_ID = []
+    uniprot_Seq = []
+    for key, val in Prot_list.items():
+        myKey = key[1:].split(" ")
+        uniprot_ID.append(myKey[0])
+        uniprot_Seq.append(val)
+    dict = {"uniprot_ID": uniprot_ID, "uniprot_Seq": uniprot_Seq}
+    df_prot = pd.DataFrame(dict)
 
-    CDS = [val for key, val in my_CDS.items() if row[1] in key]
-    prot = [val for key, val in Prot_list.items() if row[0] in key]
+# On cherche les correspondance de taille
+    f = open(sys.argv[4], "w")
+    f.write("From\tTo\n")
+    for index, row in ID_file.iloc[:, :].iterrows():
+        try:
+            CDS = df_CDS.loc[df_CDS["CDS_ensembl_key"] == row[1]].iloc[0, 2]
+            prot = df_prot.loc[df_prot["uniprot_ID"] == row[0]].iloc[0, 1]
+        except:
+            continue
 
-    if CDS == [] or prot == []:
-        continue
-    elif (math.ceil((len(CDS[0])-3)/3) == len(prot[0])) or (math.floor((len(CDS[0])-3)/3) == len(prot[0])):
-        f.write(row[0] + "\t" + row[1]+"\n")
+        if (math.ceil((len(CDS)-3)/3) == len(prot)) or (math.floor((len(CDS)-3)/3) == len(prot)) or (len(CDS)/3 == len(prot)):
+            f.write(row[0] + "\t" + row[1]+"\n")
 
-f.close()
+    f.close()

@@ -93,7 +93,7 @@ def makeAsyncEnsemblExonmapRequest(ID_file):
 
     rs = [grequests.post(url, headers=headers, data=json.dumps(i))
           for i in params]
-    all_response = grequests.map(rs, size=10)
+    all_response = grequests.map(rs, size=1)
     return all_response
 
 

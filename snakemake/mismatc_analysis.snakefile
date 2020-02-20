@@ -1,28 +1,102 @@
 # Fichiers en sortie du workflow
 rule target:
     input:
-        "../data/mismatch-analysis2/Exon_map.tab",
-        "../data/mismatch-analysis2/Intron_map.tab"
+        "../data/mismatch-analysis3/Exon_map.tab",
+        "../data/mismatch-analysis3/Intron_map.tab",
+        "../data/mismatch-analysis3/CDS_all_filt.fasta",
 
 #############################################################################################
-#  5/ Création de l'exon_map
+# tBlastn process
+# tBlastn exec
+# tBlastn prep
+# Colocaliser 2
+# Colocaliser 1
+
+#  6/ Création de l'exon_map
 rule create_exon_map:
     input:
-        "../data/mismatch-analysis2/transcript_ensembl.tab", "../data/mismatch-analysis2/exon_json_dump.json", "../data/mismatch-analysis2/genomic_all.fasta"
+        "../data/mismatch-analysis3/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis3/exon_json_dump.json", "../data/mismatch-analysis3/genomic_all_filt.fasta"
     output:
-        "../data/mismatch-analysis2/Exon_map.tab", "../data/mismatch-analysis2/Intron_map.tab"
+        "../data/mismatch-analysis3/Exon_map.tab", "../data/mismatch-analysis3/Intron_map.tab"
     message:
         "Generation de l'exon et de l'intron map"
     shell:
-        "python ../src/4-Generate_Exon_Map.py {input[0]} {input[1]} {input[2]} {output[0]} {output[1]}"
+        "python ../src/Generate_Exon_Map_4.py {input[0]} {input[1]} {input[2]} {output[0]} {output[1]}"
+
+#  5.2/ Filtrer CDS et genomic
+rule filt_cds_genom:
+    input:
+        "../data/mismatch-analysis3/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis3/CDS_all.fasta", "../data/mismatch-analysis3/genomic_all.fasta"
+    output:
+        "../data/mismatch-analysis3/CDS_all_filt.fasta", "../data/mismatch-analysis3/genomic_all_filt.fasta"
+    message:
+        "Filtrer CDS et genomic pour n'avoir aucun dup par ID uniprot"
+    shell:
+        "cut -f2 {input[0]} | grep -f - -A 1 {input[1]} | grep '\-\-' -v > {output[0]} & " 
+        "cut -f2 {input[0]} | grep -f - -A 1 {input[2]} | grep '\-\-' -v > {output[1]}"
+
+# 5.1/ Retirer les dup des ID ensembl
+rule filter_cds:
+    input:
+        "../data/mismatch-analysis3/transcript_ensembl_corrected.tab"
+    output:
+        "../data/mismatch-analysis3/transcript_ensembl_corrected2.tab"
+    message:
+        "Retirer les ID ensembl dupliques"
+    shell:
+        "cat {input} | sort -u -k1,1 | grep -P 'From\tTo' -v | sed '1 i\From\tTo' > {output}"
+
+# 5/ Selection des bonnes CDS/Genomiques ID (long)
+rule select_correct_ensemblID:
+    input:
+        "../data/mismatch-analysis3/transcript_ensembl.tab", "../data/mismatch-analysis3/CDS_all.fasta", "../data/raw/uniprot-sequence/all_sequence.fasta"
+    output:
+        "../data/mismatch-analysis3/transcript_ensembl_corrected.tab"
+    message:
+        "Selection des ID ensembl correspondant aux protéines"
+    shell:
+        "python ../src/Select_correct_transcript_ensembl.py {input[0]} {input[1]} {input[2]} {output}"
 
 #  4/ Récupération séquences génomique, CDS, info exon
 rule get_genomic_CDS_exon_info:
     input:
-        "../data/mismatch-analysis2/transcript_ensembl_corrected2.tab"
+        "../data/mismatch-analysis3/transcript_ensembl.tab"
     output:
-        "../data/mismatch-analysis2/CDS_all.fasta", "../data/mismatch-analysis2/genomic_all.fasta", "../data/mismatch-analysis2/exon_json_dump.json"
+        "../data/mismatch-analysis3/CDS_all.fasta", "../data/mismatch-analysis3/genomic_all.fasta", "../data/mismatch-analysis3/exon_json_dump.json"
     message:
         "Récupération seq génomique, seq CDS et json dump des exons"
     shell:
-        "python ../src/3-Retrieve_genomic_CDS_and_Exon.pyled-1.py {input[0]} {output[0]} {output[1]} {output[2]}"
+        "python ../src/Retrieve_genomic_CDS_and_Exon_3.py {input} {output[0]} {output[1]} {output[2]}"
+
+# 3/ Uniprot -> Ensembl
+rule get_SEQ_and_ID_errors:
+    input:
+        "../data/mismatch-analysis3/mismatch.id"
+    output:
+        "../data/mismatch-analysis3/transcript_ensembl.tab"
+    message:
+        "Récupération identifiant Trasncript Ensembl pour chaque ID uniprot"
+    shell:
+        "python ../src/Uniprot_To_Ensembl_1_1.py {input} > {output}"
+
+# 2.1/ Extraction des ID
+rule get_ID_errors:
+    input:
+        "../data/mismatch-analysis3/uniprot_errors_type3.txt"
+    output:
+        "../data/mismatch-analysis3/mismatch.id"
+    message:
+        "Récupération des ID des erreurs"
+    shell:
+        "cat {input} | cut -d ' ' -f3 | uniq > {output}"
+
+# 2/ Selection des Erreur type 3
+rule get_errors:
+    input:
+        "../data/raw/uniprot_new_errors.txt"
+    output:
+        "../data/mismatch-analysis3/uniprot_errors_type3.txt"
+    message:
+        "Récupération des erreurs"
+    shell:
+        "cat {input} | grep \"SEQ_ERROR3\" > {output}"
