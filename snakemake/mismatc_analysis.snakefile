@@ -17,13 +17,13 @@ rule target:
 rule process_tblastn:
     input:
         "../data/mismatch-analysis2/uniprot_errors_type3.txt",
-        "../data/mismatch-analysis2/tblastn/"
     output:
         "../data/mismatch-analysis2/tblastn/match.out"
     message:
         "Lecture et processing resultats tblastn"
     shell:
-        "python ../src/tblastn_process_9_1.py {output[0]} {input[0]} {input[1]}"
+    # PENSEZ A CHANGER LE CHEMIN OUTPUT
+        "python ../src/tblastn_process_9_1.py {output[0]} {input[0]} ../data/mismatch-analysis2/tblastn/"
 
 # 8.2/ Execution du tBlastn
 rule exec_tblastn:
@@ -36,7 +36,8 @@ rule exec_tblastn:
     message:
         "Execution des tblastn"
     shell:
-        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} {output[0]}"
+    # PENSEZ A CHANGER LE CHEMIN OUTPUT
+        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/mismatch-analysis2/tblastn/"
 
 # 8.1/ Préparation des fichier pour le tBlastn
 rule prep_tblastn:
