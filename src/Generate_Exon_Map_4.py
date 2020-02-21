@@ -132,6 +132,9 @@ def writeIntronMap(intron_map_file, exon_map_File, dict_Genomic):
 
     for prot in protein_list:
         res = [val for key, val in dict_Genomic.items() if prot in key]
+        if res == []:
+            print("Error "+prot)
+            continue
         subset = Exon_Map.loc[Exon_Map[0] == prot]
         intron_number = len(subset.index)-1
         for i in range(intron_number):
