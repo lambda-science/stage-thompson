@@ -126,7 +126,7 @@ rule get_ID_errors:
     message:
         "Récupération des ID des erreurs"
     shell:
-        "cat {input} | cut -d ' ' -f1 | sed 's/^\/.*\/.*\/.*\/\(.*\)\.id.fasta.mafft$/\1/'uniq > {output}"
+        "cat {input} | cut -d ' ' -f1 | sed 's/^\/.*\/.*\/.*\/\(.*\)\.id\.fasta\.mafft/\\1/' | uniq > {output}"
 
 # 2/ Selection des Erreur type 3
 rule get_errors:
