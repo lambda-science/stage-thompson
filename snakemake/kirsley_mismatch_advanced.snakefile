@@ -26,7 +26,7 @@ rule process_tblastn:
         "Lecture et processing resultats tblastn"
     shell:
     # PENSEZ A CHANGER LE CHEMIN OUTPUT
-        "python ../src/tblastn_process_9_1.py {output[0]} {input[0]} ../data/kirsley-analysis2/tblastn/"
+        "python ../src/kirsley/tblastn_process_9_1.py {output[0]} {input[0]} ../data/kirsley-analysis2/tblastn/"
 
 # 8.2/ Execution du tBlastn
 rule exec_tblastn:
@@ -52,7 +52,7 @@ rule prep_tblastn:
     message:
         "Préparation des sequence pour le tblastn"
     shell:
-        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/raw/kirsley/ ../data/kirsley-analysis2/tblastn/"
+        "python ../src/kirsley/tblastn_seq_9.py {input[0]} {input[1]} ../data/raw/kirsley/ ../data/kirsley-analysis2/tblastn/"
 
 # 7.1/ Colocaliser les mismatch sur la CDS - genomic seq
 rule colocalise_on_CDS_genomic:
@@ -65,7 +65,7 @@ rule colocalise_on_CDS_genomic:
     message:
         "Localisation des mismatch au niveau de la CDS et de la sequence genomique"
     shell:
-        "python ../src/Colocalize_CDS_genomic_mismatch_7_1.py {input[0]} {input[1]} {output[0]} {output[1]}"
+        "python ../src/kirsley/Colocalize_CDS_genomic_mismatch_7_1.py {input[0]} {input[1]} {output[0]} {output[1]}"
 
 # 7/ Colocaliser les mismatch sur les exons/introns
 rule colocalise_on_exon_introns:
@@ -81,7 +81,7 @@ rule colocalise_on_exon_introns:
     message:
         "Localisation des mismatch au niveau des exons et introns"
     shell:
-        "python ../src/Colocalize_exon_intron_mismatch_7.py {input[0]} {input[1]} {input[2]} {output[0]} {input[3]} {output[1]} {output[2]}"
+        "python ../src/kirsley/Colocalize_exon_intron_mismatch_7.py {input[0]} {input[1]} {input[2]} {output[0]} {input[3]} {output[1]} {output[2]}"
 
 #  6/ Création de l'exon_map
 rule create_exon_map:
@@ -126,7 +126,7 @@ rule select_correct_ensemblID:
     message:
         "Selection des ID ensembl correspondant aux protéines"
     shell:
-        "python ../src/Select_correct_transcript_ensembl.py {input[0]} {input[1]} {input[2]} {output}"
+        "python ../src/kirsley/Select_correct_transcript_ensembl.py {input[0]} {input[1]} {input[2]} {output}"
 
 #  4/ Récupération séquences génomique, CDS, info exon
 rule get_genomic_CDS_exon_info:

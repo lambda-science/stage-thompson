@@ -119,7 +119,7 @@ def writeExonmap(exon_map_File, ID_file, jsonFile, genomicFile):
                 exon_file.write(uniprot_name+"\t"+exon+"\n")
 
 
-def writeIntronMap(intron_map_file, exon_map_File):
+def writeIntronMap(intron_map_file, exon_map_File, dict_Genomic):
     # Function: Create an intron_map file containing introns informations and sequence for each transcript of interest by contrast with exon map file.
     # Parameters:
     # 		intron_map_file: (str) path & name to the intro_map file to write.
@@ -131,6 +131,7 @@ def writeIntronMap(intron_map_file, exon_map_File):
     Intron_Map = open(intron_map_file, "w")
 
     for prot in protein_list:
+        res = [val for key, val in dict_Genomic.items() if prot in key]
         subset = Exon_Map.loc[Exon_Map[0] == prot]
         intron_number = len(subset.index)-1
         for i in range(intron_number):
@@ -138,7 +139,7 @@ def writeIntronMap(intron_map_file, exon_map_File):
             intron_stop = str(int(subset.iloc[i+1, 4]))
             ensembl_ID = str(subset.iloc[i, 1])
             Intron_Map.write(prot+"\t"+ensembl_ID+"\tIntron\t" +
-                             str(i+1)+"\t"+intron_start+"\t"+intron_stop+"\n")
+                             str(i+1)+"\t"+intron_start+"\t"+intron_stop+"\t"+res[0][int(intron_start):int(intron_stop)]+"\n")
 
     Intron_Map.close()
 
@@ -148,4 +149,4 @@ if __name__ == "__main__":
     jsonFile = importJson(sys.argv[2])
     genomicFile = fasta2List(sys.argv[3])
     writeExonmap(sys.argv[4], ID_file, jsonFile, genomicFile)
-    writeIntronMap(sys.argv[5], sys.argv[4])
+    writeIntronMap(sys.argv[5], sys.argv[4], genomicFile)

@@ -48,7 +48,8 @@ def localizeMismatchOnExonMap(mismatch_exon_pos_file, Error_file, my_CDS, exon_f
     f = open(mismatch_exon_pos_file, "w")
     f.write("Alignement\tError\tUniprotID\tPosStartError\tPosStopError\tFirstExonError\tLastExonError\n")
     for index, row in Error_file.iloc[:, :].iterrows():
-        prot_name = row[2]
+        prot_name = row[2].split("_")
+        prot_name = prot_name[0]
         error_start = row[3]
         error_stop = row[4]
 
@@ -86,7 +87,7 @@ def localizeMismatchOnExonMap(mismatch_exon_pos_file, Error_file, my_CDS, exon_f
                 if testing_condition == False:
                     stop_exon = popped_exon[0]
                     break
-            f.write(row[0]+"\t"+row[1]+"\t"+row[2]+"\t"+str(row[3])+"\t" +
+            f.write(row[0]+"\t"+row[1]+"\t"+prot_name+"\t"+str(row[3])+"\t" +
                     str(row[4])+"\t"+str(start_exon)+"\t"+str(stop_exon)+"\n")
             fini = True
     f.close()
