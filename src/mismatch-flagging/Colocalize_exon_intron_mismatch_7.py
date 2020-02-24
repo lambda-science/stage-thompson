@@ -46,7 +46,7 @@ def localizeMismatchOnExonMap(mismatch_exon_pos_file, Error_file, my_CDS, exon_f
     #       exon_file: (str) path to the exon_map file to read
     # Return: None. Write a file containing the exons number contaning the mismatch for each mismatch-error
     f = open(mismatch_exon_pos_file, "w")
-    f.write("Alignement\tError\tUniprotID\tPosStartError\tPosStopError\tFirstExonError\tLastExonError\n")
+    f.write("Alignement\tError\tUniprotID\tPosStartError_P\tPosStopError_P\tPosStartError_H\tPosStopError_H\tFirstExonError\tLastExonError\n")
     for index, row in Error_file.iloc[:, :].iterrows():
         error_start = row[5]
         error_stop = row[6]
@@ -85,7 +85,7 @@ def localizeMismatchOnExonMap(mismatch_exon_pos_file, Error_file, my_CDS, exon_f
                 if testing_condition == False:
                     stop_exon = popped_exon[0]
                     break
-            f.write(row[0]+"\t"+row[1]+"\t"+row[2]+"\t"+str(row[5])+"\t" +
+            f.write(row[0]+"\t"+row[1]+"\t"+row[2]+"\t"+str(row[3])+"\t"+str(row[4])+"\t"+str(row[5])+"\t" +
                     str(row[6])+"\t"+str(start_exon)+"\t"+str(stop_exon)+"\n")
             fini = True
     f.close()
@@ -109,21 +109,27 @@ def getExonIntronMismatchSeq(mismatch_exon_pos_file, exon_file, intron_file, exo
         subset_exon = exon_file.loc[exon_file[0] == row[0][20:-15]]
         subset_intron = intron_file.loc[intron_file[0] == row[0][20:-15]]
 
-        if row[5] == "ERROR":
+        if row[5] == "ERROR" or subset_exon.empty or subset_intron.empty:
+            print("Error "+row[0][20:-15])
             continue
 
-        for i in range(int(row[5]), int(row[6])+1):
-            row_to_list = subset_exon.loc[subset_exon[3] == i].values.tolist()
-            row_to_list = row_to_list[0]
-            my_Str = '\t'.join(map(str, row_to_list))
-            f.write(my_Str+"\n")
-        for i in range(int(row[5]), int(row[6])):
-            row_to_list = subset_intron.loc[subset_intron[3] == i].values.tolist(
-            )
-            row_to_list = row_to_list[0]
-            my_Str = '\t'.join(map(str, row_to_list))
-            f2.write(my_Str+"\n")
-            pass
+        try:
+            for i in range(int(row[5]), int(row[6])+1):
+                row_to_list = subset_exon.loc[subset_exon[3]
+                                              == i].values.tolist()
+                row_to_list = row_to_list[0]
+                my_Str = '\t'.join(map(str, row_to_list))
+                f.write(my_Str+"\n")
+            for i in range(int(row[5]), int(row[6])):
+                row_to_list = subset_intron.loc[subset_intron[3] == i].values.tolist(
+                )
+                row_to_list = row_to_list[0]
+                my_Str = '\t'.join(map(str, row_to_list))
+                f2.write(my_Str+"\n")
+                pass
+        except:
+            print(row)
+            continue
     f.close()
     f2.close()
 
