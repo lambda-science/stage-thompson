@@ -109,27 +109,22 @@ def getExonIntronMismatchSeq(mismatch_exon_pos_file, exon_file, intron_file, exo
         subset_exon = exon_file.loc[exon_file[0] == row[0][20:-15]]
         subset_intron = intron_file.loc[intron_file[0] == row[0][20:-15]]
 
-        if row[5] == "ERROR" or subset_exon.empty or subset_intron.empty:
+        if row[7] == "ERROR" or subset_exon.empty or subset_intron.empty:
             print("Error "+row[0][20:-15])
             continue
 
-        try:
-            for i in range(int(row[5]), int(row[6])+1):
-                row_to_list = subset_exon.loc[subset_exon[3]
-                                              == i].values.tolist()
-                row_to_list = row_to_list[0]
-                my_Str = '\t'.join(map(str, row_to_list))
-                f.write(my_Str+"\n")
-            for i in range(int(row[5]), int(row[6])):
-                row_to_list = subset_intron.loc[subset_intron[3] == i].values.tolist(
-                )
-                row_to_list = row_to_list[0]
-                my_Str = '\t'.join(map(str, row_to_list))
-                f2.write(my_Str+"\n")
-                pass
-        except:
-            print(row)
-            continue
+        for i in range(int(row[7]), int(row[8])+1):
+            row_to_list = subset_exon.loc[subset_exon[3] == i].values.tolist()
+            row_to_list = row_to_list[0]
+            my_Str = '\t'.join(map(str, row_to_list))
+            f.write(my_Str+"\n")
+        for i in range(int(row[7]), int(row[8])):
+            row_to_list = subset_intron.loc[subset_intron[3] == i].values.tolist(
+            )
+            row_to_list = row_to_list[0]
+            my_Str = '\t'.join(map(str, row_to_list))
+            f2.write(my_Str+"\n")
+            pass
     f.close()
     f2.close()
 
