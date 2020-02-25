@@ -109,7 +109,7 @@ def getExonIntronMismatchSeq(mismatch_exon_pos_file, exon_file, intron_file, exo
         subset_exon = exon_file.loc[exon_file[0] == row[0][20:-15]]
         subset_intron = intron_file.loc[intron_file[0] == row[0][20:-15]]
 
-        if row[7] == "ERROR" or subset_exon.empty or subset_intron.empty:
+        if row[7] == "ERROR" or subset_exon.empty:
             print("Error "+row[0][20:-15])
             continue
 
