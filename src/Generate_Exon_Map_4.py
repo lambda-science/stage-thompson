@@ -77,6 +77,7 @@ def catExonPos(MyJsonFull, seqID, dict_Genomic):
                                   start+"\t"+stop+"\t"+res[0][int(start):int(stop)])
                 counter += 1
     except Exception as exc:
+        print(seqID)
         pass
     return exonString
 

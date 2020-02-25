@@ -16,15 +16,17 @@ genom_correct = open(sys.argv[5], 'w')
 for key, value in my_CDS.items():
     my_key = key.split(" ")
     correction = ID_file.loc[ID_file["To"] == my_key[0][1:]]
-    correction = correction.iloc[0, :].to_list()
-    cds_correct.write(my_key[0]+" "+correction[0]+" CDS\n")
+    correction = correction.iloc[:, 0].to_list()
+    correction = ' '.join(correction)
+    cds_correct.write(my_key[0]+" "+correction+" CDS\n")
     cds_correct.write(value+"\n")
 
 for key, value in my_genomic.items():
     my_key = key.split(" ")
     correction = ID_file.loc[ID_file["To"] == my_key[0][1:]]
-    correction = correction.iloc[0, :].to_list()
-    genom_correct.write(my_key[0]+" "+correction[0]+" GENOMIC\n")
+    correction = correction.iloc[:, 0].to_list()
+    correction = ' '.join(correction)
+    genom_correct.write(my_key[0]+" "+correction+" GENOMIC\n")
     genom_correct.write(value+"\n")
 
 cds_correct.close()
