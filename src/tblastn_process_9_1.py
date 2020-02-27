@@ -10,7 +10,7 @@ import os
 # %%
 if __name__ == "__main__":
     f = open(sys.argv[1], "w")
-    f.write("Match\tPrimate\tHuman\tSeq Primate\tSeq Human\tStart Genome\t" +
+    f.write("Match\tmismatch_ID\tPrimate\tHuman\tSeq Primate\tSeq Human\tStart Genome\t" +
             "Stop Genome\tE-value\tSimilarity\tLength\tFrame\n")
 
     Error_file = pd.read_csv(sys.argv[2], sep=" ", header=None)
@@ -31,7 +31,8 @@ if __name__ == "__main__":
             match = df.iloc[0, :].tolist()
             if match[7] / match[8] >= 0.90 and match[6] < 0.001 \
                     and (match[9] not in [-1, -2, -3]):
-                line = "Match\t"+"\t".join(str(x) for x in match)+"\n"
+                line = "Match\t"+str(index)+"\t" + \
+                    "\t".join(str(x) for x in match)+"\n"
                 f.write(line)
             del(df)
     f.close()
