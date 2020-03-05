@@ -47,7 +47,11 @@ if __name__ == "__main__":
         except:
             continue
 
-        if (math.ceil((len(CDS)-3)/3) == len(prot)) or (math.floor((len(CDS)-3)/3) == len(prot)) or (len(CDS)/3 == len(prot)):
+        if (math.ceil((len(CDS)-3)/3) == len(prot)) or \
+            (math.floor((len(CDS)-3)/3) == len(prot)) or \
+            (len(CDS)/3 == len(prot)) or \
+                ((len(CDS)-3)/3 == len(prot)):
+
             f.write(row[0] + "\t" + row[1]+"\n")
 
     f.close()
