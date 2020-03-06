@@ -169,4 +169,4 @@ rule get_errors:
     message:
         "Récupération des erreurs"
     shell:
-        "cat {input} | grep \"SEQ_ERROR3\" > {output}"
+        "cat {input} | grep \"SEQ_ERROR3\" | awk '{$8=""; print $0}' > {output}"
