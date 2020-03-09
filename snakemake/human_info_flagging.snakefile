@@ -1,26 +1,26 @@
 # Fichiers en sortie du workflow
 rule target:
     input:
-        "../data/mismatch-flagging/human_Exon_map.tab",
-        "../data/mismatch-flagging/human_Intron_map.tab",
-        "../data/mismatch-flagging/human_CDS_all_corrected_filt.fasta",
-        "../data/mismatch-flagging/human_genomic_all_corrected_filt.fasta",
-        "../data/mismatch-flagging/human_mismatch_exon_pos.tab",
-        "../data/mismatch-flagging/human_mismatch_exon_seq.tab",
-        "../data/mismatch-flagging/human_mismatch_intron_seq.tab",
-        "../data/mismatch-flagging/human_mismatch_CDS_seq.tab",
-        "../data/mismatch-flagging/human_mismatch_genomic_seq.tab",
+        "../data/mismatch-flagging2/human_Exon_map.tab",
+        "../data/mismatch-flagging2/human_Intron_map.tab",
+        "../data/mismatch-flagging2/human_CDS_all_corrected_filt.fasta",
+        "../data/mismatch-flagging2/human_genomic_all_corrected_filt.fasta",
+        "../data/mismatch-flagging2/human_mismatch_exon_pos.tab",
+        "../data/mismatch-flagging2/human_mismatch_exon_seq.tab",
+        "../data/mismatch-flagging2/human_mismatch_intron_seq.tab",
+        "../data/mismatch-flagging2/human_mismatch_CDS_seq.tab",
+        "../data/mismatch-flagging2/human_mismatch_genomic_seq.tab",
 
 #############################################################################################
 
 # 7.1/ Colocaliser les mismatch sur la CDS - genomic seq
 rule colocalise_on_CDS_genomic:
     input:
-        "../data/mismatch-flagging/human_mismatch_exon_seq.tab",
-        "../data/mismatch-flagging/human_mismatch_intron_seq.tab"
+        "../data/mismatch-flagging2/human_mismatch_exon_seq.tab",
+        "../data/mismatch-flagging2/human_mismatch_intron_seq.tab"
     output:
-        "../data/mismatch-flagging/human_mismatch_CDS_seq.tab",
-        "../data/mismatch-flagging/human_mismatch_genomic_seq.tab"
+        "../data/mismatch-flagging2/human_mismatch_CDS_seq.tab",
+        "../data/mismatch-flagging2/human_mismatch_genomic_seq.tab"
     message:
         "Localisation des mismatch au niveau de la CDS et de la sequence genomique"
     shell:
@@ -29,27 +29,27 @@ rule colocalise_on_CDS_genomic:
 # 7/ Colocaliser les mismatch sur les exons/introns
 rule colocalise_on_exon_introns:
     input:
-        "../data/mismatch-flagging/uniprot_errors_type3.txt", 
-        "../data/mismatch-flagging/human_CDS_all_corrected_filt.fasta",
-        "../data/mismatch-flagging/human_Exon_map.tab",
-        "../data/mismatch-flagging/human_Intron_map.tab"
+        "../data/mismatch-flagging2/uniprot_errors_type3.txt", 
+        "../data/mismatch-flagging2/human_CDS_all_corrected_filt.fasta",
+        "../data/mismatch-flagging2/human_Exon_map.tab",
+        "../data/mismatch-flagging2/human_Intron_map.tab"
     output:
-        "../data/mismatch-flagging/human_mismatch_exon_pos.tab",
-        "../data/mismatch-flagging/human_mismatch_exon_seq.tab",
-        "../data/mismatch-flagging/human_mismatch_intron_seq.tab"
+        "../data/mismatch-flagging2/human_mismatch_exon_pos.tab",
+        "../data/mismatch-flagging2/human_mismatch_exon_seq.tab",
+        "../data/mismatch-flagging2/human_mismatch_intron_seq.tab"
     message:
         "Localisation des mismatch au niveau des exons et introns"
     shell:
-        "python ../src/mismatch-flagging/Colocalize_exon_intron_mismatch_7.py {input[0]} {input[1]} {input[2]} {output[0]} {input[3]} {output[1]} {output[2]}"
+        "python ../src/mismatch-flagging2/Colocalize_exon_intron_mismatch_7.py {input[0]} {input[1]} {input[2]} {output[0]} {input[3]} {output[1]} {output[2]}"
 
 #  6/ Création de l'exon_map
 rule create_exon_map:
     input:
-        "../data/mismatch-flagging/human_transcript_ensembl_corrected2.tab", 
-        "../data/mismatch-flagging/human_exon_json_dump.json", 
-        "../data/mismatch-flagging/human_genomic_all_corrected_filt.fasta"
+        "../data/mismatch-flagging2/human_transcript_ensembl_corrected2.tab", 
+        "../data/mismatch-flagging2/human_exon_json_dump.json", 
+        "../data/mismatch-flagging2/human_genomic_all_corrected_filt.fasta"
     output:
-        "../data/mismatch-flagging/human_Exon_map.tab", "../data/mismatch-flagging/human_Intron_map.tab"
+        "../data/mismatch-flagging2/human_Exon_map.tab", "../data/mismatch-flagging2/human_Intron_map.tab"
     message:
         "Generation de l'exon et de l'intron map"
     shell:
@@ -58,12 +58,12 @@ rule create_exon_map:
 #  5.2/ Filtrer CDS et genomic
 rule filt_cds_genom:
     input:
-        "../data/mismatch-flagging/human_transcript_ensembl_corrected2.tab", 
-        "../data/mismatch-flagging/human_CDS_all_corrected.fasta", 
-        "../data/mismatch-flagging/human_genomic_all_corrected.fasta"
+        "../data/mismatch-flagging2/human_transcript_ensembl_corrected2.tab", 
+        "../data/mismatch-flagging2/human_CDS_all_corrected.fasta", 
+        "../data/mismatch-flagging2/human_genomic_all_corrected.fasta"
     output:
-        "../data/mismatch-flagging/human_CDS_all_corrected_filt.fasta", 
-        "../data/mismatch-flagging/human_genomic_all_corrected_filt.fasta"
+        "../data/mismatch-flagging2/human_CDS_all_corrected_filt.fasta", 
+        "../data/mismatch-flagging2/human_genomic_all_corrected_filt.fasta"
     message:
         "Filtrer CDS et genomic pour n'avoir aucun dup par ID uniprot"
     shell:
@@ -73,9 +73,9 @@ rule filt_cds_genom:
 # 5.1/ Retirer les dup des ID ensembl
 rule filter_cds:
     input:
-        "../data/mismatch-flagging/human_transcript_ensembl_corrected.tab"
+        "../data/mismatch-flagging2/human_transcript_ensembl_corrected.tab"
     output:
-        "../data/mismatch-flagging/human_transcript_ensembl_corrected2.tab"
+        "../data/mismatch-flagging2/human_transcript_ensembl_corrected2.tab"
     message:
         "Retirer les ID ensembl dupliques"
     shell:
@@ -84,11 +84,11 @@ rule filter_cds:
 # 5/ Selection des bonnes CDS/Genomiques ID (long)
 rule select_correct_ensemblID:
     input:
-        "../data/mismatch-flagging/human_transcript_ensembl.tab",
-        "../data/mismatch-flagging/human_CDS_all_corrected.fasta", 
+        "../data/mismatch-flagging2/human_transcript_ensembl.tab",
+        "../data/mismatch-flagging2/human_CDS_all_corrected.fasta", 
         "../data/raw/uniprot-sequence/all_sequence.fasta"
     output:
-        "../data/mismatch-flagging/human_transcript_ensembl_corrected.tab"
+        "../data/mismatch-flagging2/human_transcript_ensembl_corrected.tab"
     message:
         "Selection des ID ensembl correspondant aux protéines"
     shell:
@@ -97,25 +97,25 @@ rule select_correct_ensemblID:
 # 4.1 FIX A BUG WHEN WRITING GENOMIC AND CDS ?
 rule fix_genomic_cds:
     input:
-        "../data/mismatch-flagging/human_transcript_ensembl.tab",
-        "../data/mismatch-flagging/human_CDS_all.fasta",
-        "../data/mismatch-flagging/human_genomic_all.fasta"
+        "../data/mismatch-flagging2/human_transcript_ensembl.tab",
+        "../data/mismatch-flagging2/human_CDS_all.fasta",
+        "../data/mismatch-flagging2/human_genomic_all.fasta"
     output:
-        "../data/mismatch-flagging/human_CDS_all_corrected.fasta",
-        "../data/mismatch-flagging/human_genomic_all_corrected.fasta"
+        "../data/mismatch-flagging2/human_CDS_all_corrected.fasta",
+        "../data/mismatch-flagging2/human_genomic_all_corrected.fasta"
     message:
         "Fix du decallage uniprot - ensembl transcript"
     shell:
-        "python ../src/mismatch-flagging/check_fasta_id.py {input[0]} {input[1]} {input[2]} {output[0]} {output[1]} "
+        "python ../src/mismatch-flagging2/check_fasta_id.py {input[0]} {input[1]} {input[2]} {output[0]} {output[1]} "
 
 #  4/ Récupération séquences génomique, CDS, info exon
 rule get_genomic_CDS_exon_info:
     input:
-        "../data/mismatch-flagging/human_transcript_ensembl.tab"
+        "../data/mismatch-flagging2/human_transcript_ensembl.tab"
     output:
-        "../data/mismatch-flagging/human_CDS_all.fasta",
-        "../data/mismatch-flagging/human_genomic_all.fasta",
-        "../data/mismatch-flagging/human_exon_json_dump.json"
+        "../data/mismatch-flagging2/human_CDS_all.fasta",
+        "../data/mismatch-flagging2/human_genomic_all.fasta",
+        "../data/mismatch-flagging2/human_exon_json_dump.json"
     message:
         "Récupération seq génomique, seq CDS et json dump des exons"
     shell:
@@ -124,9 +124,9 @@ rule get_genomic_CDS_exon_info:
 # 3/ Uniprot -> Ensembl
 rule get_SEQ_and_ID_errors:
     input:
-        "../data/mismatch-flagging/mismatch_human.id"
+        "../data/mismatch-flagging2/mismatch_human.id"
     output:
-        "../data/mismatch-flagging/human_transcript_ensembl.tab"
+        "../data/mismatch-flagging2/human_transcript_ensembl.tab"
     message:
         "Récupération identifiant Trasncript Ensembl pour chaque ID uniprot"
     shell:
@@ -135,9 +135,9 @@ rule get_SEQ_and_ID_errors:
 # 2.1/ Extraction des ID
 rule get_ID_errors:
     input:
-        "../data/mismatch-flagging/uniprot_errors_type3.txt"
+        "../data/mismatch-flagging2/uniprot_errors_type3.txt"
     output:
-        "../data/mismatch-flagging/mismatch_human.id"
+        "../data/mismatch-flagging2/mismatch_human.id"
     message:
         "Récupération des ID des erreurs"
     shell:
@@ -146,10 +146,10 @@ rule get_ID_errors:
 # 2/ Selection des Erreur type 3
 rule get_errors:
     input:
-        "../data/raw/uniprot_new_errors.txt"
+        "../data/raw/uniprot_errors.txt"
     output:
-        "../data/mismatch-flagging/uniprot_errors_type3.txt"
+        "../data/mismatch-flagging2/uniprot_errors_type3.txt"
     message:
         "Récupération des erreurs"
     shell:
-        "cat {input} | grep \"SEQ_ERROR3\" | awk '{$8=""; print $0}' > {output}"
+        "cat {input} | grep \"SEQ_ERROR3\" | awk '{{$8=\"\"; print $0}}' > {output}"
