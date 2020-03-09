@@ -1,16 +1,16 @@
 # Fichiers en sortie du workflow
 rule target:
     input:
-        "../data/mismatch-analysis/Exon_map.tab",
-        "../data/mismatch-analysis/Intron_map.tab",
-        "../data/mismatch-analysis/CDS_all_filt.fasta",
-        "../data/mismatch-analysis/mismatch_exon_pos.tab",
-        "../data/mismatch-analysis/mismatch_exon_seq.tab",
-        "../data/mismatch-analysis/mismatch_intron_seq.tab",
-        "../data/mismatch-analysis/mismatch_CDS_seq.tab",
-        "../data/mismatch-analysis/mismatch_genomic_seq.tab",
-        "../data/mismatch-analysis/tblastn/all_couple.txt",
-        "../data/mismatch-analysis/tblastn/match.out"
+        "../data/mismatch-analysis-V3/Exon_map.tab",
+        "../data/mismatch-analysis-V3/Intron_map.tab",
+        "../data/mismatch-analysis-V3/CDS_all_filt.fasta",
+        "../data/mismatch-analysis-V3/mismatch_exon_pos.tab",
+        "../data/mismatch-analysis-V3/mismatch_exon_seq.tab",
+        "../data/mismatch-analysis-V3/mismatch_intron_seq.tab",
+        "../data/mismatch-analysis-V3/mismatch_CDS_seq.tab",
+        "../data/mismatch-analysis-V3/mismatch_genomic_seq.tab",
+        "../data/mismatch-analysis-V3/tblastn/all_couple.txt",
+        "../data/mismatch-analysis-V3/tblastn/match.out"
 
 #############################################################################################
 # Ensuite: s'occuper d'écrire les DB et de faire les flagging
@@ -18,51 +18,51 @@ rule target:
 # 8.3/ Processing des résultats tBlastn
 rule process_tblastn:
     input:
-        "../data/mismatch-analysis/uniprot_errors_type3.txt",
-        "../data/mismatch-analysis/tblastn/all_couple.txt",
-        "../data/mismatch-analysis/tblastn/tblastn.done"
+        "../data/mismatch-analysis-V3/uniprot_errors_type3.txt",
+        "../data/mismatch-analysis-V3/tblastn/all_couple.txt",
+        "../data/mismatch-analysis-V3/tblastn/tblastn.done"
     output:
-        "../data/mismatch-analysis/tblastn/match.out"
+        "../data/mismatch-analysis-V3/tblastn/match.out"
     message:
         "Lecture et processing resultats tblastn"
     shell:
     # PENSEZ A CHANGER LE CHEMIN OUTPUT
-        "python ../src/tblastn_process_9_1.py {output[0]} {input[0]} ../data/mismatch-analysis/tblastn/"
+        "python ../src/tblastn_process_9_1.py {output[0]} {input[0]} ../data/mismatch-analysis-V3/tblastn/"
 
 # 8.2/ Execution du tBlastn
 rule exec_tblastn:
     input:
-        "../data/mismatch-analysis/uniprot_errors_type3.txt",
-        "../data/mismatch-analysis/genomic_all_filt.fasta",
-        "../data/mismatch-analysis/tblastn/all_couple.txt"
+        "../data/mismatch-analysis-V3/uniprot_errors_type3.txt",
+        "../data/mismatch-analysis-V3/genomic_all_filt.fasta",
+        "../data/mismatch-analysis-V3/tblastn/all_couple.txt"
     output:
-        "../data/mismatch-analysis/tblastn/tblastn.done"
+        "../data/mismatch-analysis-V3/tblastn/tblastn.done"
     message:
         "Execution des tblastn"
     shell:
     # PENSEZ A CHANGER LE CHEMIN OUTPUT
-        "./../bin/tblastn.sh ../data/mismatch-analysis/"
+        "./../bin/tblastn.sh ../data/mismatch-analysis-V3/"
 
 # 8.1/ Préparation des fichier pour le tBlastn
 rule prep_tblastn:
     input:
-        "../data/mismatch-analysis/uniprot_errors_type3.txt",
-        "../data/mismatch-analysis/genomic_all_filt.fasta"
+        "../data/mismatch-analysis-V3/uniprot_errors_type3.txt",
+        "../data/mismatch-analysis-V3/genomic_all_filt.fasta"
     output:
-        "../data/mismatch-analysis/tblastn/all_couple.txt"
+        "../data/mismatch-analysis-V3/tblastn/all_couple.txt"
     message:
         "Préparation des sequence pour le tblastn"
     shell:
-        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/raw/uniprot-sequence/ ../data/mismatch-analysis/tblastn/"
+        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/raw/uniprot-sequence/ ../data/mismatch-analysis-V3/tblastn/"
 
 # 7.1/ Colocaliser les mismatch sur la CDS - genomic seq
 rule colocalise_on_CDS_genomic:
     input:
-        "../data/mismatch-analysis/mismatch_exon_seq.tab",
-        "../data/mismatch-analysis/mismatch_intron_seq.tab"
+        "../data/mismatch-analysis-V3/mismatch_exon_seq.tab",
+        "../data/mismatch-analysis-V3/mismatch_intron_seq.tab"
     output:
-        "../data/mismatch-analysis/mismatch_CDS_seq.tab",
-        "../data/mismatch-analysis/mismatch_genomic_seq.tab"
+        "../data/mismatch-analysis-V3/mismatch_CDS_seq.tab",
+        "../data/mismatch-analysis-V3/mismatch_genomic_seq.tab"
     message:
         "Localisation des mismatch au niveau de la CDS et de la sequence genomique"
     shell:
@@ -71,14 +71,14 @@ rule colocalise_on_CDS_genomic:
 # 7/ Colocaliser les mismatch sur les exons/introns
 rule colocalise_on_exon_introns:
     input:
-        "../data/mismatch-analysis/uniprot_errors_type3.txt", 
-        "../data/mismatch-analysis/CDS_all_filt.fasta",
-        "../data/mismatch-analysis/Exon_map.tab",
-        "../data/mismatch-analysis/Intron_map.tab"
+        "../data/mismatch-analysis-V3/uniprot_errors_type3.txt", 
+        "../data/mismatch-analysis-V3/CDS_all_filt.fasta",
+        "../data/mismatch-analysis-V3/Exon_map.tab",
+        "../data/mismatch-analysis-V3/Intron_map.tab"
     output:
-        "../data/mismatch-analysis/mismatch_exon_pos.tab",
-        "../data/mismatch-analysis/mismatch_exon_seq.tab",
-        "../data/mismatch-analysis/mismatch_intron_seq.tab"
+        "../data/mismatch-analysis-V3/mismatch_exon_pos.tab",
+        "../data/mismatch-analysis-V3/mismatch_exon_seq.tab",
+        "../data/mismatch-analysis-V3/mismatch_intron_seq.tab"
     message:
         "Localisation des mismatch au niveau des exons et introns"
     shell:
@@ -87,9 +87,9 @@ rule colocalise_on_exon_introns:
 #  6/ Création de l'exon_map
 rule create_exon_map:
     input:
-        "../data/mismatch-analysis/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis/exon_json_dump.json", "../data/mismatch-analysis/genomic_all_filt.fasta"
+        "../data/mismatch-analysis-V3/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis-V3/exon_json_dump.json", "../data/mismatch-analysis-V3/genomic_all_filt.fasta"
     output:
-        "../data/mismatch-analysis/Exon_map.tab", "../data/mismatch-analysis/Intron_map.tab"
+        "../data/mismatch-analysis-V3/Exon_map.tab", "../data/mismatch-analysis-V3/Intron_map.tab"
     message:
         "Generation de l'exon et de l'intron map"
     shell:
@@ -98,9 +98,9 @@ rule create_exon_map:
 #  5.2/ Filtrer CDS et genomic
 rule filt_cds_genom:
     input:
-        "../data/mismatch-analysis/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis/CDS_all.fasta", "../data/mismatch-analysis/genomic_all.fasta"
+        "../data/mismatch-analysis-V3/transcript_ensembl_corrected2.tab", "../data/mismatch-analysis-V3/CDS_all.fasta", "../data/mismatch-analysis-V3/genomic_all.fasta"
     output:
-        "../data/mismatch-analysis/CDS_all_filt.fasta", "../data/mismatch-analysis/genomic_all_filt.fasta"
+        "../data/mismatch-analysis-V3/CDS_all_filt.fasta", "../data/mismatch-analysis-V3/genomic_all_filt.fasta"
     message:
         "Filtrer CDS et genomic pour n'avoir aucun dup par ID uniprot"
     shell:
@@ -110,9 +110,9 @@ rule filt_cds_genom:
 # 5.1/ Retirer les dup des ID ensembl
 rule filter_cds:
     input:
-        "../data/mismatch-analysis/transcript_ensembl_corrected.tab"
+        "../data/mismatch-analysis-V3/transcript_ensembl_corrected.tab"
     output:
-        "../data/mismatch-analysis/transcript_ensembl_corrected2.tab"
+        "../data/mismatch-analysis-V3/transcript_ensembl_corrected2.tab"
     message:
         "Retirer les ID ensembl dupliques"
     shell:
@@ -121,9 +121,9 @@ rule filter_cds:
 # 5/ Selection des bonnes CDS/Genomiques ID (long)
 rule select_correct_ensemblID:
     input:
-        "../data/mismatch-analysis/transcript_ensembl.tab", "../data/mismatch-analysis/CDS_all.fasta", "../data/raw/uniprot-sequence/all_sequence.fasta"
+        "../data/mismatch-analysis-V3/transcript_ensembl.tab", "../data/mismatch-analysis-V3/CDS_all.fasta", "../data/raw/uniprot-sequence/all_sequence.fasta"
     output:
-        "../data/mismatch-analysis/transcript_ensembl_corrected.tab"
+        "../data/mismatch-analysis-V3/transcript_ensembl_corrected.tab"
     message:
         "Selection des ID ensembl correspondant aux protéines"
     shell:
@@ -132,9 +132,9 @@ rule select_correct_ensemblID:
 #  4/ Récupération séquences génomique, CDS, info exon
 rule get_genomic_CDS_exon_info:
     input:
-        "../data/mismatch-analysis/transcript_ensembl.tab"
+        "../data/mismatch-analysis-V3/transcript_ensembl.tab"
     output:
-        "../data/mismatch-analysis/CDS_all.fasta", "../data/mismatch-analysis/genomic_all.fasta", "../data/mismatch-analysis/exon_json_dump.json"
+        "../data/mismatch-analysis-V3/CDS_all.fasta", "../data/mismatch-analysis-V3/genomic_all.fasta", "../data/mismatch-analysis-V3/exon_json_dump.json"
     message:
         "Récupération seq génomique, seq CDS et json dump des exons"
     shell:
@@ -143,9 +143,9 @@ rule get_genomic_CDS_exon_info:
 # 3/ Uniprot -> Ensembl
 rule get_SEQ_and_ID_errors:
     input:
-        "../data/mismatch-analysis/mismatch.id"
+        "../data/mismatch-analysis-V3/mismatch.id"
     output:
-        "../data/mismatch-analysis/transcript_ensembl.tab"
+        "../data/mismatch-analysis-V3/transcript_ensembl.tab"
     message:
         "Récupération identifiant Trasncript Ensembl pour chaque ID uniprot"
     shell:
@@ -154,9 +154,9 @@ rule get_SEQ_and_ID_errors:
 # 2.1/ Extraction des ID
 rule get_ID_errors:
     input:
-        "../data/mismatch-analysis/uniprot_errors_type3.txt"
+        "../data/mismatch-analysis-V3/uniprot_errors_type3.txt"
     output:
-        "../data/mismatch-analysis/mismatch.id"
+        "../data/mismatch-analysis-V3/mismatch.id"
     message:
         "Récupération des ID des erreurs"
     shell:
@@ -167,7 +167,7 @@ rule get_errors:
     input:
         "../data/raw/uniprot_errors.txt"
     output:
-        "../data/mismatch-analysis/uniprot_errors_type3.txt"
+        "../data/mismatch-analysis-V3/uniprot_errors_type3.txt"
     message:
         "Récupération des erreurs"
     shell:

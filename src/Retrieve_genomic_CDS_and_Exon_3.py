@@ -118,12 +118,9 @@ if __name__ == "__main__":
     my_response = makeAsyncEnsemblSeqRequest(ID_file, "cds")
     print(my_response)
     writeAsyncEnsemblResponse(my_response, ID_file, sys.argv[2], "CDS")
-    del my_response
     my_response2 = makeAsyncEnsemblSeqRequest(ID_file, "genomic")
     print(my_response2)
     writeAsyncEnsemblResponse(my_response2, ID_file, sys.argv[3], "GENOMIC")
-    del my_response2
     my_response3 = makeAsyncEnsemblExonmapRequest(ID_file)
     print(my_response3)
     writeAsyncEnsemblExonMapResposne(my_response3, sys.argv[4])
-    del my_response3
