@@ -33,17 +33,17 @@ def makeAsyncEnsemblSeqRequest(ID_file, type_request):
                "Accept": "application/json"}
 
     params = []
-    for i in range(0, len(ID_file.index), 35):
+    for i in range(0, len(ID_file.index), 40):
         try:
             params.append(
-                {"ids": ID_file.iloc[i:i+35, 1].tolist(), "type": type_request})
+                {"ids": ID_file.iloc[i:i+40, 1].tolist(), "type": type_request})
         except:
             params.append(
                 {"ids": ID_file.iloc[i:, 1].tolist(), "type": type_request})
 
     rs = [grequests.post(url, headers=headers, data=json.dumps(i))
           for i in params]
-    all_response = grequests.map(rs, size=12)
+    all_response = grequests.map(rs, size=8)
     return all_response
 
 
@@ -63,7 +63,7 @@ def writeAsyncEnsemblResponse(all_response, ID_file, file_path, type_request):
             for entry in response.json():
                 j = j+1
                 f.write(
-                    ">"+entry['query']+" "+str(ID_file.iloc[indice*50+j-1, 0]) + " " + type_request + "\n")
+                    ">"+entry['query']+" "+str(ID_file.iloc[indice*40+j-1, 0]) + " " + type_request + "\n")
                 f.write(entry['seq']+"\n")
         except:
             pass
