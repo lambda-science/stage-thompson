@@ -106,7 +106,7 @@ rule fix_genomic_cds:
     message:
         "Fix du decallage uniprot - ensembl transcript"
     shell:
-        "python ../src/mismatch-flagging2-V3/check_fasta_id.py {input[0]} {input[1]} {input[2]} {output[0]} {output[1]} "
+        "python ../src/mismatch-flagging/check_fasta_id.py {input[0]} {input[1]} {input[2]} {output[0]} {output[1]} "
 
 #  4/ Récupération séquences génomique, CDS, info exon
 rule get_genomic_CDS_exon_info:

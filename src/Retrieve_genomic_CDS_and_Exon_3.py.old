@@ -31,7 +31,7 @@ def makeAsyncEnsemblSeqRequest(ID_file, type_request):
     url = "https://rest.ensembl.org/sequence/id"
     headers = {"Content-Type": "application/json",
                "Accept": "application/json"}
-    error = True
+
     params = []
     for i in range(0, len(ID_file.index), 40):
         try:
@@ -44,16 +44,6 @@ def makeAsyncEnsemblSeqRequest(ID_file, type_request):
     rs = [grequests.post(url, headers=headers, data=json.dumps(i))
           for i in params]
     all_response = grequests.map(rs, size=8)
-
-    while error == True:
-        error = False
-        for index, response in enumerate(all_response):
-            if not response.ok:
-                error = True
-                r = requests.post(url, headers=headers,
-                                  data=json.dumps(params[index]))
-                all_response[index] = r
-
     return all_response
 
 
@@ -92,9 +82,8 @@ def makeAsyncEnsemblExonmapRequest(ID_file):
     url = "https://rest.ensembl.org/lookup/id/"
     headers = {"Content-Type": "application/json",
                "Accept": "application/json"}
-    error = True
-    params = []
 
+    params = []
     for i in range(0, len(ID_file.index), 300):
         try:
             params.append(
@@ -105,16 +94,6 @@ def makeAsyncEnsemblExonmapRequest(ID_file):
     rs = [grequests.post(url, headers=headers, data=json.dumps(i))
           for i in params]
     all_response = grequests.map(rs, size=3)
-
-    while error == True:
-        error = False
-        for index, response in enumerate(all_response):
-            if not response.ok:
-                error = True
-                r = requests.post(url, headers=headers,
-                                  data=json.dumps(params[index]))
-                all_response[index] = r
-
     return all_response
 
 
