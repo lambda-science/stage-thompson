@@ -48,7 +48,14 @@ def makeAsyncEnsemblSeqRequest(ID_file, type_request):
     while error == True:
         error = False
         for index, response in enumerate(all_response):
-            if not response.ok:
+            if response is None:
+                error = True
+                r = requests.post(url, headers=headers,
+                                  data=json.dumps(params[index]))
+                all_response[index] = r
+                continue  
+            
+            elif not response.ok:
                 error = True
                 r = requests.post(url, headers=headers,
                                   data=json.dumps(params[index]))
@@ -109,7 +116,14 @@ def makeAsyncEnsemblExonmapRequest(ID_file):
     while error == True:
         error = False
         for index, response in enumerate(all_response):
-            if not response.ok:
+            if response is None:
+                error = True
+                r = requests.post(url, headers=headers,
+                                  data=json.dumps(params[index]))
+                all_response[index] = r
+                continue 
+            
+            elif not response.ok:
                 error = True
                 r = requests.post(url, headers=headers,
                                   data=json.dumps(params[index]))
