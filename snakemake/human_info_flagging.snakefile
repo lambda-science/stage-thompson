@@ -40,7 +40,7 @@ rule colocalise_on_exon_introns:
     message:
         "Localisation des mismatch au niveau des exons et introns"
     shell:
-        "python ../src/mismatch-flagging2-V3/Colocalize_exon_intron_mismatch_7.py {input[0]} {input[1]} {input[2]} {output[0]} {input[3]} {output[1]} {output[2]}"
+        "python ../src/mismatch-flagging/Colocalize_exon_intron_mismatch_7.py {input[0]} {input[1]} {input[2]} {output[0]} {input[3]} {output[1]} {output[2]}"
 
 #  6/ Création de l'exon_map
 rule create_exon_map:

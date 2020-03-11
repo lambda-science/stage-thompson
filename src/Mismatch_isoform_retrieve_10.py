@@ -79,6 +79,7 @@ def prot_to_gene():
 def gene_to_transcript_json():
     # Flagging isoform
     # Gene to Transcript
+    error = True
     ID_file = pd.read_csv(
         "../../temp/isoform/uniprot_to_gene_human.tab", sep="\t")
     url = "https://rest.ensembl.org/lookup/id/"
@@ -96,6 +97,22 @@ def gene_to_transcript_json():
     rs = [grequests.post(url, headers=headers, data=json.dumps(i))
           for i in params]
     all_response = grequests.map(rs, size=3)
+
+    while error == True:
+        error = False
+        for index, response in enumerate(all_response):
+            if response is None:
+                error = True
+                r = requests.post(url, headers=headers,
+                                  data=json.dumps(params[index]))
+                all_response[index] = r
+                continue
+
+            elif not response.ok:
+                error = True
+                r = requests.post(url, headers=headers,
+                                  data=json.dumps(params[index]))
+                all_response[index] = r
 
     f = open("../../temp/isoform/json_dump_transcript.json", "a")
     for response in all_response:
