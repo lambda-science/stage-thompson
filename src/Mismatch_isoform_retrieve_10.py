@@ -61,7 +61,7 @@ def importJson(filePath):
 def prot_to_gene():
     # Flagging isoform
     # Prot to gene
-    f = open("../../temp/isoform/uniprot_to_gene_human.tab", "w")
+    f = open("../temp/isoform/uniprot_to_gene_human.tab", "w")
     uniq_human_prot = list(set(mismatch["prot_hum"].to_list()))
     URL = "https://www.uniprot.org/uploadlists/"
     params = {
@@ -81,7 +81,7 @@ def gene_to_transcript_json():
     # Gene to Transcript
     error = True
     ID_file = pd.read_csv(
-        "../../temp/isoform/uniprot_to_gene_human.tab", sep="\t")
+        "../temp/isoform/uniprot_to_gene_human.tab", sep="\t")
     url = "https://rest.ensembl.org/lookup/id/"
     headers = {"Content-Type": "application/json",
                "Accept": "application/json"}
@@ -114,7 +114,7 @@ def gene_to_transcript_json():
                                   data=json.dumps(params[index]))
                 all_response[index] = r
 
-    f = open("../../temp/isoform/json_dump_transcript.json", "a")
+    f = open("../temp/isoform/json_dump_transcript.json", "a")
     for response in all_response:
         try:
             f.write(json.dumps(response.json())+"\n")
@@ -124,8 +124,8 @@ def gene_to_transcript_json():
 
 
 def write_gene_to_transcript():
-    transcript = importJson("../../temp/isoform/json_dump_transcript.json")
-    f = open("../../temp/isoform/gene_to_transcript.tab", "w")
+    transcript = importJson("../temp/isoform/json_dump_transcript.json")
+    f = open("../temp/isoform/gene_to_transcript.tab", "w")
     f.write("gene\ttranscript\n")
     for i in transcript:
         for j in range(len(transcript[i]["Transcript"])):
@@ -137,10 +137,10 @@ def transcript_to_prot():
     # Transcript to prot
     # Flagging isoform
 
-    f = open("../../temp/isoform/transcript_to_prot.tab", "w")
+    f = open("../temp/isoform/transcript_to_prot.tab", "w")
 
     ID_transcript = pd.read_csv(
-        "../../temp/isoform/gene_to_transcript.tab", sep="\t")
+        "../temp/isoform/gene_to_transcript.tab", sep="\t")
     uniq_human_trans = list(set(ID_transcript["transcript"].to_list()))
 
     URL = "https://www.uniprot.org/uploadlists/"
@@ -160,7 +160,7 @@ def write_protein_iso_db():
     # Dataframe pour Protein
     uniprot_ID = []
     uniprot_Seq = []
-    Prot_list = fasta2List("../../temp/isoform/all_isoform.id.fasta")
+    Prot_list = fasta2List("../temp/isoform/all_isoform.id.fasta")
     for key, val in Prot_list.items():
         myKey = key[1:].split(" ")
         uniprot_ID.append(myKey[0])
