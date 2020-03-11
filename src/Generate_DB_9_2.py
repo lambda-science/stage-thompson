@@ -73,7 +73,7 @@ error_list_db = error_list_db.astype(
 error_list_db["mismatch_ID"] = error_list_db.index
 error_list_db = error_list_db[["mismatch_ID", "prot_hum", "prot_prim", "pos_start_prim", "pos_stop_prim", "pos_start_hum",
                                "pos_stop_hum", "exon_start_prim", "exon_stop_prim", "exon_start_hum", "exon_stop_hum", "seq_prim", "seq_hum"]]
-error_list_db['prot_hum'] = error_list_db['prot_hum'].str[20:-15]
+error_list_db['prot_hum'] = error_list_db['prot_hum'].str[53:-15]
 error_list_db.to_sql(con=conn, name='mismatch',
                      index=False, if_exists="append")
 

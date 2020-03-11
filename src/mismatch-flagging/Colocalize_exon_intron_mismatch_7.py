@@ -51,11 +51,11 @@ def localizeMismatchOnExonMap(mismatch_exon_pos_file, Error_file, my_CDS, exon_f
         error_start = row[5]
         error_stop = row[6]
 
-        CDS = [val for key, val in my_CDS.items() if row[0][20:-15] in key]
+        CDS = [val for key, val in my_CDS.items() if row[0][53:-15] in key]
         if CDS == []:
             continue
         mismtach_CDS = CDS[0][error_start*3:error_stop*3+3]
-        subset = exon_file.loc[exon_file[0] == row[0][20:-15]]
+        subset = exon_file.loc[exon_file[0] == row[0][53:-15]]
         exon_number_list = subset[3].to_list()
         exon_seq_list = subset[6].to_list()
 
@@ -106,11 +106,11 @@ def getExonIntronMismatchSeq(mismatch_exon_pos_file, exon_file, intron_file, exo
     f2 = open(intron_out, "w", newline='\n')
 
     for index, row in mismatch_pos.iloc[:, :].iterrows():
-        subset_exon = exon_file.loc[exon_file[0] == row[0][20:-15]]
-        subset_intron = intron_file.loc[intron_file[0] == row[0][20:-15]]
+        subset_exon = exon_file.loc[exon_file[0] == row[0][53:-15]]
+        subset_intron = intron_file.loc[intron_file[0] == row[0][53:-15]]
 
         if row[7] == "ERROR" or subset_exon.empty:
-            print("Error "+row[0][20:-15])
+            print("Error "+row[0][53:-15])
             continue
 
         for i in range(int(row[7]), int(row[8])+1):

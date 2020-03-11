@@ -27,11 +27,11 @@ for index, row in Error_file.iloc[:, :].iterrows():
     error_stop = row[6]
 
     Prot_list = fasta2List("../../data/raw/uniprot-sequence/"+fasta_name)
-    CDS = [val for key, val in my_CDS.items() if row[0][20:-15] in key]
+    CDS = [val for key, val in my_CDS.items() if row[0][53:-15] in key]
     if CDS == []:
         continue
     mismtach_CDS = CDS[0][error_start*3:error_stop*3+3]
-    subset = exon_file.loc[exon_file[0] == row[0][20:-15]]
+    subset = exon_file.loc[exon_file[0] == row[0][53:-15]]
     exon_number_list = subset[3].to_list()
     exon_seq_list = subset[6].to_list()
 
