@@ -1,0 +1,44 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	colocalise_on_CDS_genomic
+	1	colocalise_on_exon_introns
+	1	create_exon_map
+	1	filt_cds_genom
+	1	filter_cds
+	1	fix_genomic_cds
+	1	get_ID_errors
+	1	get_SEQ_and_ID_errors
+	1	get_errors
+	1	get_genomic_CDS_exon_info
+	1	select_correct_ensemblID
+	1	target
+	12
+
+[Thu Mar 12 12:02:56 2020]
+Job 8: Récupération des erreurs
+
+[Thu Mar 12 12:02:57 2020]
+Finished job 8.
+1 of 12 steps (8%) done
+
+[Thu Mar 12 12:02:57 2020]
+Job 11: Récupération des ID des erreurs
+
+[Thu Mar 12 12:02:57 2020]
+Finished job 11.
+2 of 12 steps (17%) done
+
+[Thu Mar 12 12:02:57 2020]
+Job 10: Récupération identifiant Trasncript Ensembl pour chaque ID uniprot
+
+[Thu Mar 12 12:03:01 2020]
+Finished job 10.
+3 of 12 steps (25%) done
+
+[Thu Mar 12 12:03:01 2020]
+Job 6: Récupération seq génomique, seq CDS et json dump des exons
+
