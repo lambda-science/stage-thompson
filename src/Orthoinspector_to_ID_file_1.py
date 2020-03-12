@@ -20,9 +20,9 @@ def process_Json_orthoinspector():
     # for human uniprot ID and one column for primate uniprot ID
     taxonID = [60711, 9541, 9544, 9555, 9595, 9598, 9601, 61853, 9483, 30611]
     for i in range(10):
-        f = open("../data/raw/orthoinspector-json-processed/" +
+        f = open("../data/raw/orthoinspector-json-processed-v2/" +
                  str(taxonID[i])+".txt", "w")
-        with open("../data/raw/orthoinspector-json/"+str(taxonID[i])+".json") as json_file:
+        with open("../data/raw/orthoinspector-json-v2/"+str(taxonID[i])+".json") as json_file:
             data = json.load(json_file)
             f.write("9606\t"+str(taxonID[i])+"\n")
             for human_prot in data:
@@ -39,16 +39,16 @@ def merge_tab_files():
     # Parameters: None
     # Return: main_df (dataframe): the pandas dataframe containing the table with all primates ID. Also write it to a file.
     # Description: Merged final final contains one column for each primate with each uniprot ID. Column 0 is always human.
-    myfiles2 = listdir("../data/raw/orthoinspector-json-processed/")
+    myfiles2 = listdir("../data/raw/orthoinspector-json-processed-v2/")
     main_df = pd.read_csv(
-        '../data/raw/orthoinspector-json-processed/'+myfiles2[0], sep='\t', header=0)
+        '../data/raw/orthoinspector-json-processed-v2/'+myfiles2[0], sep='\t', header=0)
     for i in range(1, 10):
         df_temp = pd.read_csv(
-            '../data/raw/orthoinspector-json-processed/'+myfiles2[i], sep='\t', header=0)
+            '../data/raw/orthoinspector-json-processed-v2/'+myfiles2[i], sep='\t', header=0)
         main_df = main_df.merge(df_temp, on="9606", how="outer")
 
     main_df.to_csv(
-        "../data/raw/orthoinspector-json-processed/allProteineName.txt", sep="\t", index=False)
+        "../data/raw/orthoinspector-json-processed-v2/allProteineName.txt", sep="\t", index=False)
     return main_df
 
 
@@ -59,7 +59,7 @@ def write_orthologue_ID(gene_names):
     # Return: None. Write a file for each row in /raw/uniprot-sequence/
     # Description:
     for i in range(20265):
-        f = open("../data/raw/uniprot-sequence/" +
+        f = open("../data/raw/uniprot-sequence-v2/" +
                  str(gene_names.iloc[i, 0])+".id", "w", newline='\n')
         query = gene_names.iloc[i, :].dropna().tolist()
         query = ' '.join(query)

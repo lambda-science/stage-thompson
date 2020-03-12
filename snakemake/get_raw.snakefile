@@ -40,7 +40,7 @@ rule error_calling_julies_script:
     message: 
         "Détermination des erreurs d'alignement"
     shell: 
-        "./../bin/orthoinspect_query.sh"
+        ""
         
 # 4/ Alignement des séquences.
 rule mafft_align:
