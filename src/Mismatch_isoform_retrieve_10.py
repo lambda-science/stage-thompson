@@ -186,4 +186,4 @@ if __name__ == "__main__":
     gene_to_transcript_json()
     write_gene_to_transcript()
     transcript_to_prot()
-    write_protein_iso_db()
+    # write_protein_iso_db()
