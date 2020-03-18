@@ -13,7 +13,7 @@ done
 
 # Base de données RefSeq
 FILES=~/stage-thompson/data/raw/refseq-blast/*.fasta
-database="callithrix_jacchus_ref.fasta  chlorocebus_sabaeus_ref.fasta macaca_fascicularis_ref.fasta nomascus_leucogenys_ref.fasta  pan_troglodytes_ref.fasta pongo_abelii_ref.fasta gorilla_gorilla_ref.fasta macaca_mulatta_ref.fasta papio_anubis_ref.fasta otolemur_garnettii_ref.fasta"
+database="callithrix_jacchus_ref  chlorocebus_sabaeus_ref macaca_fascicularis_ref nomascus_leucogenys_ref  pan_troglodytes_ref pongo_abelii_ref gorilla_gorilla_ref macaca_mulatta_ref papio_anubis_ref otolemur_garnettii_ref"
 for f in $FILES
 do
 	cat $f >> $f.results
@@ -21,5 +21,5 @@ do
 	do
 		/biolo/blast/bin/blastp -db /commun/bics/DB-Corentin/refseq-per-primate/$db -num_threads 16 -evalue 0.005 -outfmt '6 sseqid sseq' -max_target_seqs 1 -query $f | awk -v title=$db 'BEGIN{FS="\t"; OFS="\n"}{gsub(/-/, "", $2); print ">"$1 " " title,$2}' >> $f.results
 	done
-
+sed -i 's/>.*|\(.*\)|/>\1 /' $f.results
 done
