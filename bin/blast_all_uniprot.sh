@@ -5,6 +5,7 @@ do
 	cat $f >> $f.results
     for db in $database
 	do
-		/biolo/blast/bin/blastp -db /commun/bics/DB-Corentin/uniprot-per-primate/$db -evalue 0.005 -outfmt '6 sseqid sseq' -max_target_seqs 1 -query $f | awk 'BEGIN{FS="\t"; OFS="\n"}{gsub(/-/, "", $2); print ">"$1,$2}' >> $f.results
+		/biolo/blast/bin/blastp -db /commun/bics/DB-Corentin/uniprot-per-primate/$db -num_threads 16 -evalue 0.005 -outfmt '6 sseqid sseq' -max_target_seqs 1 -query $f | awk -v title=$db 'BEGIN{FS="\t"; OFS="\n"}{gsub(/-/, "", $2); print ">"$1 " " title,$2}' >> $f.results
 	done
+sed -i 's/>.*|\(.*\)|/>\1 /' $f.results
 done
