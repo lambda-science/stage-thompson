@@ -1,28 +1,54 @@
+# %%
+
 import pandas as pd
 from os import listdir
 from os.path import isfile, join
 import json
 
+# %%
 
-def write_orthologue_ID(gene_names):
-    # Function: Separate row of orthologous uniprot ID of all primate table to one row per file containing each ID.
+
+def fasta2List(pathFasta):
+    # Function: Convert fastafile to dictionnary with title:seq structure
     # Parameters:
-    # 		gene_names: (dataframe) dataframe containing uniprotID for each human prot per row and each primates by columns
-    # Return: None. Write a file for each row in /raw/uniprot-sequence/
-    # Description:
-    for i in range(20265):
+    # 		pathFasta: (str) path to the fasta file
+    # Return:
+    # 		dictionary: (dict) dictionnary title:seq structure
+    f = open(pathFasta, "r")
+    title = []
+    seq = []
+    seq_temp = []
+    for line in f:
+        if line[0] == ">":
+            seq.append(''.join(seq_temp).replace("\n", ""))
+            title.append(line.replace("\n", ""))
+            seq_temp = []
+        else:
+            seq_temp.append(line)
+    seq.append(''.join(seq_temp).replace("\n", ""))
+    seq.pop(0)
+    dictionary = dict(zip(title, seq))
+    return dictionary
+
+
+def write_hum_prot(fasta_dict):
+    for i, j in fasta_dict.items():
+        prot_name = i.split("|")[1]
         f = open("../../data/raw/uniprot-blast/" +
-                 str(gene_names.iloc[i, 0])+".id", "w", newline='\n')
-        f.write(str(gene_names.iloc[i, 0])+"\n")
+                 prot_name+".id", "w", newline='\n')
+        f.write(str(i)+"\n")
+        f.write(str(j)+"\n")
         f.close()
 
         g = open("../../data/raw/refseq-blast/" +
-                 str(gene_names.iloc[i, 0])+".id", "w", newline='\n')
-        g.write(str(gene_names.iloc[i, 0])+"\n")
+                 prot_name+".id", "w", newline='\n')
+        g.write(str(i)+"\n")
+        g.write(str(j)+"\n")
         g.close()
+
+# %%
 
 
 if __name__ == "__main__":
-    gene_names = pd.read_csv(
-        "../../data/raw/orthoinspector-json-processed/allProteineName.txt", sep="\t")
-    write_orthologue_ID(gene_names)
+    fasta_dict = fasta2List("../../temp/UP000005640_9606.fasta")
+    write_hum_prot(fasta_dict)
