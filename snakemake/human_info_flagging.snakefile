@@ -146,7 +146,7 @@ rule get_ID_errors:
 # 2/ Selection des Erreur type 3
 rule get_errors:
     input:
-        "../data/raw/uniprot_errors.txt"
+        "../data/raw/uniprot_blast_errors.txt"
     output:
         "../data/mismatch-flagging2-V3/uniprot_errors_type3.txt"
     message:
