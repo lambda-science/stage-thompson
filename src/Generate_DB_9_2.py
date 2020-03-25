@@ -37,11 +37,11 @@ mismatch_prim = []
 mismatch_hum = []
 
 for index, row in error_list.iloc[:, :].iterrows():
-    fasta_name = row[0][20:-6]
+    fasta_name = row[0][58:-6]
     Prot_list = fasta2List("../../data/raw/uniprot-sequence/"+fasta_name)
     prot_prim = [val for key, val in Prot_list.items() if row[2] in key]
     prot_hum = [val for key, val in Prot_list.items() if row[0]
-                [44:-30] in key]
+                [58:-15] in key]
     mismatch_prim.append(prot_prim[0][row[3]:row[4]+1])
     mismatch_hum.append(prot_hum[0][row[5]:row[6]+1])
 error_list.insert(7, "seq_prim", mismatch_prim, allow_duplicates=True)
@@ -73,7 +73,7 @@ error_list_db = error_list_db.astype(
 error_list_db["mismatch_ID"] = error_list_db.index
 error_list_db = error_list_db[["mismatch_ID", "prot_hum", "prot_prim", "pos_start_prim", "pos_stop_prim", "pos_start_hum",
                                "pos_stop_hum", "exon_start_prim", "exon_stop_prim", "exon_start_hum", "exon_stop_hum", "seq_prim", "seq_hum"]]
-error_list_db['prot_hum'] = error_list_db['prot_hum'].str[53:-15]
+error_list_db['prot_hum'] = error_list_db['prot_hum'].str[58:-15]
 error_list_db.to_sql(con=conn, name='mismatch',
                      index=False, if_exists="append")
 

@@ -16,13 +16,13 @@ if __name__ == "__main__":
     Error_file = pd.read_csv(sys.argv[2], sep=" ", header=None)
 
     for index, row in Error_file.iloc[:, :].iterrows():
-        fasta_name = row[0][53:-6]
+        fasta_name = row[0][58:-6]
         prot_name = row[2]
         human_start = row[5]
         human_stop = row[6]
 
         blast_file = sys.argv[3]+"blast_out/" + \
-            str(index)+"_" + str(row[0][53:-15])+"_"+str(prot_name)+".blast"
+            str(index)+"_" + str(row[0][58:-15])+"_"+str(prot_name)+".blast"
         try:
             df = pd.read_csv(blast_file, sep="\t", header=None)
         except:

@@ -30,7 +30,7 @@ def writeQuerySubject(Error_file, out_folder, my_Genomic, raw_folder):
 
     fff = open(out_folder+"/all_couple.txt", "w")
     for index, row in Error_file.iloc[:, :].iterrows():
-        fasta_name = row[0][44:-6]
+        fasta_name = row[0][58:-6]
         prot_name = row[2].split("_")
         prot_name = prot_name[0]
 
@@ -39,7 +39,7 @@ def writeQuerySubject(Error_file, out_folder, my_Genomic, raw_folder):
         Prot_list = fasta2List(raw_folder+"/"+fasta_name)
 
         prot_HumanRef = [val for key, val in Prot_list.items()
-                         if row[0][44:-30] in key]
+                         if row[0][58:-15] in key]
         genomic_Seq = [val for key, val in my_Genomic.items()
                        if prot_name in key]
         if genomic_Seq == []:
@@ -48,17 +48,17 @@ def writeQuerySubject(Error_file, out_folder, my_Genomic, raw_folder):
             pass
 
         else:
-            peptide_Ref = (row[0][44:-30], prot_HumanRef[0]
+            peptide_Ref = (row[0][58:-15], prot_HumanRef[0]
                            [human_start:human_stop])
             f = open(out_folder+"/query_subject/"+str(index)+"_" +
-                     str(row[0][44:-30])+"_"+str(prot_name)+".subject", "w")
+                     str(row[0][58:-15])+"_"+str(prot_name)+".subject", "w")
             ff = open(out_folder+"/query_subject/"+str(index)+"_" +
-                      str(row[0][44:-30])+"_"+str(prot_name)+".query", "w")
+                      str(row[0][58:-15])+"_"+str(prot_name)+".query", "w")
 
             f.write(">"+prot_name+"\n"+str(genomic_Seq[0]))
-            ff.write(">"+row[0][44:-30]+"\n"+str(peptide_Ref[1]))
+            ff.write(">"+row[0][58:-15]+"\n"+str(peptide_Ref[1]))
             fff.write(str(index)+"_" +
-                      str(row[0][44:-30])+"_"+str(prot_name)+"\n")
+                      str(row[0][58:-15])+"_"+str(prot_name)+"\n")
 
             f.close()
             ff.close()
