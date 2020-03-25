@@ -38,7 +38,7 @@ mismatch_hum = []
 
 for index, row in error_list.iloc[:, :].iterrows():
     fasta_name = row[0][58:-6]
-    Prot_list = fasta2List("../../data/raw/uniprot-sequence/"+fasta_name)
+    Prot_list = fasta2List("../../data/raw/uniprot-blast/results/"+fasta_name)
     prot_prim = [val for key, val in Prot_list.items() if row[2] in key]
     prot_hum = [val for key, val in Prot_list.items() if row[0]
                 [58:-15] in key]
@@ -78,8 +78,10 @@ error_list_db.to_sql(con=conn, name='mismatch',
                      index=False, if_exists="append")
 
 # Table Protein
-primate_prot = fasta2List("../../data/raw/uniprot-sequence/all_sequence.fasta")
-human_prot = fasta2List("../../data/raw/uniprot-sequence/all_sequence.fasta")
+primate_prot = fasta2List(
+    "../../data/raw/uniprot-blast/results/all_sequence.fasta")
+human_prot = fasta2List(
+    "../../data/raw/uniprot-blast/results/all_sequence.fasta")
 primate_ensembl = pd.read_csv(
     "../../data/mismatch-analysis/transcript_ensembl_corrected2.tab", sep="\t")
 human_ensembl = pd.read_csv(

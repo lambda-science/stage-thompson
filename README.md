@@ -2,39 +2,10 @@
 
 ### Structure des données (dossier local et sur serveur ssh.lbgi.fr)
 ```
-├── bin  --------------------------------# Ensemble de script bash
-├── doc  --------------------------------# Tout documents en rapport avec le projet (article, cahier de labo, notes)
-├── raw  --------------------------------# Donnée brute ou en partie traitée
-│   ├── correction-pairwise -------------# Fasta et MAFFT des alignement fragment humain - seq génomique pour correction
-│   ├── orthoinspector-json -------------# Fichier raw JSON Orthoinspector
-│   ├── orthoinspector-json-processed ---# Fichier issue du traitement des JSON
-│   ├── uniprot-sequence ----------------# ID, Séquence, Alignement des protéines orthologue Uniprot
-│   ├── uniprot-exon-map ----------------# Exon-map et autre séquence genomique, CDS, cDNA
-│   ├── uniprot-mismatch-colocalize -----# Exon-map, Intron-map et autre séquence localisée au niveau des mismatch
-│   ├── uniprot-error-mismatch ----------# Fichiers relatifs aux détection d'erreur d'alignement et mismatch
-│   └── uniprot-translation-correction --# Fichiers relatifs à la correction des erreurs de mismatch par traduction
-├── results  ----------------------------# Dossier contenant certains résultats finaux
-├── temp  -------------------------------# Dossier pour tout fichier temporaire (screenshot, sequence test)
-└── src  --------------------------------# Code source non-bash (python, jupyter notebook)
+/
 ```
 ### Workflow pour re-générer les données
-1. Executer src/1-Orthoinspector_to_ID_file.ipynb  
-2. Executer bin/retrieve_seq_from_uniprot.sh  
-3. Executer bin/mafft_all.sh   
-4. Executer bin/error_count.sh
-5. Executer ```cat ~/stage-thompson/raw/uniprot-exon-map/uniprot_errors.txt | grep "SEQ_ERROR3" > ~/stage-thompson/raw/uniprot-exon-map/uniprot_errors_mismatch.txt```
-6. Récupérer que les ID des séquences à mismatch:  
-```cat ~/stage-thompson/raw/uniprot-exon-map/uniprot_errors_mismatch.txt | cut -d ' ' -f3 | uniq > mismatch.id```
-7. Récupérer les séquences des ID à mismatch
-```/biolo/blast/bin/blastdbcmd -entry_batch mismatch.id -db /commun/bics/DB-Corentin/uniprot >> mismatch.id.fasta```
-7. Optionnel: Executer src/2-Uniprot_RefSeq_Match.ipynb
-8. Faire la correspondance UniprotID -> Ensembl Transcript avec https://www.uniprot.org/uploadlists/ (télécharger le fichier .tab)
-9. Executer src/3-Retrieve_Genomic_CDS_and_Exon.ipynb
-10. Executer src/4-Generate_Exon_Map.ipynb  
-11. Executer src/5-ExonMap_to_cDNA.ipynb
-12. Executer src/6-Mismatch_correction_translation.ipynb  
-13. Executer src/7-Colocalize_exon_intron_mismatch.ipynb
-14. Executer src/8-Mismatch_correction_similarity.ipynb
+/
 
 ### Environnement virtuel
 Le fichier environment.yml contient les informations de version et de packages utilisés pour ce projet.  

@@ -86,7 +86,7 @@ rule select_correct_ensemblID:
     input:
         "../data/mismatch-flagging2-V3/human_transcript_ensembl.tab",
         "../data/mismatch-flagging2-V3/human_CDS_all_corrected.fasta", 
-        "../data/raw/uniprot-sequence/all_sequence.fasta"
+        "../data/raw/uniprot-blast/results/all_sequence.fasta"
     output:
         "../data/mismatch-flagging2-V3/human_transcript_ensembl_corrected.tab"
     message:

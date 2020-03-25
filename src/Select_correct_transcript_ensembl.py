@@ -1,4 +1,4 @@
-# IMPORTANT: you need to  meyer@milex:~/stage-thompson/data/raw/uniprot-sequence$ cat *.fasta > all_sequence.fasta
+# IMPORTANT: you need to  meyer@milex:~/stage-thompson/data/raw/uniprot-blast/results$ cat *.fasta > all_sequence.fasta
 # in order to be able to do that
 import pandas as pd
 import sys

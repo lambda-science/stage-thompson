@@ -53,7 +53,7 @@ rule prep_tblastn:
     message:
         "Préparation des sequence pour le tblastn"
     shell:
-        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/raw/uniprot-sequence/ ../data/mismatch-analysis-V3/tblastn/"
+        "python ../src/tblastn_seq_9.py {input[0]} {input[1]} ../data/raw/uniprot-blast/results/ ../data/mismatch-analysis-V3/tblastn/"
 
 # 7.1/ Colocaliser les mismatch sur la CDS - genomic seq
 rule colocalise_on_CDS_genomic:
@@ -121,7 +121,7 @@ rule filter_cds:
 # 5/ Selection des bonnes CDS/Genomiques ID (long)
 rule select_correct_ensemblID:
     input:
-        "../data/mismatch-analysis-V3/transcript_ensembl.tab", "../data/mismatch-analysis-V3/CDS_all.fasta", "../data/raw/uniprot-sequence/all_sequence.fasta"
+        "../data/mismatch-analysis-V3/transcript_ensembl.tab", "../data/mismatch-analysis-V3/CDS_all.fasta", "../data/raw/uniprot-blast/results/all_sequence.fasta"
     output:
         "../data/mismatch-analysis-V3/transcript_ensembl_corrected.tab"
     message:

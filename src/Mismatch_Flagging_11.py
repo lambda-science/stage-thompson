@@ -75,7 +75,7 @@ def conserved_flag():
         conserved = 0
 
         mySeq = fasta2List(
-            "../../data/raw/uniprot-sequence/"+row[1]+".id.fasta")
+            "../../data/raw/uniprot-blast/results/"+row[1]+".id.fasta")
         mismtaching_seq = row[11]
 
         for i, j in mySeq.items():

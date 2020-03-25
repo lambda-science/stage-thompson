@@ -26,7 +26,7 @@ for index, row in Error_file.iloc[:, :].iterrows():
     error_start = row[5]
     error_stop = row[6]
 
-    Prot_list = fasta2List("../../data/raw/uniprot-sequence/"+fasta_name)
+    Prot_list = fasta2List("../../data/raw/uniprot-blast/results/"+fasta_name)
     CDS = [val for key, val in my_CDS.items() if row[0][58:-15] in key]
     if CDS == []:
         continue
