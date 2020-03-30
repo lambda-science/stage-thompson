@@ -5,5 +5,5 @@ for db in $database
 do
     echo $db
     seqnum=$(cat *.id.results | grep -c "$db")
-    echo "scale=1;$seqnum/500*100" | bc
+    echo "scale=5;$seqnum/500*100" | bc
 done
