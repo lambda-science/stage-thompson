@@ -5,6 +5,6 @@ seqvar=$( cat *.id.results )
 for db in $database
 do
     echo db
-    seqnum=$(grep -c "$db" seqvar)
+    seqnum=$(grep -c "$db" $seqvar)
     echo "scale=1;$seqnum/500*100" | bc
 done
