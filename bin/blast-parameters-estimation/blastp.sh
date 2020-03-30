@@ -8,4 +8,5 @@ do
 	do
 		/biolo/blast/bin/blastp -db /commun/bics/DB-Corentin/uniprot-per-primate/$db -num_threads 48 -evalue 0.00001 -outfmt '6 sseqid pident' -max_target_seqs 1 -query $f | awk -v title=macaca_mulatta_uni.fasta '{if ($2>=80) print ">"$1 " " title}' | sed 's/>.*|\(.*\)|/>\1 /' >> $f.results
 	done
+echo "$(uniq $f.results)" > $f.results
 done
