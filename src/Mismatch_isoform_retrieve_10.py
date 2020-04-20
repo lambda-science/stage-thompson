@@ -104,14 +104,14 @@ def gene_to_transcript_json():
             if response is None:
                 error = True
                 r = requests.post(url, headers=headers,
-                                  data=json.dumps(params[index]))
+                                  data=json.dumps(params[index]), verify=False)
                 all_response[index] = r
                 continue
 
             elif not response.ok:
                 error = True
                 r = requests.post(url, headers=headers,
-                                  data=json.dumps(params[index]))
+                                  data=json.dumps(params[index]), verify=False)
                 all_response[index] = r
 
     f = open("../temp/isoform/json_dump_transcript.json", "a")

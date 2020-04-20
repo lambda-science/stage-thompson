@@ -4,7 +4,8 @@ mkdir results
 FILES=*.results
 for f in $FILES
 do
-    cat $f | grep ">" | uniq | sed 's/^>\([^ ]*\) .*/\1/' > results/$f
+    cat $f | sed 's/^>\([^ ]*\) .*/\1/' > results/${f%\.results}
+    #cat $f | grep ">" | uniq | sed 's/^>\([^ ]*\) .*/\1/' > results/$f
 done
 
 # Base de données RefSeq
@@ -13,5 +14,6 @@ mkdir results
 FILES=*.results
 for f in $FILES
 do
-    cat $f | grep ">" | uniq | sed 's/^>\([^ ]*\) .*/\1/' > results/$f
+    cat $f | sed 's/^>\([^ ]*\) .*/\1/' > results/${f%\.results}
+
 done

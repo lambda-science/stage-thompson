@@ -29,8 +29,8 @@ if __name__ == "__main__":
             pass
         if 'df' in locals():
             match = df.iloc[0, :].tolist()
-            if match[7] / match[8] >= 0.90 and match[6] < 0.001 \
-                    and (match[9] not in [-1, -2, -3]):
+            if match[7] / match[8] >= 0.80 and match[6] < 0.001 \
+                    and (match[9] in [1, 2, 3]):
                 line = "Match\t"+str(index)+"\t" + \
                     "\t".join(str(x) for x in match)+"\n"
                 f.write(line)
