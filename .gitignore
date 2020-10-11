@@ -137,12 +137,13 @@ data/*
 results/*
 !results/.gitkeep
 temp/*
+!temp/.gitkeep
 doc/articles-files/
 .vscode/
 */nohup.out
 nohup.out
-data/
 snakemake/.snakemake
 *.sqlite3
 *.db
+!template_empty_mismatch_db.db
 mismatch_db.db.old
