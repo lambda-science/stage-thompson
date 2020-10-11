@@ -129,9 +129,14 @@ dmypy.json
 .pyre/
 
 # Corentin Custom
-raw/
-results/
-temp/
+data/*
+!data/.gitkeep
+!data/raw/.gitkeep
+!data/mismatch-analysis/.gitkeep
+!data/mismatch-flagging/.gitkeep
+results/*
+!results/.gitkeep
+temp/*
 doc/articles-files/
 .vscode/
 */nohup.out
@@ -140,3 +145,4 @@ data/
 snakemake/.snakemake
 *.sqlite3
 *.db
+mismatch_db.db.old
